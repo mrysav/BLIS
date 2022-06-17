@@ -5,6 +5,7 @@
 include("redirect.php");
 include("includes/header.php");
 include("includes/stats_lib.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("reports");
 
 $script_elems->enableFlotBasic();
@@ -162,7 +163,7 @@ function view_tat()
 	else if(tat_type == 'w')
 		view_testwise_weekly();
 	else if(tat_type == 'd')
-		view_testwise_daily();	
+		view_testwise_daily();
 }
 </script>
 <style type='text/css'>
@@ -202,7 +203,7 @@ if($lab_config == null)
 DbUtil::switchToLabConfig($lab_config_id);
 ?>
 <?php echo LangUtil::$generalTerms['FROM_DATE']; ?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<?php 
+<?php
 $name_list = array("yf", "mf", "df");
 $id_list = $name_list;
 $df_parts = explode("-", $date_from);
@@ -211,7 +212,7 @@ $page_elems->getDatePicker($name_list, $id_list, $df_parts, false);
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <?php echo LangUtil::$generalTerms['TO_DATE']; ?>
 <span>
-<?php 
+<?php
 $name_list = array("yt", "mt", "dt");
 $id_list = $name_list;
 $dt_parts = explode("-", $date_to);

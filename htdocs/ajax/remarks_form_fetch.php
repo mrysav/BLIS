@@ -6,6 +6,7 @@
 include("../includes/SessionCheck.php");
 include("../includes/db_lib.php");
 include("../includes/page_elems.php");
+require_once(__DIR__."/../lang/lang_util.php");
 $page_elems = new PageElems();
 
 $lab_config_id = $_REQUEST['lid'];
@@ -28,7 +29,7 @@ $measure_remarks = array();
 <form name='remarks_form' id='remarks_form' action='remarks_update.php' method='post'>
 <input type='hidden' name='lid' value='<?php echo $lab_config_id; ?>'></input>
 <input type='hidden' name='ttype' value='<?php echo $test_type_id; ?>'></input>
-<?php 
+<?php
 foreach($measure_list as $measure)
 {
 	$range_type = $measure->getRangeType();
@@ -49,31 +50,31 @@ foreach($measure_list as $measure)
 	echo "<b>".$decName."</b>";
 	if($range_type == Measure::$RANGE_NUMERIC)
 	{
-	
+
 	$range_list_array=$measure->getReferenceRanges($_SESSION['lab_config_id']);
 	if(count($range_list_array)==0)
 	{
 		echo "&nbsp;&nbsp;&nbsp;";
 		echo $measure->getRangeString();
 		echo "<br>";
-	
+
 	}
 	else if(count($range_list_array)==1)
 	{
 		echo "&nbsp;&nbsp;&nbsp;";
 		echo "(".($range_list_array[0]->rangeLower)."-".($range_list_array[0]->rangeUpper) .$measure->unit.")".$range_list_array[0]->sex;
 		echo "<br>";
-		
+
 	}
 	else{
 	echo "&nbsp;&nbsp;&nbsp;";
 		echo "(".($range_list_array[0]->rangeLower)."-".($range_list_array[0]->rangeUpper) .$measure->unit.")".$range_list_array[0]->sex;
-		
+
 		echo "&nbsp;&nbsp;&nbsp;";
 		echo "(".($range_list_array[1]->rangeLower)."-".($range_list_array[1]->rangeUpper) .$measure->unit.")".$range_list_array[1]->sex;
 		echo "<br>";
 	}
-		
+
 		}
 	?>
 	<table id='remarks_table_<?php echo $measure->measureId; ?>' class='hor-minimalist-c'>
@@ -147,7 +148,7 @@ foreach($measure_list as $measure)
 		}
 		else if($range_type == Measure::$RANGE_AUTOCOMPLETE)
 		{
-		
+
 			$range_list=$measure->getRangeValues();
 			foreach($range_list as $key=>$value)
 			{
@@ -163,14 +164,14 @@ foreach($measure_list as $measure)
 				echo "</td>";
 				echo "</tr>";
 			}
-			
+
 		}
-                
+
                 else if($range_type == Measure::$RANGE_FREETEXT)
 		{
-		
+
 			echo $range_list=$measure->getRangeValues();
-                    
+
 			/*foreach($range_list as $key=>$value)
 			{
 				$inter_value=$remarks_list[$key];
@@ -185,9 +186,9 @@ foreach($measure_list as $measure)
 				echo "</td>";
 				echo "</tr>";
 			}*/
-			
+
 		}
-                
+
 		?>
 		</tbody>
 	</table>

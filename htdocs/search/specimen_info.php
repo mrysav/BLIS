@@ -4,6 +4,7 @@
 #
 include("redirect.php");
 include("includes/header.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("specimen_info");
 
 $script_elems->enableJQueryForm();
@@ -26,7 +27,7 @@ function submit_forms(specimen_id)
 //result_cancel_link').hide();
 	$('.result_progress_spinner').show();
 	//var target_div_id = "fetched_specimen";
-	
+
 	var target_div_id = "result_form_pane_"+specimen_id;
 	for(var i = 0; i < form_id_list.length; i++)
 	{
@@ -50,16 +51,16 @@ function submit_forms(specimen_id)
 
 function fetch_specimen2(specimen_id)
 {
-	
+
 	$('#fetch_progress_bar').show();
 	var pg=1;
 	var url = 'ajax/specimen_form_fetch.php';
 	//var target_div = "fetch_specimen";
 	$('.result_form_pane').html("");
 	var target_div = "result_form_pane_"+specimen_id;
-	$("#"+target_div).load(url, 
-		{sid: specimen_id , page_id:pg}, 
-		function() 
+	$("#"+target_div).load(url,
+		{sid: specimen_id , page_id:pg},
+		function()
 		{
 			$('#fetch_progress_bar').hide();
 			$("#fetched_specimen").show();
@@ -70,14 +71,14 @@ function fetch_specimen2(specimen_id)
 <br>
 <b><?php echo LangUtil::getTitle(); ?></b>
  | <a href='javascript:history.go(-1);'>&laquo; <?php echo LangUtil::$generalTerms['CMD_BACK']; ?></a>
-&nbsp;&nbsp;<?php 
-    			if($isTestDel){ 
+&nbsp;&nbsp;<?php
+    			if($isTestDel){
     		?>
     			<span class='clean-orange' id='msg_box_test'>
 					<?php echo "Test Deleted Successfully" ?> &nbsp;&nbsp;<a href="javascript:toggle('msg_box_test');"><?php echo LangUtil::$generalTerms['CMD_HIDE']; ?></a>&nbsp;&nbsp;
 				</span>
 			<?php } ?>
- 
+
  <br><br>
 <?php
 if(isset($_REQUEST['vd']))
@@ -96,7 +97,7 @@ else if(isset($_REQUEST['re']))
 	<span class='clean-orange' id='msg_box'>
 		<?php echo LangUtil::$pageTerms['TIPS_ENTRYDONE']; ?> &nbsp;&nbsp;<a href="javascript:toggle('msg_box');"><?php echo LangUtil::$generalTerms['CMD_HIDE']; ?></a>&nbsp;&nbsp;
 	</span>
-	<?php	
+	<?php
 }
 
 ?>
@@ -116,7 +117,7 @@ else if(isset($_REQUEST['re']))
 </table>
 <span id='fetch_progress_bar' style='display:none;'>
 					<?php $page_elems->getProgressSpinner(LangUtil::$generalTerms['CMD_SEARCHING']); ?>
-				</span>	
+				</span>
 <div class='result_form_pane' id='result_form_pane_<?php echo $sid; ?>'>
 		</div>
 <br>

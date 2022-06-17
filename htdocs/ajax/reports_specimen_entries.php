@@ -5,6 +5,7 @@
 #
 include("../includes/SessionCheck.php");
 include("../includes/db_lib.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("reports");
 
 $lab_config_id = $_REQUEST['location'];
@@ -87,8 +88,8 @@ foreach($specimen_list as $specimen)
 	<?php echo DateLib::mysqlToString($specimen->dateRecvd); ?>
 	</td>
 	<td>
-	<?php 
-	//echo $specimen->patientId; 
+	<?php
+	//echo $specimen->patientId;
 	//echo " ";
 	echo $patient->getName();
 	?>

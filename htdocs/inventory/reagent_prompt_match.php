@@ -5,10 +5,11 @@
 #
 
 include("../includes/db_lib.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("new_patient");
 
 $q = $_REQUEST['q'];
-$query_string = 
+$query_string =
 	"SELECT * FROM inv_reagent ".
 	"WHERE name LIKE '$q%' ";
 $resultset = query_associative_all($query_string);
@@ -27,7 +28,7 @@ foreach($resultset as $record)
     $jj++;
     if(isset($record['remarks']))
         $reagent_list[$ii][$jj] = $record['remarks'];
-    else 
+    else
         $reagent_list[$ii][$jj] = '-';
     $jj++;
     $ii++;
@@ -39,7 +40,7 @@ foreach($resultset as $record)
 			<th>
 				<span style='background-color:#FFCC66'><?php echo "Similar Reagents"; ?></span>
 			</th>
-			
+
 			<th><?php echo "Unit"; ?></th>
 			<th style="width:70px;"><?php echo "Remarks" ?></th>
 		</tr>
@@ -51,11 +52,11 @@ foreach($resultset as $record)
 		?>
 		<tr valign='top'>
 			<td>
-				<?php 
-				echo $reagent[0]; 
+				<?php
+				echo $reagent[0];
 				?>
 			</td>
-			
+
 			<td>
 				<?php
 				echo $reagent[1];

@@ -5,6 +5,7 @@
 #
 include("redirect.php");
 include("includes/header.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("specimen_added");
 
 $session_num = $_REQUEST['snum'];
@@ -69,7 +70,7 @@ $patient_id = $specimen_list[0]->patientId;
 		{
 			echo "<td>";
 			echo "<div class='pretty_box'>";
-			$page_elems->getSpecimenInfo($specimen->specimenId); 
+			$page_elems->getSpecimenInfo($specimen->specimenId);
 			echo "</div>";
 			echo "</td>";
 			if($count % 2 == 0)

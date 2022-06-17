@@ -14,7 +14,8 @@ if( !(isAdmin(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVE
 
 
 include("redirect.php");
-include("includes/header.php"); 
+include("includes/header.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("blis_help_page");
 $script_elems->enableJQueryForm();
 
@@ -24,20 +25,20 @@ $lab_config_id = $_REQUEST['id'];
 $lab_config = LabConfig::getById($lab_config_id);
 ?>
 <p style="text-align: right;"><a rel='facebox' href='#Tests_config'>Page Help</a></p><br/>
-<a href='lab_config_home.php?id=<?php echo $lab_config_id; ?>'>&laquo; <?php echo LangUtil::$generalTerms['CMD_BACK']; ?></a>|<b>Results Interpretation</b> 
+<a href='lab_config_home.php?id=<?php echo $lab_config_id; ?>'>&laquo; <?php echo LangUtil::$generalTerms['CMD_BACK']; ?></a>|<b>Results Interpretation</b>
  <br><br>
- 
+
 <div id='Tests_config' class='right_pane' style='display:none;margin-left:10px;'>
 	<ul>
 		<?php
 		if(LangUtil::$pageTerms['TIPS_RESULTINTERPRETATION']!="-") {
-			echo "<li>"; 
+			echo "<li>";
 			echo LangUtil::$pageTerms['TIPS_RESULTINTERPRETATION'];
-			echo "</li>"; 
+			echo "</li>";
 		}
 		?>
 	</ul>
-</div> 
+</div>
 <?php
 if($lab_config === null)
 {
@@ -134,5 +135,5 @@ function hide_remarks_form()
 </div>
 <?php
 SessionUtil::restore($saved_session);
-include("includes/footer.php"); 
+include("includes/footer.php");
 ?>

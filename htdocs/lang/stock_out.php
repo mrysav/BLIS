@@ -5,6 +5,7 @@
 include("redirect.php");
 include("includes/header.php");
 include("includes/stats_lib.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("stocks");
 $script_elems->enableFlotBasic();
 $script_elems->enableFlipV();
@@ -61,14 +62,14 @@ $count=0;
 		<td></td>
 		<td>
 			<div id="<?php echo $div_id; ?>" style="width:800px;height:300px; display:none"></div>
-		</td>	
+		</td>
 		<td>
 			<div id="<?php echo $legend_id; ?>" style="width:200px;height:300px;display:none"></div>
 		</td>
 	</tr>
 	</tbody>
 </table>
-<script id="source" language="javascript" type="text/javascript"> 
+<script id="source" language="javascript" type="text/javascript">
 		 $(function (){
 	 <?php
 		echo "var d = [];";
@@ -89,12 +90,12 @@ $count=0;
 		{
 			data: d,
 			hoverable:true,
-			<?php 
-			
-			if($count==1) 
+			<?php
+
+			if($count==1)
 			{
 			?>
-				points: { show: true, radius:5 }, 
+				points: { show: true, radius:5 },
 			<?php
 			}
 			else
@@ -110,9 +111,9 @@ $count=0;
 			?>
 			label: "Stock Level"
 		},
-		
+
 		],
-		{ 
+		{
 			xaxis: {
 				autoscaleMargin:.02,
 				ticks:10,
@@ -122,7 +123,7 @@ $count=0;
 			legend: {
 				container: "#<?php echo $legend_id;?>"
 			}
-		} 
+		}
 	);
 });
 </script>

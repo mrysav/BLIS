@@ -6,6 +6,7 @@
 include("../includes/SessionCheck.php");
 include("../includes/db_lib.php");
 include("../includes/page_elems.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("general");
 
 $page_elems = new PageElems();

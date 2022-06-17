@@ -5,6 +5,7 @@
 include("redirect.php");
 include("includes/header.php");
 include("includes/ajax_lib.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("specimen_info");
 
 $script_elems->enableTokenInput();
@@ -91,24 +92,24 @@ $test_list = get_tests_by_specimen_id($specimen->specimenId);
 
 		// 59,60,61...,
 		$measure_list = $test_type->getMeasures();
-                
+
                 $submeasure_list = array();
                 $comb_measure_list = array();
                // print_r($measure_list);
-                
+
                 foreach($measure_list as $measure)
                 {
-                    
+
                     $submeasure_list = $measure->getSubmeasuresAsObj();
                     //echo "<br>".count($submeasure_list);
                     //print_r($submeasure_list);
                     $submeasure_count = count($submeasure_list);
-                    
+
                     if($measure->checkIfSubmeasure() == 1)
                     {
                         continue;
                     }
-                        
+
                     if($submeasure_count == 0)
                     {
                         array_push($comb_measure_list, $measure);
@@ -117,10 +118,10 @@ $test_list = get_tests_by_specimen_id($specimen->specimenId);
                     {
                         array_push($comb_measure_list, $measure);
                         foreach($submeasure_list as $submeasure)
-                           array_push($comb_measure_list, $submeasure); 
+                           array_push($comb_measure_list, $submeasure);
                     }
                 }
-                
+
                 $measure_list = $comb_measure_list;
 		$result_list = explode(",", $test->result);
 		?>
@@ -183,12 +184,12 @@ $test_list = get_tests_by_specimen_id($specimen->specimenId);
 					{
 					$range_bounds = $measure->getRangeValues($patient);
 					}
-					
+
 					?>
 					<span>
-					&nbsp; <?php echo LangUtil::$generalTerms['RANGE']; ?> (<?php 
+					&nbsp; <?php echo LangUtil::$generalTerms['RANGE']; ?> (<?php
 					$unit=$measure->unit;
-					if(stripos($unit,",")!=false) {	
+					if(stripos($unit,",")!=false) {
 						$units=explode(",",$unit);
 						$lower_parts=explode(".",$range_bounds[0]);
 						$upper_parts=explode(".",$range_bounds[1]);
@@ -216,11 +217,11 @@ $test_list = get_tests_by_specimen_id($specimen->specimenId);
 					?>)<?php
 					}
 					else
-					{	
-						if(stripos($unit,":")!=false) {		
+					{
+						if(stripos($unit,":")!=false) {
 							$units=explode(":",$unit);
 							echo $range_bounds[0]; ?><sup><?php echo $units[0] ?></sup>-<?php echo $range_bounds[1];?><sup><?php echo $units[0] ?></sup>)
-						<?php 
+						<?php
 						}
 						else {
 							echo $range_bounds[0]; ?>-<?php echo $range_bounds[1];?>)<?php echo "&nbsp;".$measure->unit;} ?>
@@ -228,7 +229,7 @@ $test_list = get_tests_by_specimen_id($specimen->specimenId);
 							<input class='uniform_width results_entry' type='text' name='<?php echo $field_name; ?>' id='<?php echo $field_id; ?>' value='<?php echo $field_value; ?>' onchange="javascript:update_remarks(<?php echo $test_type->testTypeId; ?>);">
 							</input>
 						<?php
-					}	
+					}
 				}
 				else if($range_type == Measure::$RANGE_AUTOCOMPLETE)
 				{
@@ -238,9 +239,9 @@ $test_list = get_tests_by_specimen_id($specimen->specimenId);
 					$value_map = explode("_",trim($field_value));
 					$values_f = array();
 					for($js=0; $js<count($value_map); $js++)
-						$values_f[$value_map[$js]]= $value_map[$js];						
-					$json_values = list_to_json($values_f, $json_params);					
-					
+						$values_f[$value_map[$js]]= $value_map[$js];
+					$json_values = list_to_json($values_f, $json_params);
+
 					$url_string = "ajax/measure_autocomplete.php?id=".$measure->measureId;
 					$hint_text = "Type to enter results";
 					echo "<div>";
@@ -250,26 +251,26 @@ $test_list = get_tests_by_specimen_id($specimen->specimenId);
                                 else if($range_type == Measure::$RANGE_FREETEXT)
                                 {
                                     # Text box
-									$field_value = preg_replace("/[^a-zA-Z0-9,+.;:_\s]/", "", $field_value);									
+									$field_value = preg_replace("/[^a-zA-Z0-9,+.;:_\s]/", "", $field_value);
                                     echo "<textarea name='$field_name' id='$field_id' class='uniform_width results_entry'>$field_value</textarea>";
                                 }
-				echo "</span>"; 
+				echo "</span>";
 				echo "</td>";
 				echo "<td>";
 				$remark_value="";
 				$strpart = strstr( $test->comments,$measure->getName());
 				if( $strpart != "")
-				{					
-					$remark_arr = explode(":",$strpart,3);					
+				{
+					$remark_arr = explode(":",$strpart,3);
 					if( strstr($remark_arr[1], ","))
 					{
 						$remark_arr[1] = explode(",",$remark_arr[1]);
-						$remark_value = $remark_arr[1][0];						
+						$remark_value = $remark_arr[1][0];
 					}
 					else
 					{
 						$remark_value = $remark_arr[1];
-					}					
+					}
 				}
 				echo "<input class='uniform_width' name=$comments_field_name id=$comments_field_name value='$remark_value'></input>";
 				echo "</td>";

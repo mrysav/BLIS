@@ -4,6 +4,7 @@
 #
 include("redirect.php");
 include("includes/header.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("catalog");
 $script_elems->enableLatencyRecord();
 ?>
@@ -16,8 +17,8 @@ function check_input()
 	{
 		alert("<?php echo LangUtil::$pageTerms['TIPS_MISSING_SPECIMENNAME']; ?>");
 		return;
-	}		
-			
+	}
+
 	var ttype_entries = $('.ttype_entry');
 	var ttype_selected = false;
 	for(var i = 0; i < ttype_entries.length; i++)
@@ -36,10 +37,10 @@ function check_input()
 	}
 
 	var check_url = "ajax/specimen_name_check.php?specimen_name="+specimen_name;
-	$.ajax({ url: check_url, async : false, success: function(response){			
-			if(response == "1")		
-			{	
-				alert("Spacemen :"+specimen_name + " already exist");				
+	$.ajax({ url: check_url, async : false, success: function(response){
+			if(response == "1")
+			{
+				alert("Spacemen :"+specimen_name + " already exist");
 			}
 			else
 			{
@@ -48,8 +49,8 @@ function check_input()
 			}
 	}
 	});
-	
-	
+
+
 }
 
 </script>

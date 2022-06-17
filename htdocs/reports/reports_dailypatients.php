@@ -7,6 +7,7 @@ include("includes/db_lib.php");
 include("includes/script_elems.php");
 include("includes/page_elems.php");
 require_once("includes/user_lib.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("reports");
 
 
@@ -122,7 +123,7 @@ $(document).ready(function(){
 	echo LangUtil::$generalTerms['TO_DATE'].": ".DateLib::mysqlToString($date_to);
  }
  ?>
-  
+
 <?php
 //echo "Unreported count : ".count($patient_list_U);
 if( (count($patient_list) == 0 || $patient_list == null) && (count($patient_list_U) == 0 || $patient_list_U == null) )
@@ -136,12 +137,12 @@ if( (count($patient_list) == 0 || $patient_list == null) && (count($patient_list
 <b>Reported</b>
 <?php if(count($patient_list) > 0 ) { ?>
 <style type='text/css'>
-	tbody td, thead th { padding: .3em;  border: 1px <?php if( $report_config->showResultBorder) echo "black"; else echo "white" ?> solid;} 
-	.rstyle 
+	tbody td, thead th { padding: .3em;  border: 1px <?php if( $report_config->showResultBorder) echo "black"; else echo "white" ?> solid;}
+	.rstyle
 	{
 		border-top-style: <?php if( $report_config->resultborderHorizontal == 1) echo "solid"; else echo "none"?>;
 		border-bottom-style: <?php if( $report_config->resultborderHorizontal == 1) echo "solid"; else echo "none"?>;
-		border-right-style: <?php if( $report_config->resultborderVertical == 1) echo "solid"; else echo "none"?>;		
+		border-right-style: <?php if( $report_config->resultborderVertical == 1) echo "solid"; else echo "none"?>;
 		border-left-style: <?php if( $report_config->resultborderVertical == 1) echo "solid"; else echo "none"?>;
 	}
 </style>
@@ -181,7 +182,7 @@ if( (count($patient_list) == 0 || $patient_list == null) && (count($patient_list
 		}
 		if($report_config->useGender == 1)
 		{
-		?>			
+		?>
 			<th><?php echo LangUtil::$generalTerms['GENDER']; ?></th>
 		<?php
 		}
@@ -189,7 +190,7 @@ if( (count($patient_list) == 0 || $patient_list == null) && (count($patient_list
 		{
 		?>
 			<th><?php echo LangUtil::$generalTerms['DOB']; ?></th>
-		<?php 
+		<?php
 		}
 		if($report_config->useTest == 1)
 		{
@@ -204,54 +205,54 @@ if( (count($patient_list) == 0 || $patient_list == null) && (count($patient_list
 			<th><?php echo "View Report"; ?></th>
 		<?php
 		}
-		
+
 		# Patient Custom fields here
 		$custom_field_list = $lab_config->getPatientCustomFields();
 		//echo "Patient Custom Field List : ".sizeof($custom_field_list);
 		foreach($custom_field_list as $custom_field)
 		{
 			if(in_array($custom_field->id, $report_config->patientCustomFields))
-			{	
-				$field_name = $custom_field->fieldName;				
+			{
+				$field_name = $custom_field->fieldName;
 				echo "<th>";
 				echo $field_name;
 				echo "</th>";
 			}
 		}
-		
-		
-		
+
+
+
 		if($report_config->useRequesterName == 1)
 		{
 			if ( is_admin($user)  ) {
-			
+
 			echo "<th>"."Referrer Names"."</th>";
 			}
 		}
-		
+
 		if($report_config->usePatientSignature == 1)
 		{
 			?>
 				<th><?php echo LangUtil::$generalTerms['PATIENT_SIGNATURE']; ?></th>
-			<?php 
+			<?php
 		}
 		if($report_config->usePatientBarcode == 1)
 		{
 			?>
 				<th><?php echo LangUtil::$generalTerms['PATIENT_BARCODE']; ?></th>
-			<?php 
+			<?php
 		}
 		if($report_config->usePatientRegistrationDate == 1)
 		{
 			?>
 				<th><?php echo 'Date of Registration'; ?></th>
-			<?php 
+			<?php
 		}
 		if($report_config->useTest == 1)
 		{
 			?>
 				<th><?php echo 'Test'; ?></th>
-			<?php 
+			<?php
 		}
 		?>
 	</tr>
@@ -297,7 +298,7 @@ if( (count($patient_list) == 0 || $patient_list == null) && (count($patient_list
 		}
 		if($report_config->useGender == 1)
 		{
-		?>			
+		?>
 			<td class='rstyle'><?php echo $patient->sex; ?></td>
 		<?php
 		}
@@ -305,7 +306,7 @@ if( (count($patient_list) == 0 || $patient_list == null) && (count($patient_list
 		{
 		?>
 			<td class='rstyle'><?php echo $patient->getDob(); ?></td>
-		<?php 
+		<?php
 		}
 		if($report_config->useTest == 1)
 		{
@@ -317,21 +318,21 @@ if( (count($patient_list) == 0 || $patient_list == null) && (count($patient_list
 		{
 		?>
 			<td class='rstyle'>
-				<a href='reports_testhistory.php?location=<?php echo $lab_config_id; ?>&patient_id=<?php echo $patient->patientId; ?>' 
+				<a href='reports_testhistory.php?location=<?php echo $lab_config_id; ?>&patient_id=<?php echo $patient->patientId; ?>'
 				title="Click to Generate Test History Report for this Patient" target="_blank">
 				<?php echo LangUtil::$generalTerms['VIEW_REPORT']; ?></a>
 			</td>
 		<?php
-			
+
 		}
-		
+
 		# Patient Custom fields here
 		$custom_field_list = $lab_config->getPatientCustomFields();
 		foreach($custom_field_list as $custom_field)
 		{
 			if(in_array($custom_field->id, $report_config->patientCustomFields))
-			{	
-				$field_name = $custom_field->fieldName;				
+			{
+				$field_name = $custom_field->fieldName;
 				$custom_data = get_custom_data_patient_bytype($patient->patientId, $custom_field->id);
 				echo "<td class='rstyle'>";
 				if($custom_data == null)
@@ -345,13 +346,13 @@ if( (count($patient_list) == 0 || $patient_list == null) && (count($patient_list
 						$field_value = "-";
 					echo $field_value;
 				}
-				echo "</td>";					
+				echo "</td>";
 			}
 		}
-		
-		
-		
-		
+
+
+
+
 		if($report_config->useRequesterName == 1)
 		{
 			if ( is_admin($user)  ) {
@@ -360,40 +361,40 @@ if( (count($patient_list) == 0 || $patient_list == null) && (count($patient_list
 			if(sizeof($doctors_for_patients) > 0){
 				$docNames = implode (", ", $doctors_for_patients);
 			}
-			
-		?>		
+
+		?>
 				<td class='rstyle'><?php echo $docNames;?></td>
 		<?php }
 		}
-		
+
 		if($report_config->usePatientSignature == 1)
 		{
 			?>
 				<td class='rstyle'>&nbsp;&nbsp;&nbsp;&nbsp; </td>
-		<?php 
+		<?php
 		}
 		if($report_config->usePatientBarcode == 1)
 		{
 			?>
 				<td class='rstyle'> <?php echo encodePatientBarcode($patient->getSurrogateId(),0); ?> </td>
-		<?php 
+		<?php
 		}
 		if($report_config->usePatientRegistrationDate == 1)
 		{
 			?>
 				<td class='rstyle'> <?php echo $patient->regDate; ?> </td>
-			<?php 
+			<?php
 		}
 		if($report_config->useTest == 1)
 		{
 			?>
 				<td class='rstyle'> <?php echo $patient->getAssociatedTests(); ?> </td>
-			<?php 
+			<?php
 		}
 		?>
 
-		
-		
+
+
 		</tr>
 		<?php
 	}
@@ -406,12 +407,12 @@ if( (count($patient_list) == 0 || $patient_list == null) && (count($patient_list
 <b>Unreported</b>
 
 <style type='text/css'>
-			tbody td, thead th { padding: .3em;  border: 1px <?php if( $report_config->showResultBorder) echo "black"; else echo "white" ?> solid;} 
-			.rstyle 
+			tbody td, thead th { padding: .3em;  border: 1px <?php if( $report_config->showResultBorder) echo "black"; else echo "white" ?> solid;}
+			.rstyle
 			{
 				border-top-style: <?php if( $report_config->resultborderHorizontal == 1) echo "solid"; else echo "none"?>;
 				border-bottom-style: <?php if( $report_config->resultborderHorizontal == 1) echo "solid"; else echo "none"?>;
-				border-right-style: <?php if( $report_config->resultborderVertical == 1) echo "solid"; else echo "none"?>;		
+				border-right-style: <?php if( $report_config->resultborderVertical == 1) echo "solid"; else echo "none"?>;
 				border-left-style: <?php if( $report_config->resultborderVertical == 1) echo "solid"; else echo "none"?>;
 			}
 		</style>
@@ -452,7 +453,7 @@ if( (count($patient_list) == 0 || $patient_list == null) && (count($patient_list
 		}
 		if($report_config->useGender == 1)
 		{
-		?>			
+		?>
 			<th><?php echo LangUtil::$generalTerms['GENDER']; ?></th>
 		<?php
 		}
@@ -460,16 +461,16 @@ if( (count($patient_list) == 0 || $patient_list == null) && (count($patient_list
 		{
 		?>
 			<th><?php echo LangUtil::$generalTerms['DOB']; ?></th>
-		<?php 
+		<?php
 		}
-		
+
 		# Patient Custom fields here
 		$custom_field_list = $lab_config->getPatientCustomFields();
 		foreach($custom_field_list as $custom_field)
 		{
 			if(in_array($custom_field->id, $report_config->patientCustomFields))
-			{	
-				$field_name = $custom_field->fieldName;				
+			{
+				$field_name = $custom_field->fieldName;
 				echo "<th>";
 				echo $field_name;
 				echo "</th>";
@@ -478,7 +479,7 @@ if( (count($patient_list) == 0 || $patient_list == null) && (count($patient_list
 		if($report_config->useRequesterName == 1)
 		{
 			if ( is_admin($user)  ) {
-			
+
 			echo "<th>"."Referrer Names"."</th>";
 			}
 		}
@@ -486,29 +487,29 @@ if( (count($patient_list) == 0 || $patient_list == null) && (count($patient_list
 		{
 			?>
 					<th><?php echo LangUtil::$generalTerms['PATIENT_SIGNATURE']; ?></th>
-				<?php 
+				<?php
 		}
 		if($report_config->usePatientBarcode == 1)
 		{
 			?>
 					<th><?php echo LangUtil::$generalTerms['PATIENT_BARCODE']; ?></th>
-				<?php 
+				<?php
 		}
 		if($report_config->usePatientRegistrationDate == 1)
 		{
 			?>
 				<th><?php echo 'Date of Registration'; ?></th>
-			<?php 
+			<?php
 		}
 		if($report_config->useTest == 1)
 		{
 			?>
 				<th><?php echo 'Test'; ?></th>
-			<?php 
+			<?php
 		}
 		?>
-		
-		
+
+
 	</tr>
 </thead>
 <?php } ?>
@@ -553,7 +554,7 @@ if( (count($patient_list) == 0 || $patient_list == null) && (count($patient_list
 		}
 		if($report_config->useGender == 1)
 		{
-		?>			
+		?>
 			<td class='rstyle'><?php echo $patient->sex; ?></td>
 		<?php
 		}
@@ -561,16 +562,16 @@ if( (count($patient_list) == 0 || $patient_list == null) && (count($patient_list
 		{
 		?>
 			<td class='rstyle'><?php echo $patient->getDob(); ?></td>
-		<?php 
+		<?php
 		}
-		
+
 		# Patient Custom fields here
 		$custom_field_list = $lab_config->getPatientCustomFields();
 		foreach($custom_field_list as $custom_field)
 		{
 			if(in_array($custom_field->id, $report_config->patientCustomFields))
-			{	
-				$field_name = $custom_field->fieldName;				
+			{
+				$field_name = $custom_field->fieldName;
 				$custom_data = get_custom_data_patient_bytype($patient->patientId, $custom_field->id);
 				echo "<td class='rstyle'>";
 				if($custom_data == null)
@@ -584,12 +585,12 @@ if( (count($patient_list) == 0 || $patient_list == null) && (count($patient_list
 						$field_value = "-";
 					echo $field_value;
 				}
-				echo "</td>";					
+				echo "</td>";
 			}
 		}
 		?>
-		
-		<?php 
+
+		<?php
 		if($report_config->useRequesterName == 1)
 		{
 			if ( is_admin($user)  ) {
@@ -598,8 +599,8 @@ if( (count($patient_list) == 0 || $patient_list == null) && (count($patient_list
 			if(sizeof($doctors_for_patients) > 0){
 				$docNames = implode (", ", $doctors_for_patients);
 			}
-			
-		?>		
+
+		?>
 				<td class='rstyle'><?php echo $docNames;?></td>
 		<?php }
 		}
@@ -607,29 +608,29 @@ if( (count($patient_list) == 0 || $patient_list == null) && (count($patient_list
 		{
 			?>
 					<td class='rstyle'>&nbsp;&nbsp;&nbsp;&nbsp; </td>
-				<?php 
+				<?php
 		}
 		if($report_config->usePatientBarcode == 1)
 		{
 			?>
 				<td class='rstyle'> <?php echo encodePatientBarcode($patient->getSurrogateId(),0); ?> </td>
-		<?php 
+		<?php
 		}
 		if($report_config->usePatientRegistrationDate == 1)
 		{
 			?>
 				<td class='rstyle'> <?php echo $patient->regDate; ?> </td>
-			<?php 
+			<?php
 		}
 		if($report_config->useTest == 1)
 		{
 			?>
 				<td class='rstyle'> <?php echo $patient->getAssociatedTests(); ?> </td>
-			<?php 
+			<?php
 		}
 		?>
-		
-		
+
+
 		</tr>
 		<?php
 	}
@@ -638,7 +639,7 @@ if( (count($patient_list) == 0 || $patient_list == null) && (count($patient_list
 </table>
 
 <br>
-<?php 
+<?php
 
 $designation=explode(";" ,$report_config->designation);
 ?>
@@ -658,7 +659,7 @@ for($j=0;$j<count($designation);$j++) {?>
 		<?php echo "................"; ?>
 	</td>
 	<?php } ?>
-</tr>	
+</tr>
 <h4><?php echo $report_config->footerText; ?></h4>
 </div>
 </div>

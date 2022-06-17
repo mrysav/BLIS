@@ -5,13 +5,14 @@
 
 include("redirect.php");
 include("includes/header.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("lab_config_home");
 
 $lab_config_id = $_REQUEST['id'];
 $lab_config = LabConfig::getById($lab_config_id);
 ?>
 <br>
-<b><?php echo LangUtil::$pageTerms['NEW_CUSTOMWORKSHEET']; ?></b> | 
+<b><?php echo LangUtil::$pageTerms['NEW_CUSTOMWORKSHEET']; ?></b> |
 	<a href='lab_config_home.php?id=<?php echo $lab_config_id; ?>'><?php echo LangUtil::$generalTerms['CMD_CANCEL']; ?></a>
 <br><br>
 <?php
@@ -37,7 +38,7 @@ $(document).ready(function() {
 		toggle_mlist(this);
 	});
 });
-		
+
 function toggle_mlist(elem)
 {
 	var target_div = elem.name+"_mlist";

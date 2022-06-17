@@ -5,8 +5,8 @@
 # Called from lab_config_home.php
 #
 include("../users/accesslist.php");
-if( !(isAdmin(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $adminPageList)) 
-     && !(isCountryDir(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $countryDirPageList)) 
+if( !(isAdmin(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $adminPageList))
+     && !(isCountryDir(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $countryDirPageList))
 	 && !(isSuperAdmin(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $superAdminPageList)) ) {
 		header( 'Location: home.php' );
 }
@@ -14,6 +14,7 @@ if( !(isAdmin(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVE
 include("redirect.php");
 include("includes/page_elems.php");
 include("includes/script_elems.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("lab_config_home");
 
 $script_elems = new ScriptElems();
@@ -82,10 +83,10 @@ function add_lab_user()
 	// readwriteOption = $('#readwriteOpt:checked').length;
 /*    var readwriteOption = 0;
     var rwoptions = ',';
-    
+
 	$('input[name="readwriteOpt"]:checked').each(function() {
 		readwriteOption++;
-		rwoptions = rwoptions + this.value+','  ; 
+		rwoptions = rwoptions + this.value+','  ;
 	});
 
 	rwoptions = rwoptions.slice(1,-1);
@@ -122,7 +123,7 @@ var rwoptions=document.getElementById('hdn_rwopt').value;
 }
 function add_user_type(){
 	var user_type = prompt("Please enter a name for your custom user type");
-	
+
 	//Add to user_type table and return the id
 	var data_string = 'u='+user_type;
 	$.ajax({
@@ -274,7 +275,7 @@ add_read_mode();
 			</td>
 		</tr>
 		<tr>
-		  
+
 		 	<td> <div id="readOrWrite" name="readOrWrite" > Writeable Options </div><?php $page_elems->getAsterisk(); ?>
 		 	</td>
 		 	<td><div id="readWrite_options" name="readWrite_options">
@@ -309,13 +310,13 @@ Backup Data
 <td id="readwriteOpt7">
 </td>
 </tr>
-</table> 		
+</table>
 <!--					<input type="checkbox" name="readwriteOpt" id='readwriteOpt2' value="2">Patient Registration<br>
 					<input type="checkbox" name="readwriteOpt" id='readwriteOpt3' value="3">Test Results<br>
 					<input type="checkbox" name="readwriteOpt" id='readwriteOpt4' value="4">Search<br>
 					<input type="checkbox" name="readwriteOpt" id='readwriteOpt6' value="6">Inventory<br>
 					<input type="checkbox" name="readwriteOpt" id='readwriteOpt7' value="7">Backup Data <br>
-	-->			
+	-->
 				</div>
 		 	</td>
 		</tr>

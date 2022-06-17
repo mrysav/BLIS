@@ -5,8 +5,8 @@
 #
 
 include("../users/accesslist.php");
-if( !(isAdmin(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $adminPageList)) 
-     && !(isCountryDir(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $countryDirPageList)) 
+if( !(isAdmin(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $adminPageList))
+     && !(isCountryDir(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $countryDirPageList))
 	 && !(isSuperAdmin(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $superAdminPageList)) ) {
 		header( 'Location: home.php' );
 }
@@ -17,6 +17,7 @@ include("includes/page_elems.php");
 
 $saved_session = SessionUtil::save();
 
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("lab_config_home");
 $script_elems = new ScriptElems();
 $script_elems->enableJQuery();
@@ -78,7 +79,7 @@ $monthago_array = explode("-", $monthago_date);
 			$name_list = array("yyyy_from", "mm_from", "dd_from");
 			$id_list = $name_list;
 			$value_list = $monthago_array;
-			$page_elems->getDatePickerPlain($name_list, $id_list, $value_list); 
+			$page_elems->getDatePickerPlain($name_list, $id_list, $value_list);
 			?>
 		</td>
 		<td>
@@ -113,7 +114,7 @@ $monthago_array = explode("-", $monthago_date);
 <div id='export_content'>
 	<style type='text/css'>
 	#report_content table { border-collapse: collapse; }
-	#report_content td, th { padding: .3em; border: 1px black solid; font-size:14px; } 
+	#report_content td, th { padding: .3em; border: 1px black solid; font-size:14px; }
 	#report_content { margin-left: 20px; }
 	#export_content { margin-left: 20px; }
 	</style>

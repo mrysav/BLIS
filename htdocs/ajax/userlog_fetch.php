@@ -7,6 +7,7 @@ include("../includes/SessionCheck.php");
 
 include("../includes/db_lib.php");
 $saved_session = SessionUtil::save();
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("lab_config_home");
 
 # Helper functions
@@ -14,7 +15,7 @@ LangUtil::setPageId("lab_config_home");
 
 function get_activity_specimen($lab_config_id, $user_id, $date_from, $date_to)
 {
-	$query_string = 
+	$query_string =
 		"SELECT * from specimen ".
 		"WHERE user_id=$user_id ".
 		"AND (date_collected BETWEEN '$date_from' AND '$date_to') ".
@@ -31,7 +32,7 @@ function get_activity_specimen($lab_config_id, $user_id, $date_from, $date_to)
 
 function get_activity_test($lab_config_id, $user_id, $date_from, $date_to)
 {
-	$query_string = 
+	$query_string =
 		"SELECT * from test ".
 		"WHERE user_id=$user_id ".
 		"AND (ts BETWEEN '$date_from' AND '$date_to' ) ".
@@ -59,9 +60,9 @@ $date_to = $_REQUEST['yt']."-".$_REQUEST['mt']."-".$_REQUEST['dt'];
 <br>
 <b><?php echo LangUtil::$pageTerms['RECENT_ACTIVITY']; ?></b><br>
 <?php echo LangUtil::$generalTerms['FACILITY']; ?>: <?php echo $lab_config->getSiteName(); ?> |
-<?php echo LangUtil::$generalTerms['USERNAME']; ?>: <?php echo $user->username; ?> 
+<?php echo LangUtil::$generalTerms['USERNAME']; ?>: <?php echo $user->username; ?>
 <br>
-<?php echo LangUtil::$generalTerms['FROM_DATE']; ?>: <?php echo DateLib::mysqlToString($date_from); ?> | 
+<?php echo LangUtil::$generalTerms['FROM_DATE']; ?>: <?php echo DateLib::mysqlToString($date_from); ?> |
 <?php echo LangUtil::$generalTerms['TO_DATE']; ?>: <?php echo DateLib::mysqlToString($date_to); ?> |
 <?php echo LangUtil::$generalTerms['G_DATE']; ?>: <?php echo date($_SESSION['dformat'].' H:i'); ?>
 <br><br>

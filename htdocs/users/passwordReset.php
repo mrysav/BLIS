@@ -23,7 +23,7 @@ body {
 <body>
 <div id="top_pane">
 		<div id="top_pane_user_info">
-		
+
 		</div>
 		<table cellspacing="10px">
 			<tbody><tr>
@@ -32,7 +32,7 @@ body {
 				</td>
 				<td>
 				</td>
-				<td> 
+				<td>
 				</td>
 			</tr>
 		</tbody></table>
@@ -44,9 +44,10 @@ body {
 	</div>
 </div>
 
-<?php 
+<?php
 include("../includes/db_lib.php");
 require_once("../includes/user_lib.php");
+require_once(__DIR__."/../lang/lang_util.php");
 $reset_before_date = "2013-08-30";
 ?>
 
@@ -54,7 +55,7 @@ $reset_before_date = "2013-08-30";
 <b><?php echo LangUtil::$generalTerms['PWD_RESET']; ?></b>
  | <a href='javascript:history.go(-1);'> &laquo; <?php echo LangUtil::$generalTerms['CMD_BACK']; ?></a>
 <br><br>
-<?php $today = date("Y-m-d"); 
+<?php $today = date("Y-m-d");
 if(strtotime($reset_before_date) > strtotime($today)){
 password_reset_flush($reset_before_date);
 echo LangUtil::$generalTerms["PASSWORDRESET_COMPLETE"];

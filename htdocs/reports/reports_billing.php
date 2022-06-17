@@ -10,6 +10,7 @@ include("includes/script_elems.php");
 
 include("includes/page_elems.php");
 
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("reports");
 
 include("../users/accesslist.php");
@@ -29,13 +30,13 @@ $chart_column_width = 360;
 $defaultCurrency = currencyConfig::getDefaultCurrency($lab_config_id);
 $defCurrencyIfnotSet = get_lab_config_settings_billing();
 if(is_null($defaultCurrency)){
-	$secondaryCurrencies = currencyConfig::getAllSecondaryCurrencies($lab_config_id, $defCurrencyIfnotSet); 
+	$secondaryCurrencies = currencyConfig::getAllSecondaryCurrencies($lab_config_id, $defCurrencyIfnotSet);
 } else {
 	$secondaryCurrencies = currencyConfig::getAllSecondaryCurrencies($lab_config_id, $defaultCurrency->getCurrencyTo());
 }
 // Currency Type
 if(isset($_REQUEST['CT'])) {
-	$currencyTo = $_REQUEST['CT']; 
+	$currencyTo = $_REQUEST['CT'];
 } else {
 	if(!is_null($defaultCurrency)){
 	$currencyTo = $defaultCurrency->getCurrencyTo();
@@ -206,7 +207,7 @@ function clean_result($test, $report_config){
 		$result = $test->decodeResultWithoutMeasures();
 	else
 		$result = $test->decodeResult();
-	
+
         // cleaning up results
 	$result = str_replace("&nbsp;", " ", $result);
 	$result = str_replace("<br><br>", ", ", $result);
@@ -531,16 +532,16 @@ $monthago_array = explode("-", $monthago_date);
 	<td>&nbsp;&nbsp;
 	Currency Type &nbsp;
 	<select name='default_currency' id='default_currency'>
-    <?php 
-    foreach ($secondaryCurrencies as $currency){ 
+    <?php
+    foreach ($secondaryCurrencies as $currency){
 	if($currency->getCurrencyTo() == $currencyTo){
 	?>
 	<option value='<?php echo $currency->getCurrencyFrom(); ?>' selected><?php echo $currency->getCurrencyFrom(); ?></option>
-	<?php } 
+	<?php }
 	else {
     ?>
       	<option value='<?php echo $currency->getCurrencyFrom(); ?>'><?php echo $currency->getCurrencyFrom(); ?></option>
-    <?php } 
+    <?php }
 	}?>
 	</td>
 	<td>
@@ -837,10 +838,10 @@ if(count($billing_info['names']) != 0)
     <tr>
         <td><?php echo $billing_info['dates'][$i]; ?></td>
         <td><?php echo $billing_info['names'][$i]; ?></td>
-		
-		<?php 
+
+		<?php
 		if($defaultFlag != 1) { ?>
-        <td><?php 
+        <td><?php
 		//echo $exchange_rate->getExchangeRate(). " ";
 		echo format_number_to_money_currencyName(($billing_info['costs'][$i])*$exchange_rate->getExchangeRate(), $currencyTo); ?></td>
 		<?php } else {?>

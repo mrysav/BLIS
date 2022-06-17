@@ -6,6 +6,7 @@ include("redirect.php");
 include("includes/header.php");
 include("includes/stats_lib.php");
 include("lang/lang_xml2php.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("stocks");
 $script_elems->enableTableSorter();
 $script_elems->enableDatePicker();
@@ -62,7 +63,7 @@ function div_load()
 ?>
 	<h3><?php echo LangUtil::$pageTerms['Inventory'];?></h3>
 	<a href='javascript:div_load();'><?php echo LangUtil::$pageTerms['Current_Inventory']; ?></a>
-	
+
 <?php
 	$tips_string = LangUtil::$pageTerms['TIPS_UPDATE'];//"Enter the quantity of the stock being checked out. The table below gives account of the current inventory. ";
 	$page_elems->getSideTip("Tips", $tips_string);
@@ -83,7 +84,7 @@ function div_load()
 					<td><?php echo $value[0];?></td>
 					<td><?php echo $value[1]."  ".$value[2] ;?></td>
 				</tr>
-			<?php 
+			<?php
 			} ?>
 			</tbody>
 		</table>
@@ -92,9 +93,9 @@ function div_load()
 		<br>
 		<a href="javascript:view_table();">Update Stock </a>
 	</div>
-	
+
 	<br>
-	
+
 	<div  id="edit_table" name="edit_table" style="display:none;width:400px;" class='pretty_box' >
 		<form name='new_test_form2' id='new_test_form2' action='stock_add.php' method='post'>
 
@@ -151,8 +152,8 @@ function div_load()
 			<input type='button' name='stock_update' id='stock_update' onclick='javascript:update_stock();' value='Submit' />
 		</form>
 	</div>
-	
-	
+
+
 <br><br><br><br>
 
 

@@ -6,8 +6,7 @@
 
 require_once("redirect.php");
 require_once("../includes/script_elems.php");
-require_once("lang/lang_util.php");
-
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("update");
 
 $script_elems = new ScriptElems();

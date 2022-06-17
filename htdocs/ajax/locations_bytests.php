@@ -6,6 +6,7 @@
 #
 include("../includes/SessionCheck.php");
 include("../includes/db_lib.php");
+require_once(__DIR__."/../lang/lang_util.php");
 
 $selectValues = $_REQUEST['l'];
 $labIdTestIdArr = explode(';',$selectValues);
@@ -19,7 +20,7 @@ for($i = 0; $i < count($labIdTestIdArr); $i++) {
 	$testId = $labIdTestId[1];
 	$lab_config = new LabConfig();
 	$record = $lab_config->getById($labId);
-	
+
 	echo "<br><input type='checkbox' name='$checkBoxName' value=$labId>$record->name</input>";
 }
 

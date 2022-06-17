@@ -6,6 +6,7 @@ include("redirect.php");
 include("includes/db_lib.php");
 include("includes/script_elems.php");
 include("includes/page_elems.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("reports");
 
 # Utility function
@@ -13,10 +14,10 @@ function get_records_to_print($lab_config, $test_type_id, $date_from, $date_to)
 {
 	$saved_db = DbUtil::switchToLabConfig($lab_config->id);
 	$retval = array();
-	
+
 	if(isset($_REQUEST['p']) && $_REQUEST['p'] ==1)
 		{
-	
+
 		$query_string =
 		"SELECT * FROM test WHERE test_type_id=$test_type_id ".
 		"AND result LIKE '' ".
@@ -25,7 +26,7 @@ function get_records_to_print($lab_config, $test_type_id, $date_from, $date_to)
 			"WHERE (date_collected BETWEEN '$date_from' AND '$date_to') ".
 		")";
 		}
-	 
+
 		else
 		if(isset($_REQUEST['ip']) && $_REQUEST['ip'] == 0)
 	{
@@ -39,7 +40,7 @@ function get_records_to_print($lab_config, $test_type_id, $date_from, $date_to)
 		}
 		else
 		{
-		
+
 		$query_string =
 		"SELECT * FROM test WHERE test_type_id=$test_type_id ".
 		//"AND result <> '' ".
@@ -49,7 +50,7 @@ function get_records_to_print($lab_config, $test_type_id, $date_from, $date_to)
 		")";
 		}
 	$resultset = query_associative_all($query_string);
-	
+
 	foreach($resultset as $record)
 	{
 		$test = Test::getObject($record);
@@ -57,8 +58,8 @@ function get_records_to_print($lab_config, $test_type_id, $date_from, $date_to)
 		$patient = Patient::getById($specimen->patientId);
 		$retval[] = array($test, $specimen, $patient);
 	}
-	
-	
+
+
 	DbUtil::switchRestore($saved_db);
 	return $retval;
 }
@@ -214,7 +215,7 @@ foreach($record_list as $record)
 {
 	$total_tests += count($record);
 }
-?>	
+?>
 <br>
  <?php if($cat_code != 0){ echo LangUtil::$generalTerms['LAB_SECTION']; ?>: <?php }
 	if($cat_code == 0)
@@ -229,7 +230,7 @@ foreach($record_list as $record)
 	 if($ttype != 0 && $cat_code != 0)
 	 {
  ?>
- |<?php  
+ |<?php
  }
  if($ttype != 0) { echo LangUtil::$generalTerms['TEST_TYPE']; ?>: <?php }
 	if($ttype == 0)
@@ -240,7 +241,7 @@ foreach($record_list as $record)
 	{
 		$test_name = get_test_name_by_id($ttype);
 		echo $test_name;
-	
+
 	}
 
 
@@ -333,7 +334,7 @@ if($no_match === true)
 			}
 			if($report_config->useGender == 1)
 			{
-			?>			
+			?>
 				<th><?php echo LangUtil::$generalTerms['GENDER']; ?></th>
 			<?php
 			}
@@ -341,15 +342,15 @@ if($no_match === true)
 			{
 			?>
 				<th><?php echo LangUtil::$generalTerms['DOB']; ?></th>
-			<?php 
+			<?php
 			}
 			# Patient Custom fields here
 			$custom_field_list = $lab_config->getPatientCustomFields();
 			foreach($custom_field_list as $custom_field)
 			{
 				if(in_array($custom_field->id, $report_config->patientCustomFields))
-				{	
-					$field_name = $custom_field->fieldName;				
+				{
+					$field_name = $custom_field->fieldName;
 					echo "<th>";
 					echo $field_name;
 					echo "</th>";
@@ -426,7 +427,7 @@ if($no_match === true)
 		</tr>
 	</thead>
 	<tbody>
-	
+
 	<?php
 	$count = 1;
 	# Loop here
@@ -480,7 +481,7 @@ if($no_match === true)
 			}
 			if($report_config->useGender == 1)
 			{
-			?>			
+			?>
 				<td><?php echo $patient->sex; ?></td>
 			<?php
 			}
@@ -488,15 +489,15 @@ if($no_match === true)
 			{
 			?>
 				<td><?php echo $patient->getDob(); ?></td>
-			<?php 
+			<?php
 			}
 			# Patient Custom fields here
 			$custom_field_list = $lab_config->getPatientCustomFields();
 			foreach($custom_field_list as $custom_field)
 			{
 				if(in_array($custom_field->id, $report_config->patientCustomFields))
-				{	
-					$field_name = $custom_field->fieldName;				
+				{
+					$field_name = $custom_field->fieldName;
 					$custom_data = get_custom_data_patient_bytype($patient->patientId, $custom_field->id);
 					echo "<td>";
 					if($custom_data == null)
@@ -510,7 +511,7 @@ if($no_match === true)
 							$field_value = "-";
 						echo $field_value;
 					}
-					echo "</td>";					
+					echo "</td>";
 				}
 			}
 			if($report_config->useSpecimenName == 1)
@@ -536,9 +537,9 @@ if($no_match === true)
 					else
 					{
 						$field_value = $custom_data->getFieldValueString($lab_config->id, 1);
-						if($field_value == "" or $field_value == null) 
+						if($field_value == "" or $field_value == null)
 							$field_value = "-";
-						echo $field_value; 
+						echo $field_value;
 					}
 					echo "</td>";
 				}
@@ -574,7 +575,7 @@ if($no_match === true)
 				}
 				else
 				{
-				
+
 					echo $test->decodeResult();
 				}
 				echo "</td>";
@@ -596,7 +597,7 @@ if($no_match === true)
 		<?php
 			$unit=$measure->unit;
 			if(stripos($unit,",")!=false)
-		{	
+		{
 			$units=explode(",",$unit);
 			$lower_parts=explode(".",$lower);
 			$upper_parts=explode(".",$upper);
@@ -626,28 +627,28 @@ if($no_match === true)
 		else if(stripos($unit,":")!=false)
 		{
 		$units=explode(":",$unit);
-			
+
 		echo $lower;
-		?><sup><?php echo $units[0]; ?></sup> - 
+		?><sup><?php echo $units[0]; ?></sup> -
 		<?php echo $upper;?> <sup> <?php echo $units[0]; ?> </sup>
 		<?php
 		echo " ".$units[1];
 		}
-		
+
 		else
-		{			
-			echo $lower; ?>-<?php echo $upper; 
+		{
+			echo $lower; ?>-<?php echo $upper;
 			echo " ".$measure->unit;
 		}
-		?>)&nbsp;&nbsp;	
-			
+		?>)&nbsp;&nbsp;
+
 			<?php
 		//echo " ".$measure->unit;
 	//	echo "<br>";
-		
-		
-		
-							
+
+
+
+
 						}
 						//echo $measure->getRangeString($patient);
 						else
@@ -693,7 +694,7 @@ if($no_match === true)
 	?>
 	</tbody>
 	</table>
-		<?php echo LangUtil::$pageTerms['TOTAL_TESTS']; ?>: <?php echo $total_tests; ?> 
+		<?php echo LangUtil::$pageTerms['TOTAL_TESTS']; ?>: <?php echo $total_tests; ?>
 
 
 	<br>

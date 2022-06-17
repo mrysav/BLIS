@@ -5,6 +5,7 @@
 include("redirect.php");
 include("includes/header.php");
 include("includes/stats_lib.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("stocks");
 $script_elems->enableFlotBasic();
 $script_elems->enableFlipV();
@@ -13,7 +14,7 @@ $script_elems->enableLatencyRecord();
 ?>
 
 <br>
-<b>Inventory Report</b> 
+<b>Inventory Report</b>
 | <a href='reports.php'>&laquo; Back To Reports</a>
 <br><br>
 

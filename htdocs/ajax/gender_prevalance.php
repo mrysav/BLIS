@@ -7,6 +7,7 @@ include("../includes/SessionCheck.php");
 include("../includes/db_lib.php");
 include("../includes/stats_lib.php");
 include("../includes/page_elems.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("reports");
 
 $page_elems = new PageElems();
@@ -32,10 +33,10 @@ $legend_id = "legend_".$test_type_id;
 ?>
 
 
-<script id="source" language="javascript" type="text/javascript"> 
+<script id="source" language="javascript" type="text/javascript">
 $(function () {
 <?php
-		
+
 		$countM = 0;
 		echo "var dM = [];";
 		$countF = 0;
@@ -48,12 +49,12 @@ $(function () {
 			$infection_rate = 0;
 			if($count_all != 0)
 				$infection_rate = round((($count_all-$count_negative)/$count_all)*100, 2);
-			
+
 			echo "dM.push([$x_val*1000, $infection_rate]);";
 			$countM++;
 			//$x_val += 2;
 		}
-		
+
 		foreach($stat_listF as $key=>$value)
 		{
 				$x_val=$value[2];//check if the test id is returnr as  value or else x_value  key but shld be date
@@ -62,12 +63,12 @@ $(function () {
 			$infection_rate = 0;
 			if($count_all != 0)
 				$infection_rate = round((($count_all-$count_negative)/$count_all)*100, 2);
-			
+
 			echo "dF.push([$x_val*1000, $infection_rate]);";
 			$countF++;
 			//$x_val += 2;
 		}
-	
+
 	?>
 	});
  </script>
@@ -75,7 +76,7 @@ $(function () {
 		if($countM==0)
 		{
 		echo("No data for MALE \n");
-		
+
 		}
 		if($countF==0)
 		{?><br><?php
@@ -83,7 +84,7 @@ $(function () {
 		}
 		if($countM!=0||$countF!=0)
 		{ ?>
-	
+
 <table>
 	<tbody>
 	<tr valign='top'>
@@ -92,15 +93,15 @@ $(function () {
 		</td>
 		<td>
 			<div id="<?php echo $div_id; ?>" style="width:800px;height:300px;"></div>
-		</td>	
+		</td>
 		<td>
 			<div id="<?php echo $legend_id; ?>" style="width:200px;height:300px;"></div>
 		</td>
 	</tr>
 	</tbody>
 </table>
-	<script id="source" language="javascript" type="text/javascript"> 
-	
+	<script id="source" language="javascript" type="text/javascript">
+
 	 $(function (){
 	 <?php
 		echo "var dM = [];";
@@ -113,11 +114,11 @@ $(function () {
 			$infection_rate = 0;
 			if($count_all != 0)
 				$infection_rate = round((($count_all-$count_negative)/$count_all)*100, 2);
-			
+
 			echo "dM.push([$x_val*1000, $infection_rate]);";
 			//$x_val += 2;
 		}
-		
+
 		foreach($stat_listF as $key=>$value)
 		{
 			$x_val=$value[2];//check if the test id is returnr as  value or else x_value  key but shld be date
@@ -126,21 +127,21 @@ $(function () {
 			$infection_rate = 0;
 			if($count_all != 0)
 				$infection_rate = round((($count_all-$count_negative)/$count_all)*100, 2);
-			
+
 			echo "dF.push([$x_val*1000, $infection_rate]);";
 			//$x_val += 2;
 		}
-		
+
 	?>
-		
+
 $.plot($("#<?php echo $div_id; ?>"), [
 		{
 			data: dM,
-			<?php 
-			if($countM==1) 
+			<?php
+			if($countM==1)
 			{
 			?>
-				points: { show: true, radius:5 }, 
+				points: { show: true, radius:5 },
 			<?php
 			}
 			else
@@ -155,11 +156,11 @@ $.plot($("#<?php echo $div_id; ?>"), [
 		},
 		{
 			data: dF,
-			<?php 
-			if($countF==1) 
+			<?php
+			if($countF==1)
 			{
 			?>
-				points: { show: true, radius:5 }, 
+				points: { show: true, radius:5 },
 			<?php
 			}
 			else
@@ -173,13 +174,13 @@ $.plot($("#<?php echo $div_id; ?>"), [
 			//label: "<?php echo LangUtil::$pageTerms['MENU_INFECTIONSUMMARY']; ?>"
 		}
 		],
-		{ 
+		{
 			xaxis: {
 				mode: "time",
-				<?php 
+				<?php
 				if($type=='d')
 				{?>
-				
+
 				ticks: 10,
 				minTickSize: [1, "day"],
 				timeformat: "%y-%m-%d"//,
@@ -196,23 +197,23 @@ $.plot($("#<?php echo $div_id; ?>"), [
 				ticks: 10,
 				minTickSize: [1, "month"],
 				timeformat: "%y-%m-%d"//,
-			<?php	
+			<?php
 			}
 
-			?>	
+			?>
 			//min: (new Date("<?php echo $date_from_js; ?>")).getTime()//,
             //max: (new Date("<?php echo $date_to_js; ?>")).getTime()
             },
 			legend: {
 				container: "#<?php echo $legend_id; ?>"
 			}
-		} 
+		}
 	);
 	$('#<?php echo $ylabel_id; ?>').flipv_up();
-		
+
 });
 <?php
 	}
-	
+
 	?>
 </script>

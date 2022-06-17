@@ -7,6 +7,7 @@ include("redirect.php");
 include("includes/db_lib.php");
 include("includes/stats_lib.php");
 include("includes/script_elems.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("reports");
 
 $script_elems = new ScriptElems();
@@ -98,7 +99,7 @@ $user_obj = get_user_by_id($user_id);
 		</tr>
                 <tr>
 			<td><?php echo "Designation"; ?>:</td>
-			<td><?php  
+			<td><?php
                         if ($user_obj->level == 0 || $user_obj->level == 1 || $user_obj->level == 13)
                             echo "Technician";
                         else if ($user_obj->level == 2)
@@ -116,7 +117,7 @@ $user_obj = get_user_by_id($user_id);
 				echo DateLib::mysqlToString($date_from);
 			}
 			else
-			{	
+			{
 				echo DateLib::mysqlToString($date_from)." to ".DateLib::mysqlToString($date_to);
 			}
 			?>
@@ -139,18 +140,18 @@ $user_obj = get_user_by_id($user_id);
 			?>
 			</td>
 		</tr>
-		
+
 	</tbody>
 </table>
 <?php
 $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
 ?>
 <br>
-<?php if($log_type == 1) { ?> 
+<?php if($log_type == 1) { ?>
 <table style='border-collapse: collapse;' id='testsdone_table'>
 	<thead>
 		<tr>
-                    <th><?php 
+                    <th><?php
                         $count = 0;
                         echo "S.No.";
                     ?></th>
@@ -170,24 +171,24 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
             ?>
             <tr>
                     <td>
-                        <?php 
+                        <?php
                             $count++;
-                            echo $count; 
+                            echo $count;
                         ?>
                     </td>
-                    
+
                     <td>
-                        <?php 
+                        <?php
                             if($entry->name != '')
-                                echo $entry->name; 
+                                echo $entry->name;
                             else
                                 echo '-';
                         ?>
                     </td>
                     <td>
-                        <?php 
+                        <?php
                             if($entry->surrogateId != '')
-                                echo $entry->surrogateId; 
+                                echo $entry->surrogateId;
                             else
                                 echo '-';
                         ?>
@@ -202,31 +203,31 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
                         ?>
                     </td>
                     <td>
-                        <?php 
+                        <?php
                             if($entry->sex != '')
-                                echo $entry->sex; 
+                                echo $entry->sex;
                             else
                                 echo '-';
                         ?>
                     </td>
                     <td>
-                        <?php 
+                        <?php
                             $entr = $entry->getAge();
                             if($entr != '')
-                                echo $entr; 
+                                echo $entr;
                             else
                                 echo '-';
                         ?>
                     </td>
                     <td>
-                        <?php 
+                        <?php
                            if($entry->regDate != '')
                                echo $entry->regDate;
                             else
                                 echo '-';
                         ?>
                     </td>
-                   
+
             </tr>
         <?php
         }
@@ -235,11 +236,11 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
 </table>
 <?php } ?>
 
-<?php if($log_type == 2) { ?> 
+<?php if($log_type == 2) { ?>
 <table style='border-collapse: collapse;' id='testsdone_table'>
 	<thead>
 		<tr>
-                    <th><?php 
+                    <th><?php
                         $count = 0;
                         echo "S.No.";
                     ?></th>
@@ -258,25 +259,25 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
             ?>
             <tr>
                     <td>
-                        <?php 
+                        <?php
                             $count++;
-                            echo $count; 
+                            echo $count;
                         ?>
                     </td>
-                    
+
                     <td>
-                        <?php 
+                        <?php
                             $tname = $entry->getTypeName();
                             if($tname != '')
-                                echo $tname; 
+                                echo $tname;
                             else
                                 echo '-';
                         ?>
                     </td>
                     <td>
-                        <?php 
+                        <?php
                             if($entry->specimenId != '')
-                               echo $entry->specimenId; 
+                               echo $entry->specimenId;
                             else
                                 echo '-';
                         ?>
@@ -291,28 +292,28 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
                                 echo '-';
                         ?>
                     </td>
-                 
+
                     <td>
-                        <?php 
+                        <?php
                             $entr = $entry->patientId;
                             if($entr != '')
-                                echo $entr; 
+                                echo $entr;
                             else
                                 echo '-';
                         ?>
                     </td>
-                    
+
                     <td>
-                        <?php 
+                        <?php
                             $entr = $entry->dateCollected;
                             if($entr != '')
-                                echo $entr; 
+                                echo $entr;
                             else
                                 echo '-';
                         ?>
                     </td>
-                    
-                   
+
+
             </tr>
         <?php
         }
@@ -322,11 +323,11 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
 <?php } ?>
 
 
-<?php if($log_type == 3) { ?> 
+<?php if($log_type == 3) { ?>
 <table style='border-collapse: collapse;' id='testsdone_table'>
 	<thead>
 		<tr>
-                    <th><?php 
+                    <th><?php
                         $count = 0;
                         echo "S.No.";
                     ?></th>
@@ -346,25 +347,25 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
             ?>
             <tr>
                     <td>
-                        <?php 
+                        <?php
                             $count++;
-                            echo $count; 
+                            echo $count;
                         ?>
                     </td>
-                    
+
                     <td>
-                        <?php 
+                        <?php
                             $tname = get_test_name_by_id($entry->testTypeId);
                             if($tname != '')
-                                echo $tname; 
+                                echo $tname;
                             else
                                 echo '-';
                         ?>
                     </td>
                     <td>
-                        <?php 
+                        <?php
                             if($entry->testId != '')
-                               echo $entry->testId; 
+                               echo $entry->testId;
                             else
                                 echo '-';
                         ?>
@@ -380,7 +381,7 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
                         ?>
                     </td>
                     <td>
-                        <?php 
+                        <?php
                             $entr = $entr2[0]->patientId;
                             if($entr != '')
                                echo $entr;
@@ -389,26 +390,26 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
                         ?>
                     </td>
                     <td>
-                        <?php 
+                        <?php
                             $entr = $entry->specimenId;
                             if($entr != '')
-                                echo $entr; 
+                                echo $entr;
                             else
                                 echo '-';
                         ?>
                     </td>
-                    
+
                     <td>
-                        <?php 
+                        <?php
                             $entr = $entry->getTestRegDate();
                             if($entr != '')
-                                echo $entr; 
+                                echo $entr;
                             else
                                 echo '-';
                         ?>
                     </td>
-                    
-                   
+
+
             </tr>
         <?php
         }
@@ -418,11 +419,11 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
 <?php } ?>
 
 
-<?php if($log_type == 4) { ?> 
+<?php if($log_type == 4) { ?>
 <table style='border-collapse: collapse;' id='testsdone_table'>
 	<thead>
 		<tr>
-                    <th><?php 
+                    <th><?php
                         $count = 0;
                         echo "S.No.";
                     ?></th>
@@ -442,25 +443,25 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
             ?>
             <tr>
                     <td>
-                        <?php 
+                        <?php
                             $count++;
-                            echo $count; 
+                            echo $count;
                         ?>
                     </td>
-                    
+
                     <td>
-                        <?php 
+                        <?php
                             $tname = get_test_name_by_id($entry->testTypeId);
                             if($tname != '')
-                                echo $tname; 
+                                echo $tname;
                             else
                                 echo '-';
                         ?>
                     </td>
                     <td>
-                        <?php 
+                        <?php
                             if($entry->testId != '')
-                               echo $entry->testId; 
+                               echo $entry->testId;
                             else
                                 echo '-';
                         ?>
@@ -476,7 +477,7 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
                         ?>
                     </td>
                     <td>
-                        <?php 
+                        <?php
                             $entr = $entr2[0]->patientId;
                             if($entr != '')
                                echo $entr;
@@ -485,26 +486,26 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
                         ?>
                     </td>
                     <td>
-                        <?php 
+                        <?php
                             $entr = $entry->specimenId;
                             if($entr != '')
-                                echo $entr; 
+                                echo $entr;
                             else
                                 echo '-';
                         ?>
                     </td>
-                    
+
                     <td>
-                        <?php 
+                        <?php
                             $entr = $entry->timestamp;
                             if($entr != '')
-                                echo $entr; 
+                                echo $entr;
                             else
                                 echo '-';
                         ?>
                     </td>
-                    
-                   
+
+
             </tr>
         <?php
         }
@@ -513,12 +514,12 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
 </table>
 <?php } ?>
 
-<?php if($log_type == 5) { ?> 
+<?php if($log_type == 5) { ?>
 <b>Inventory In-Flow</b>
 <table style='border-collapse: collapse;' id='testsdone_table'>
 	<thead>
 		<tr>
-                    <th><?php 
+                    <th><?php
                         $count = 0;
                         echo "S.No.";
                     ?></th>
@@ -542,32 +543,32 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
             ?>
             <tr>
                     <td>
-                        <?php 
+                        <?php
                             $count++;
-                            echo $count; 
+                            echo $count;
                         ?>
                     </td>
-                    
+
                     <td>
-                        <?php 
+                        <?php
                             $dat = Inventory::getReagentById($lab_config_id, $entry['reagent_id']);
                             if($dat[name] != '')
-                                echo $dat[name]; 
-                            else
-                                echo '-';
-                        ?>
-                    </td>
-                    <td>
-                        <?php 
-                            if($entry[lot] != '')
-                                echo $entry[lot]; 
+                                echo $dat[name];
                             else
                                 echo '-';
                         ?>
                     </td>
                     <td>
                         <?php
-                            
+                            if($entry[lot] != '')
+                                echo $entry[lot];
+                            else
+                                echo '-';
+                        ?>
+                    </td>
+                    <td>
+                        <?php
+
                             if($entry[expiry_date] != '')
                                echo $entry[expiry_date];
                             else
@@ -575,32 +576,32 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
                         ?>
                     </td>
                     <td>
-                        <?php 
+                        <?php
                             if($entry[manufacturer] != '')
-                                echo $entry[manufacturer]; 
+                                echo $entry[manufacturer];
                             else
                                 echo '-';
                         ?>
                     </td>
                     <td>
-                        <?php 
+                        <?php
                             if($entry[supplier] != '')
-                                echo $entry[supplier]; 
+                                echo $entry[supplier];
                             else
                                 echo '-';
                         ?>
                     </td>
                     <td>
-                        <?php 
-                            
+                        <?php
+
                             if($entry[quantity_supplied] != '')
-                                echo $entry[quantity_supplied]; 
+                                echo $entry[quantity_supplied];
                             else
                                 echo '-';
                         ?>
                     </td>
                     <td>
-                        <?php 
+                        <?php
                            if($entry[cost_per_unit] != '')
                                echo $entry[cost_per_unit];
                             else
@@ -608,7 +609,7 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
                         ?>
                     </td>
                     <td>
-                        <?php 
+                        <?php
                            if($entry[date_of_reception] != '')
                                echo $entry[date_of_reception];
                             else
@@ -616,7 +617,7 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
                         ?>
                     </td>
                     <td>
-                        <?php 
+                        <?php
                            if($entry[remarks] != '')
                                echo $entry[remarks];
                             else
@@ -624,14 +625,14 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
                         ?>
                     </td>
                     <td>
-                        <?php 
+                        <?php
                            if($entry[ts] != '')
                                echo $entry[ts];
                             else
                                 echo '-';
                         ?>
                     </td>
-                   
+
             </tr>
         <?php
         }
@@ -643,7 +644,7 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
 <table style='border-collapse: collapse;' id='testsdone_table'>
 	<thead>
 		<tr>
-                    <th><?php 
+                    <th><?php
                         $count = 0;
                         echo "S.No.";
                     ?></th>
@@ -663,40 +664,40 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
             ?>
             <tr>
                     <td>
-                        <?php 
+                        <?php
                             $count++;
-                            echo $count; 
+                            echo $count;
                         ?>
                     </td>
-                    
+
                     <td>
-                        <?php 
+                        <?php
                             $dat = Inventory::getReagentById($lab_config_id, $entry['reagent_id']);
                             if($dat[name] != '')
-                                echo $dat[name]; 
+                                echo $dat[name];
                             else
                                 echo '-';
                         ?>
                     </td>
                     <td>
-                        <?php 
+                        <?php
                             if($entry[lot] != '')
-                                echo $entry[lot]; 
+                                echo $entry[lot];
                             else
                                 echo '-';
                         ?>
                     </td>
                     <td>
-                        <?php 
-                            
+                        <?php
+
                             if($entry[quantity_used] != '')
-                                echo $entry[quantity_used]; 
+                                echo $entry[quantity_used];
                             else
                                 echo '-';
                         ?>
                     </td>
                     <td>
-                        <?php 
+                        <?php
                            if($entry[date_of_use] != '' && $entry[date_of_use] != '0000-00-00')
                                echo $entry[date_of_use];
                             else
@@ -704,7 +705,7 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
                         ?>
                     </td>
                     <td>
-                        <?php 
+                        <?php
                            if($entry[remarks] != '')
                                echo $entry[remarks];
                             else
@@ -712,14 +713,14 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
                         ?>
                     </td>
                     <td>
-                        <?php 
+                        <?php
                            if($entry[ts] != '')
                                echo $entry[ts];
                             else
                                 echo '-';
                         ?>
                     </td>
-                   
+
             </tr>
         <?php
         }

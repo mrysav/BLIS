@@ -5,6 +5,7 @@
 include("redirect.php");
 include("includes/header.php");
 include("includes/stats_lib.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("reports");
 
 $script_elems->enableFlotBasic();
@@ -99,7 +100,7 @@ if($lab_config == null)
 }
  $site_list = get_site_list($_SESSION['user_id']);
 			if(count($site_list) != 1)
-			{ echo LangUtil::$generalTerms['FACILITY'] ?>: <?php echo $lab_config->getSiteName(); ?> | 
+			{ echo LangUtil::$generalTerms['FACILITY'] ?>: <?php echo $lab_config->getSiteName(); ?> |
 <?php
 }
 
@@ -108,7 +109,7 @@ if($date_from == $date_to)
 	echo LangUtil::$generalTerms['DATE'].": ".DateLib::mysqlToString($date_from);
 }
 else
-{	
+{
 	echo LangUtil::$generalTerms['FROM_DATE'].": ".DateLib::mysqlToString($date_from);
 	echo " | ";
 	echo LangUtil::$generalTerms['TO_DATE'].": ".DateLib::mysqlToString($date_to);
@@ -149,7 +150,7 @@ foreach($stat_chunks as $stat_chunk)
 	</tr>
 	</tbody>
 	</table>
-	<script id="source" language="javascript" type="text/javascript"> 
+	<script id="source" language="javascript" type="text/javascript">
 	$(function () {
 		<?php
 		$x_val = 0;
@@ -193,7 +194,7 @@ foreach($stat_chunks as $stat_chunk)
 		], { xaxis: {ticks: <?php echo $tick_array; ?>}, legend: {container: "#<?php echo $legend_id; ?>"}  });
 		$('#<?php echo $ylabel_id; ?>').flipv_up();
 	});
-	</script>	
+	</script>
 	<?php
 	# End of loop
 	$i++;

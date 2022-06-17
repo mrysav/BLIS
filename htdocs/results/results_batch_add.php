@@ -4,6 +4,7 @@
 #
 include("redirect.php");
 include("includes/header.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("results_entry");
 
 $script_elems->enableTableSorter();
@@ -22,9 +23,9 @@ $comments_list = $_REQUEST['comments'];
 
 if($DEBUG)
 {
-	
+
 	echo $measure_list[0][0];
-	
+
 	echo $test_type_id;
 	echo $num_measures;
 	print_r($specimen_id_list);
@@ -59,7 +60,7 @@ for($i = 0; $i < count($specimen_id_list); $i++) {
 		continue;
 	}
 	$result_values = array();
-	
+
 	for($x = 0; $x < $num_measures; $x++) {
 		$k = 0;
 		$field_name = "measure_".$specimen_id."_".($x+1);
@@ -69,13 +70,13 @@ for($i = 0; $i < count($specimen_id_list); $i++) {
 		$measure_list[$x][$k-1] = substr( $measure_list[$x][$k-1], 0, strlen($measure_list[$x][$k-1]) -1 );
 		$measure_list[$x][$k-1] .= ",";
 	}
-	
+
 	for($j = 0; $j < $num_measures; $j++) {
 		$k = 0;
 		if( (trim($measure_list[$j][$k]) == "") && ($k == 0) )
 			$empty_result_field = true;
 		else {
-			while( ( trim($measure_list[$j][$k]) ) != "" ) 
+			while( ( trim($measure_list[$j][$k]) ) != "" )
 				$result_values[] .= $measure_list[$j][$k++];
 		}
 	}
@@ -84,11 +85,11 @@ for($i = 0; $i < count($specimen_id_list); $i++) {
 	//$result_csv = implode(",", $result_values).",";
 	$result_csv = "";
 
-	foreach( $result_values as $result_value) 
+	foreach( $result_values as $result_value)
 		$result_csv .= $result_value;
 	unset($result_values);
 	$result_csv = preg_replace("/[^a-zA-Z0-9,.;:_\s]/", "", $result_csv);
-	
+
 	$comments = $comments_list[$i];
 	$comments = preg_replace("/[^a-zA-z0-9,.;:_\s]/", "", $comments);
 	# Fetch entry in 'test' table
@@ -100,12 +101,12 @@ for($i = 0; $i < count($specimen_id_list); $i++) {
 	else if($test->isPending() == false)
 	{
 		# Error: Results already entered
-		$status_list[] = "<font color='red'>".LangUtil::$generalTerms['ERROR']."</font>: ".LangUtil::$pageTerms['MSG_ALREADYENTERED'];		
+		$status_list[] = "<font color='red'>".LangUtil::$generalTerms['ERROR']."</font>: ".LangUtil::$pageTerms['MSG_ALREADYENTERED'];
 	}
 	else if($empty_result_field == true)
 	{
 		# Error: Result value missing
-		$status_list[] = "<font color='red'>".LangUtil::$generalTerms['ERROR']."</font>: ".LangUtil::$pageTerms['MSG_RESULTMISSING'];		
+		$status_list[] = "<font color='red'>".LangUtil::$generalTerms['ERROR']."</font>: ".LangUtil::$pageTerms['MSG_RESULTMISSING'];
 	}
 	else
 	{
@@ -156,7 +157,7 @@ function fetch_specimen3(specimen_id, test_id)
 			}
 			?>
 			<th><?php echo LangUtil::$generalTerms['PATIENT']; ?></th>
-			<th><?php echo LangUtil::$generalTerms['SP_STATUS']; ?></th>			
+			<th><?php echo LangUtil::$generalTerms['SP_STATUS']; ?></th>
 			<th></th>
 			<th></th>
 		</tr>
@@ -188,8 +189,8 @@ function fetch_specimen3(specimen_id, test_id)
 			if($_SESSION['s_addl'] != 0)
 			{
 				?>
-				<td>	
-					<?php $specimen->getAuxId(); ?>	
+				<td>
+					<?php $specimen->getAuxId(); ?>
 				</td>
 				<?php
 			}

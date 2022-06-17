@@ -2,6 +2,7 @@
 include("redirect.php");
 //include("includes/header.php");
 include("barcode_lib.php");
+require_once(__DIR__."/../lang/lang_util.php");
 
 $code_type = "code39";
 $bar_width = 2;
@@ -25,15 +26,15 @@ putUILog('print_barcode', $uiinfo, basename($_SERVER['REQUEST_URI'], ".php"), 'X
 	});
 function getBarcode(code)
 {
-    
+
     if(code == '')
         {
              alert('cannot be empty');
                 return;
         }
-    var count = parseInt($('#count').html()); 
+    var count = parseInt($('#count').html());
     count = count + 1;
-    $('#count').html(count);  
+    $('#count').html(count);
     var div = "bar"+count;
     generateBarcode(div, code);
 }
@@ -54,7 +55,7 @@ function generateBarcode(div, code)
         Popup($(elem).html());
     }
 
-    function Popup(data) 
+    function Popup(data)
     {
         var mywindow = window.open('', 'my div', 'height=400,width=600');
         mywindow.document.write('<html><head><title>Barcodes</title>');
@@ -83,7 +84,7 @@ function hide_div(div)
 <div id="count" style="display: none;">0</div>
 
 Code: <input type="text" id="code" name="code"></input>
-<input type="button" onclick='getBarcode();' value="Generate">  
+<input type="button" onclick='getBarcode();' value="Generate">
 <input type="button" value="Print" onclick="PrintElem('#barcodeList')" />
 <input type='button' onclick="javascript:export_as_word('barcodeList');" value='<?php echo LangUtil::$generalTerms['CMD_EXPORTWORD']; ?>'></input>
 <input type='button' onclick="javascript:export_as_pdf2('barcodeList');" value='<?php echo LangUtil::$generalTerms['CMD_EXPORTPDF']; ?>'></input>

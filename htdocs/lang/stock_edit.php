@@ -5,8 +5,8 @@
 #
 
 include("../users/accesslist.php");
-if( !(isAdmin(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $adminPageList)) 
-     && !(isCountryDir(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $countryDirPageList)) 
+if( !(isAdmin(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $adminPageList))
+     && !(isCountryDir(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $countryDirPageList))
 	 && !(isSuperAdmin(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $superAdminPageList)) ) {
 		header( 'Location: home.php' );
 }
@@ -15,6 +15,7 @@ include("redirect.php");
 include("includes/header.php");
 include("lang/lang_xml2php.php");
 include("includes/stats_lib.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("stocks");
 
 $script_elems->enableTableSorter();
@@ -69,7 +70,7 @@ $('#new_test_form2').submit();
 	</thead>
 	<tbody>
 <?php
-	foreach($retval as $record_set){ 
+	foreach($retval as $record_set){
 ?>
 		<tr align='center'>
 		<?php $value = $record_set;?>
@@ -84,7 +85,7 @@ $('#new_test_form2').submit();
 			<td><a href="javascript:void(0)" onclick="stock_edit(<?php echo $value[7]; ?>)"><?php echo LangUtil::$pageTerms['Edit']; ?></a></td>
 		</tr>
 <?php
-	} 
+	}
 ?>
 	</tbody>
 </table>

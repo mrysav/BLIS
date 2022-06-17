@@ -5,6 +5,7 @@
 include("redirect.php");
 include("includes/header.php");
 include("includes/stats_lib.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("reports");
 
 $script_elems->enableFlotBasic();
@@ -27,12 +28,12 @@ if($_REQUEST['pending'] == 'Y') {
 <script type='text/javascript'>
 $(document).ready(function(){
 
-	<?php 
+	<?php
 	if($include_pending == 'Y') { ?>
 		$('#pending_chk').attr('checked', true);
 	<?php } ?>
 		$('#ttype').val(<?php echo json_encode($ttype);?>);
-	
+
 	view_tat(<?php echo json_encode($tat_type); ?>);
 });
 
@@ -88,7 +89,7 @@ function view_testwise_weekly()
 	var date_from = $('#yf').attr("value")+"-"+$('#mf').attr("value")+"-"+$('#df').attr("value");
 	var date_to = $('#yt').attr("value")+"-"+$('#mt').attr("value")+"-"+$('#dt').attr("value");
 	var include_pending = 0;
-	
+
 	/* Get Selected Lab Values */
 	var myTR=document.getElementById('locationAggregation');
 	var inputArray=myTR.getElementsByTagName('input');
@@ -165,7 +166,7 @@ function view_tat(tat_type) {
 	else if(tat_type == 'w')
 		view_testwise_weekly();
 	else if(tat_type == 'd')
-		view_testwise_daily();		
+		view_testwise_daily();
 }
 
 function changeAvailableLocations(dropdown) {
@@ -188,27 +189,27 @@ function changeAvailableLocations(dropdown) {
 </style>
 <br>
 <b><?php echo LangUtil::$pageTerms['MENU_TAT']; ?></b><br>
-<?php 
+<?php
 /*
 $lab_config = get_lab_config_by_id($lab_config_id); ?><br>
 <a href='reports.php?show_t'>&laquo; <?php echo LangUtil::$pageTerms['MSG_BACKTOREPORTS']; ?></a>
 <br><br>
-<?php 
+<?php
 	if($lab_config == null) { ?>
 	<div class='sidetip_nopos'>
 		<?php echo LangUtil::$generalTerms['MSG_NOTFOUND']; ?> <a href='javascript:history.go(-1);'>&laquo; <?php echo LangUtil::$generalTerms['CMD_BACK']; ?></a>
 	</div>
-	<?php return; } 
-*/ 
+	<?php return; }
+*/
 ?>
 <a href='reports.php?show_t_agg'>&laquo; <?php echo LangUtil::$pageTerms['MSG_BACKTOREPORTS']; ?></a>
 <table>
 <tbody>
 <tr>
 <td>
-<?php echo LangUtil::$generalTerms['FROM_DATE']; ?> 
+<?php echo LangUtil::$generalTerms['FROM_DATE']; ?>
 <td>
-<?php 
+<?php
 $name_list = array("yf", "mf", "df");
 $id_list = $name_list;
 $df_parts = explode("-", $date_from);
@@ -220,7 +221,7 @@ $page_elems->getDatePicker($name_list, $id_list, $df_parts, false);
 </tr>
 <tr>
 <td><?php echo LangUtil::$generalTerms['TO_DATE']; ?></td>
-<td><?php 
+<td><?php
 $name_list = array("yt", "mt", "dt");
 $id_list = $name_list;
 $dt_parts = explode("-", $date_to);

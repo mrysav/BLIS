@@ -5,6 +5,7 @@
 #
 include("../includes/SessionCheck.php");
 include("../includes/db_lib.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("search");
 
 $q = $_REQUEST['q'];

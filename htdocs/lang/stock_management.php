@@ -2,12 +2,12 @@
 #
 # (c) C4G, Santosh Vempala, Ruban Monu and Amol Shintre
 # Admin Stock Management Page to add new stock
-# Sneds POST request to stock_details.php 
+# Sneds POST request to stock_details.php
 #
 
 include("../users/accesslist.php");
-if( !(isAdmin(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $adminPageList)) 
-     && !(isCountryDir(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $countryDirPageList)) 
+if( !(isAdmin(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $adminPageList))
+     && !(isCountryDir(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $countryDirPageList))
 	 && !(isSuperAdmin(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $superAdminPageList)) ) {
 		header( 'Location: home.php' );
 }
@@ -15,23 +15,24 @@ if( !(isAdmin(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVE
 include("redirect.php");
 include("includes/header.php");
 include("includes/stats_lib.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("stocks");
 $script_elems->enableTableSorter();
 $script_elems->enableDatePicker();
-?> 
+?>
 <script type='text/javascript'>
 function add_specimenbox(){
 	var num= parseInt(document.getElementById('count').value);
-	
+
 	var new_num=num+1;
 	$('#count').attr("value",new_num);
-	
+
 	var url_string = "ajax/add_stock.php?num="+new_num;
-	$.ajax({ 
-		url: url_string, 
+	$.ajax({
+		url: url_string,
 		success: function(msg){
 			$('#specimenboxes').append(msg);
-			
+
 		}
 	});
 }
@@ -68,7 +69,7 @@ $page_elems->getSideTip("Tips", $tips_string);
 			<table>
 				<tr>
 					<td>
-						&nbsp;<?php echo LangUtil::$pageTerms['Reagent']; ?><?php $page_elems->getAsterisk(); ?> 
+						&nbsp;<?php echo LangUtil::$pageTerms['Reagent']; ?><?php $page_elems->getAsterisk(); ?>
 					</td>
 					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 					<td>
@@ -77,7 +78,7 @@ $page_elems->getSideTip("Tips", $tips_string);
 				</tr>
 				<tr>
 					<td>
-						&nbsp;<?php echo LangUtil::$pageTerms['Lot_Number']; ?><?php $page_elems->getAsterisk(); ?> 
+						&nbsp;<?php echo LangUtil::$pageTerms['Lot_Number']; ?><?php $page_elems->getAsterisk(); ?>
 					</td>
 					<td></td>
 					<td>
@@ -86,8 +87,8 @@ $page_elems->getSideTip("Tips", $tips_string);
 				</tr>
 				<tr>
 					<td>
-						&nbsp;<?php echo LangUtil::$pageTerms['Expiry_Date']; ?><?php $page_elems->getAsterisk(); ?> 
-						
+						&nbsp;<?php echo LangUtil::$pageTerms['Expiry_Date']; ?><?php $page_elems->getAsterisk(); ?>
+
 					</td>
 					<td></td>
 					<td>
@@ -115,7 +116,7 @@ $page_elems->getSideTip("Tips", $tips_string);
 				</tr>
 				<tr>
 					<td>
-						&nbsp;<?php echo LangUtil::$pageTerms['Quantity_Supplied']; ?><?php $page_elems->getAsterisk(); ?> 
+						&nbsp;<?php echo LangUtil::$pageTerms['Quantity_Supplied']; ?><?php $page_elems->getAsterisk(); ?>
 					</td>
 					<td></td>
 					<td>
@@ -124,7 +125,7 @@ $page_elems->getSideTip("Tips", $tips_string);
 				</tr>
 				<tr>
 					<td>
-						&nbsp;<?php echo LangUtil::$pageTerms['Units']; ?><?php $page_elems->getAsterisk(); ?> 
+						&nbsp;<?php echo LangUtil::$pageTerms['Units']; ?><?php $page_elems->getAsterisk(); ?>
 					</td>
 					<td></td>
 					<td>

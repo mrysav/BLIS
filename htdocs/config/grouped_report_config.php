@@ -10,6 +10,7 @@ include("includes/random.php");
 include("includes/stats_lib.php");
 include_once("includes/field_order_update.php");
 
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("grouped_report_config");
 echo "hi";
 
@@ -22,4 +23,4 @@ $script_elems->enableJQueryForm();
 <script src="js/jquery-ui-1.8.16.js" type="text/javascript"></script>
 <link rel="stylesheet" href="css//jquery-ui-1.8.16.css" type="text/css" media="all">
 
- <link rel="stylesheet" href="css/jquery-ui-1.8.16.css" type="text/css" media="all"> 
+ <link rel="stylesheet" href="css/jquery-ui-1.8.16.css" type="text/css" media="all">

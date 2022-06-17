@@ -7,6 +7,7 @@ include("redirect.php");
 include("includes/db_lib.php");
 include("includes/stats_lib.php");
 include("includes/script_elems.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("reports");
 
 include("../users/accesslist.php");
@@ -79,7 +80,7 @@ $byAge = $configArray['group_by_age'];
 $age_group_list = decodeAgeGroups($configArray['age_groups']);
 $byGender = $configArray['group_by_gender'];
 $bySection = $configArray['measure_id'];
-$combo = $configArray['test_type_id']; // 1 - registered, 2 - completed, 3 - completed / pending 
+$combo = $configArray['test_type_id']; // 1 - registered, 2 - completed, 3 - completed / pending
 $combo = 1;
 //$age_group_list = $site_settings->getAgeGroupAsList();
 ?>
@@ -98,14 +99,14 @@ $combo = 1;
 				echo DateLib::mysqlToString($date_from);
 			}
 			else
-			{	
+			{
 				echo DateLib::mysqlToString($date_from)." to ".DateLib::mysqlToString($date_to);
 			}
 			?>
 			</td>
 		</tr>
-		
-		
+
+
 	</tbody>
 </table>
 <?php
@@ -139,14 +140,14 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
 				echo "<th >".LangUtil::$pageTerms['TOTAL_MF']."</th>";
 			}
 			?>
-			
-                        
+
+
                         <?php if($byAge == 1 || $byGender == 1)
                         {
                             echo "<th>".LangUtil::$pageTerms['TOTAL_TESTS']."</th>";
                         }
                         ?>
-                        
+
 		</tr>
 		<tr>
 			<th ></th>
@@ -155,7 +156,7 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
 			{
 				echo "<th ></th>";
 			}
-			
+
 			if($byAge == 1)
 			{
 				foreach($age_group_list as $age_slot)
@@ -176,7 +177,7 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
 			{
 				echo "<th ></th>";
 			}
-                        
+
                         if($byAge == 1 || $byGender == 1)
                             echo "<th ></th>";
 			?>
@@ -198,7 +199,7 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
                         echo "<td>";
                             echo $test_name;
                         echo "</td>";
-                        
+
                         if($byGender == 1)
                         {
                             echo "<td>";
@@ -207,7 +208,7 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
                                 echo "F";
                             echo "</td>";
                         }
-                
+
                     # Group by age set to true: Fetch age slots from DB
                     if($byAge == 1)
                     {
@@ -220,16 +221,16 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
                         $count_female_p_total = 0;
                         foreach($age_slot_list as $age_slot)
                         {
-                            
+
                             $age_from = intval(trim($age_slot[0]));
                             if(trim($age_slot[1]) == "+")
                                 $age_to = 100;
                             else
                                 $age_to = intval(trim($age_slot[1]));
-                            
+
                             if($byGender == 1)
                             {
-                                
+
                                 if($combo == 1)
                                 {
                                     $gender = 'M';
@@ -237,13 +238,13 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
                                     $gender = 'F';
                                     $count_female_t = get_specimen_count_grouped($test_type_id, $date_from, $date_to, $gender, $age_from, $age_to);
                                     $count_male_t_total += $count_male_t;
-                                    $count_female_t_total += $count_female_t;                                    
+                                    $count_female_t_total += $count_female_t;
                                     echo "<td>";
                                     echo $count_male_t;
                                     echo "<br>";
                                     echo $count_female_t;
                                     echo "</td>";
-                                    
+
                                 }
                                 else if ($combo == 2)
                                 {
@@ -269,19 +270,19 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
                                     $count_female_c = get_specimen_count_grouped($test_type_id, $date_from, $date_to, $gender, $age_from, $age_to, 1);
                                     $count_male_p = $count_male_t - $count_male_c;
                                     $count_female_p = $count_female_t - $count_female_c;
-                                    
+
                                     $count_male_c_total += $count_male_c;
                                     $count_female_c_total += $count_female_c;
                                     $count_male_p_total += $count_male_p;
                                     $count_female_p_total += $count_female_p;
-                                    
+
                                     echo "<td>";
                                     echo $count_male_c." / ".$count_male_p;
                                     echo "<br>";
                                     echo $count_female_c." / ".$count_female_p;
                                     echo "</td>";
                                 }
-                                    
+
                             }
                             else
                             {
@@ -412,7 +413,7 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
                                     $count_male_c = get_specimen_count_grouped2($test_type_id, $date_from, $date_to, $gender, 1);
                                     $gender = 'F';
                                     $count_female_c = get_specimen_count_grouped2($test_type_id, $date_from, $date_to, $gender, 1);
-                                    
+
                                     echo "<td>";
                                     echo $count_male_c;
                                     echo "<br>";
@@ -441,7 +442,7 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
                                     echo ($count_male_c + $count_female_c)." / ".($count_male_p + $count_female_p);
                                     echo "</td>";
                                 }
-                                    
+
                             }
                             else
                             {
@@ -482,10 +483,10 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
                             }
                     }
                     echo "</tr>";
-                } 
+                }
         ?>
  <!-- ********************************************************************** -->
-	
+
 	</tbody>
 </table>
 <br><br><br>

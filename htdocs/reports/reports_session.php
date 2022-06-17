@@ -5,12 +5,13 @@
 include("redirect.php");
 include("includes/db_lib.php");
 include("includes/script_elems.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("reports");
 
 # Helper function to fetch test record
 function get_test_record($specimen_id, $test_type_id)
 {
-	$query_string = 
+	$query_string =
 		"SELECT * FROM test ".
 		"WHERE specimen_id=$specimen_id AND test_type_id=$test_type_id ";
 	$record = query_associative_one($query_string);
@@ -47,7 +48,7 @@ function list_results($test_entry, $not_bold_measure_name)
 			<td></td>
 			<td></td>
 			<td>
-			<?php 
+			<?php
 			if($print_range_label)
 				echo LangUtil::$pageTerms['RANGE_NORMAL'];
 			?>
@@ -150,7 +151,7 @@ $lab_config = get_lab_config_by_id($lab_config_id);
 </style>
 <h2><?php echo $lab_config->getSiteName(); ?></h2>
 <h3>
-<?php 
+<?php
 $from_redirect = false;
 $session_num = 0;
 $specimen_list = array();
@@ -192,7 +193,7 @@ else
 ?>
 </h3>
 <?php echo LangUtil::$generalTerms['DATE']; ?>: <?php echo date('Y-m-d H:i'); ?>
-<?php 
+<?php
 if($from_redirect === false)
 {
 	echo LangUtil::$generalTerms['ACCESSION_NUM']." : ".$session_num;
@@ -248,7 +249,7 @@ foreach($specimen_list as $specimen)
 	}
 	?>
 	<br><br>
-	<?php 
+	<?php
 	$test_list = get_tests_by_specimen_id($specimen_id);
 	foreach($test_list as $test_entry)
 	{
@@ -264,7 +265,7 @@ foreach($specimen_list as $specimen)
 		{
 			echo "<b>$test_name</b>";
 			echo "<br>";
-		}		
+		}
 		if($test_entry == null)
 		{
 			echo "ERROR: Test type $test_name was not registered for Sample ID $specimen_id<br>";

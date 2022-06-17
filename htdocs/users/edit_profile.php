@@ -4,7 +4,8 @@
 #
 
 include("redirect.php");
-include("includes/header.php"); 
+include("includes/header.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("edit_profile");
 
 $pwd_tip = LangUtil::getPageTerm("TIPS_CASEPWD");

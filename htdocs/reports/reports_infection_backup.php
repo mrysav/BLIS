@@ -5,6 +5,7 @@
 include("redirect.php");
 include("includes/header.php");
 include("includes/stats_lib.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("reports");
 
 $script_elems->enableFlotBasic();
@@ -15,7 +16,7 @@ $script_elems->enableLatencyRecord();
 <script type='text/javascript'>
 $(window).load(function(){
 	$('#stat_graph').hide();
-	
+
 });
 function toggle_stat_table()
 {
@@ -34,17 +35,17 @@ function view_prevalance()
 {
 
 	var tat_type = $('#tattype').attr("value");
-	
-	
+
+
 	if(tat_type == 'm')
 	view_testwise_monthly();
-	
+
 else if(tat_type == 'w')
 	view_testwise_weekly();
 
 	else if(tat_type == 'd')
-		view_testwise_daily();	
-	
+		view_testwise_daily();
+
 
 }
 function view_testwise_monthly()
@@ -53,7 +54,7 @@ function view_testwise_monthly()
 	var date_to = $('#yt').attr("value")+"-"+$('#mt').attr("value")+"-"+$('#dt').attr("value");
 	if(checkDate($('#yf').attr("value"), $('#mf').attr("value"), $('#df').attr("value")) == false)
 	{
-	
+
 		alert("<?php echo LangUtil::$generalTerms['TIPS_DATEINVALID']; ?>");
 		return;
 	}
@@ -62,9 +63,9 @@ function view_testwise_monthly()
 		alert("<?php echo LangUtil::$generalTerms['TIPS_DATEINVALID']; ?>");
 		return;
 	}
-	
+
 	$('#progress_spinner').show();
-	
+
 	var ttype = $('#ttype').attr("value");
 	var age_s=$('#age_s').attr("value");
 	var age_e=$('#age_e').attr("value");
@@ -75,19 +76,19 @@ function view_testwise_monthly()
 	//var url_string = "ajax/monthly_prevalance.php?tt="+ttype+"&df="+date_from+"&dt="+date_to+"&l=<?php echo $lab_config_id; ?>";
 	$('#prevalance_graph').load(url_string, function() {
 		$('#prevalance_graph').show();
-		
+
 		$('#progress_spinner').hide();
 	});
 }
 function view_testwise_weekly()
 {
 	var date_from = $('#yf').attr("value")+"-"+$('#mf').attr("value")+"-"+$('#df').attr("value");
-	
+
 	var date_to = $('#yt').attr("value")+"-"+$('#mt').attr("value")+"-"+$('#dt').attr("value");
-	
+
 	if(checkDate($('#yf').attr("value"), $('#mf').attr("value"), $('#df').attr("value")) == false)
 	{
-	
+
 		alert("<?php echo LangUtil::$generalTerms['TIPS_DATEINVALID']; ?>");
 		return;
 	}
@@ -96,9 +97,9 @@ function view_testwise_weekly()
 		alert("<?php echo LangUtil::$generalTerms['TIPS_DATEINVALID']; ?>");
 		return;
 	}
-	
+
 	$('#progress_spinner').show();
-	
+
 	var ttype = $('#ttype').attr("value");
 	var ttype = $('#ttype').attr("value");
 	var age_s=$('#age_s').attr("value");
@@ -108,19 +109,19 @@ function view_testwise_weekly()
 	//var url_string = "ajax/weekly_prevalance.php?tt="+ttype+"&df="+date_from+"&dt="+date_to+"&l=<?php echo $lab_config_id; ?>";
 	$('#prevalance_graph').load(url_string, function() {
 		$('#prevalance_graph').show();
-		
+
 		$('#progress_spinner').hide();
 	});
 }
 function view_testwise_daily()
 {
 	var date_from = $('#yf').attr("value")+"-"+$('#mf').attr("value")+"-"+$('#df').attr("value");
-	
+
 	var date_to = $('#yt').attr("value")+"-"+$('#mt').attr("value")+"-"+$('#dt').attr("value");
-	
+
 	if(checkDate($('#yf').attr("value"), $('#mf').attr("value"), $('#df').attr("value")) == false)
 	{
-	
+
 		alert("<?php echo LangUtil::$generalTerms['TIPS_DATEINVALID']; ?>");
 		return;
 	}
@@ -129,9 +130,9 @@ function view_testwise_daily()
 		alert("<?php echo LangUtil::$generalTerms['TIPS_DATEINVALID']; ?>");
 		return;
 	}
-	
+
 	$('#progress_spinner').show();
-	
+
 	var ttype = $('#ttype').attr("value");
 	var ttype = $('#ttype').attr("value");
 	var age_s=$('#age_s').attr("value");
@@ -140,7 +141,7 @@ function view_testwise_daily()
 	var url_string = "ajax/daily_prevalance.php?tt="+ttype+"&df="+date_from+"&dt="+date_to+"&age_s="+age_s+"&age_e="+age_e+"&gender="+gender+"&l=<?php echo $lab_config_id; ?>";
 	$('#prevalance_graph').load(url_string, function() {
 		$('#prevalance_graph').show();
-		
+
 		$('#progress_spinner').hide();
 	});
 }
@@ -177,14 +178,14 @@ if($lab_config == null)
 	return;
 }
 ?>
-<?php echo LangUtil::$generalTerms['FACILITY'] ?>: <?php echo $lab_config->getSiteName(); ?> | 
+<?php echo LangUtil::$generalTerms['FACILITY'] ?>: <?php echo $lab_config->getSiteName(); ?> |
 <?php
 if($date_from == $date_to)
 {
 	echo LangUtil::$generalTerms['DATE'].": ".DateLib::mysqlToString($date_from);
 }
 else
-{	
+{
 	echo LangUtil::$generalTerms['FROM_DATE'].": ".DateLib::mysqlToString($date_from);
 	echo " | ";
 	echo LangUtil::$generalTerms['TO_DATE'].": ".DateLib::mysqlToString($date_to);
@@ -202,7 +203,7 @@ if(count($stat_list) == 0)
 	<?php echo LangUtil::$pageTerms['TIPS_NODISCRETE']; ?>
 	</div>
 	<?php
-	include("includes/footer.php"); 
+	include("includes/footer.php");
 	return;
 }
 /*
@@ -239,7 +240,7 @@ foreach($stat_chunks as $stat_chunk)
 	</tbody>
 	</table>
 	<?php
-	<script id="source" language="javascript" type="text/javascript"> 
+	<script id="source" language="javascript" type="text/javascript">
 	$(function () {
 		<?php
 		$x_val = 0;
@@ -275,7 +276,7 @@ foreach($stat_chunks as $stat_chunk)
 				}
 				<?php
 				$count++;
-				$index_count += 2;				
+				$index_count += 2;
 				if($count < count($stat_chunk) + 1)
 				{
 					echo ",";
@@ -299,13 +300,13 @@ foreach($stat_chunks as $stat_chunk)
 */
 ?>
 <div id='prevalance'style='display:none'>
-<table> 
-	<tr> 
+<table>
+	<tr>
 		<td width="1%">
-			<?php echo LangUtil::$generalTerms['FROM_DATE']; ?> 
+			<?php echo LangUtil::$generalTerms['FROM_DATE']; ?>
 		</td>
 		<td>
-			<?php 
+			<?php
 			$name_list = array("yf","mf","df");
 			$id_list = $name_list;
 			$df_parts = explode("-", $date_from);
@@ -317,7 +318,7 @@ foreach($stat_chunks as $stat_chunk)
 		</td>
 		<td>
 			<span>
-			<?php 
+			<?php
 			$name_list = array("yt", "mt", "dt");
 			$id_list = $name_list;
 			$dt_parts = explode("-", $date_to);

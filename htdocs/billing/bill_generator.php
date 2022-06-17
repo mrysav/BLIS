@@ -7,6 +7,7 @@
 include("../includes/db_lib.php");
 include("../includes/script_elems.php");
 include("../includes/page_elems.php");
+require_once(__DIR__."/../lang/lang_util.php");
 
 $script_elems = new ScriptElems();
 $page_elems = new PageElems();
@@ -56,7 +57,7 @@ $script_elems->enableJQueryForm();
 			$specimen = Specimen::getById($test->specimenId);
 
 			$testHasBeenBilled = Bill::hasTestBeenBilled($test->testId, $_SESSION['lab_config_id']);
-			
+
 			if ($testHasBeenBilled)
 			{
 				$style_string = "style='background-color:grey; color:white;'";
@@ -71,7 +72,7 @@ $script_elems->enableJQueryForm();
 				<td <?php echo $style_string ?>><?php echo $specimen->getTypeName(); ?></td>
 				<td <?php echo $style_string ?>><?php echo $cost["amount"]; ?></td>
 				<?php if ($testHasBeenBilled)
-				{ 
+				{
 					$assoc = BillsTestsAssociationObject::loadByTestId($test->testId, $_SESSION['lab_config_id']);
 					?>
 					<td> <a href="bill_review.php?bill_id=<?php echo $assoc->getBillId() ?>">View Associated Bill</a> </td>

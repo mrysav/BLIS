@@ -5,6 +5,7 @@
 
 include("redirect.php");
 include("includes/header.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("lab_config_home");
 
 $lab_config_id = $_REQUEST['lid'];
@@ -13,12 +14,12 @@ $worksheet_id = $_REQUEST['wid'];
 $lab_config = LabConfig::getById($lab_config_id);
 if($lab_config == null)
 {
-	echo LangUtil::$generalTerms['MSG_NOTFOUND']; 
+	echo LangUtil::$generalTerms['MSG_NOTFOUND'];
 }
 $worksheet = CustomWorksheet::getById($worksheet_id, $lab_config);
 if($worksheet == null)
 {
-	echo LangUtil::$generalTerms['MSG_NOTFOUND']; 
+	echo LangUtil::$generalTerms['MSG_NOTFOUND'];
 }
 else
 {

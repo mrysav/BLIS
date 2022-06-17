@@ -7,6 +7,7 @@ include("redirect.php");
 include("includes/db_lib.php");
 include("includes/stats_lib.php");
 include("includes/script_elems.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("reports");
 
 $script_elems = new ScriptElems();
@@ -125,7 +126,7 @@ $age_group_list = $site_settings->getAgeGroupAsList();
 				echo DateLib::mysqlToString($date_from);
 			}
 			else
-			{	
+			{
 				echo DateLib::mysqlToString($date_from)." to ".DateLib::mysqlToString($date_to);
 			}
 			?>
@@ -188,7 +189,7 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
 			{
 				echo "<th ></th>";
 			}
-			
+
 			if($site_settings->groupByAge == 1)
 			{
 				foreach($age_group_list as $age_slot)
@@ -228,7 +229,7 @@ $add_site_condition=false;
 			$curr_female_total = 0;
 			$curr_cross_gender_total = 0;
 			$disease_report = DiseaseReport::getByKeys($lab_config->id, $test->testTypeId, $measure->measureId);
-			
+
 			if($disease_report == null)
 			{
 				# TODO: Check for error control
@@ -247,12 +248,12 @@ $add_site_condition=false;
 				# Alphanumeric options
 				$range_values1 = explode("/", $measure->range);
 				$range_values=str_replace("#","/",$range_values1);
-				
+
 			}
 			else
 			{
 				# Numeric ranges: Fetch ranges configured for this test-type/measure from DB
-				
+
 				$range_values = $disease_report->getMeasureGroupAsList();
 			}
 			$row_id = "row_".$test->testTypeId."_".$measure->measureId;
@@ -261,7 +262,7 @@ $add_site_condition=false;
 			<tr valign='top' id='<?php echo $row_id; ?>'>
 				<td><?php echo $measure->getName(); ?></td>
 				<td>
-				<?php 
+				<?php
 				foreach($range_values as $range_value)
 				{
 					if($is_range_options)
@@ -405,7 +406,7 @@ $add_site_condition=false;
 							$cross_gender_total[$range_value_count] += $curr_cross_gender_total;
 						}
 				}
-				
+
 				if($site_settings->groupByGender == 1)
 				{
 					echo "<td>";
@@ -418,7 +419,7 @@ $add_site_condition=false;
 					}
 					echo "</td>";
 				}
-				
+
 				echo "<td>";
 				for($i = 1; $i <= count($range_values); $i++)
 				{
@@ -431,7 +432,7 @@ $add_site_condition=false;
 					{
 						echo $cross_gender_total[$i];
 						echo "<br>";
-					}				
+					}
 				}
 				echo "</td>";
 				# Grand total:

@@ -3,14 +3,15 @@
 # Shows confirmation for new specimen type addition
 #
 include("redirect.php");
-include("includes/header.php"); 
+include("includes/header.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("catalog");
 ?>
 <br>
 <b><?php echo LangUtil::$pageTerms['SPECIMEN_TYPE_ADDED']; ?></b>
  | <a href='catalog.php?show_s=1'>&laquo; <?php echo LangUtil::$pageTerms['CMD_BACK_TOCATALOG']; ?></a>
 <br><br>
-<?php 
+<?php
 $page_elems->getSpecimenTypeInfo($_REQUEST['sn'], true);
 include("includes/footer.php");
 ?>

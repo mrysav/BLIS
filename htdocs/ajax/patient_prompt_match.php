@@ -5,10 +5,11 @@
 #
 include("../includes/SessionCheck.php");
 include("../includes/db_lib.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("new_patient");
 
 $q = $_REQUEST['q'];
-$query_string = 
+$query_string =
 	"SELECT * FROM patient ".
 	"WHERE name LIKE '%$q%' ";
 $resultset = query_associative_all($query_string);
@@ -46,8 +47,8 @@ foreach($resultset as $record)
 		?>
 		<tr valign='top'>
 			<td>
-				<?php 
-				echo $patient->name; 
+				<?php
+				echo $patient->name;
 				?>
 			</td>
 			<?php

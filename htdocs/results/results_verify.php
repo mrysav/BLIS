@@ -4,6 +4,7 @@
 #
 include("redirect.php");
 include("includes/header.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("results_entry");
 
 # Helper functions
@@ -11,7 +12,7 @@ LangUtil::setPageId("results_entry");
 function get_unverified_tests($test_type_id)
 {
 	# Fetches all unverified test results
-	$query_string = 
+	$query_string =
 		"SELECT * FROM test ".
 		"WHERE verified_by=0 ".
 		"AND result <> '' ".
@@ -54,7 +55,7 @@ function verify_results()
 	$('#verify_progress_spinner').show();
 	var html_code = "<div class='sidetip_nopos'><?php echo LangUtil::$pageTerms['TIPS_VERIFYDONE']; ?></div>";
 	$('#verify_form').ajaxSubmit({
-		success: function() { 
+		success: function() {
 			$('#verify_content_pane').html(html_code);
 			$('#verify_progress_spinner').hide();
 			$('#cancel_link').html("&laquo; <?php echo LangUtil::$generalTerms['CMD_BACK']; ?>");
@@ -84,7 +85,7 @@ function checkoruncheckall()
 <br><br>
 <?php echo LangUtil::$generalTerms['TEST_TYPE']; ?>: <?php echo get_test_name_by_id($test_type_id); ?>
 <br><br>
-<?php 
+<?php
 if(count($test_list) == 0)
 {
 	echo "<div class='sidetip_nopos'>".LangUtil::$pageTerms['TIPS_VERIFYNOTFOUND']."</div>";
@@ -200,7 +201,7 @@ if(count($test_list) == 0)
 					echo "</td>";
 				}
 				else if(strpos($measure->range, "/") != false)
-				{	
+				{
 					# Discrete value range
 					$range_options = explode("/", $measure->range);
 					?>
@@ -211,7 +212,7 @@ if(count($test_list) == 0)
 					{
 					?>
 						<option value='<?php echo $option; ?>'
-						<?php 
+						<?php
 						if($option == $result_csv[$measure_count-1])
 							echo " selected ";
 						?>
@@ -250,12 +251,12 @@ if(count($test_list) == 0)
 	</span>
 	<br><br>
 	<span>
-	<?php 
+	<?php
 	$div_id = 'confirm_dialog';
 	$msg_string = LangUtil::$pageTerms['TIPS_VERIFYCONFIRM'];
 	$ok_function_call = "verify_results()";
 	$cancel_function_call = "hide_dialog_box()";
-	$page_elems->getConfirmDialog($div_id, $msg_string, $ok_function_call, $cancel_function_call); 
+	$page_elems->getConfirmDialog($div_id, $msg_string, $ok_function_call, $cancel_function_call);
 	?>
 	</span>
 </form>

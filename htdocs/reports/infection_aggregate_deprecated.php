@@ -7,6 +7,7 @@ include("redirect.php");
 include("includes/db_lib.php");
 include("includes/stats_lib.php");
 include("includes/script_elems.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("reports");
 
 $script_elems = new ScriptElems();
@@ -102,7 +103,7 @@ $age_group_list = $site_settings->getAgeGroupAsList();
 				echo DateLib::mysqlToString($date_from);
 			}
 			else
-			{	
+			{
 				echo DateLib::mysqlToString($date_from)." to ".DateLib::mysqlToString($date_to);
 			}
 			?>
@@ -164,7 +165,7 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
 			{
 				echo "<th ></th>";
 			}
-			
+
 			if($site_settings->groupByAge == 1)
 			{
 				foreach($age_group_list as $age_slot)
@@ -216,7 +217,7 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
 			if($is_range_options) {
 				# Alphanumeric options
 				$range_values1 = explode("/", $measure->range);
-				$range_values=str_replace("#","/",$range_values1);	
+				$range_values=str_replace("#","/",$range_values1);
 			}
 			else {
 				# Numeric ranges: Fetch ranges configured for this test-type/measure from DB
@@ -362,7 +363,7 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
 							$cross_gender_total[$range_value_count] += $curr_cross_gender_total;
 						}
 				}
-				
+
 				if($site_settings->groupByGender == 1)
 				{
 					echo "<td>";
@@ -375,7 +376,7 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
 					}
 					echo "</td>";
 				}
-				
+
 				echo "<td>";
 				for($i = 1; $i <= count($range_values); $i++)
 				{
@@ -388,7 +389,7 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
 					{
 						echo $cross_gender_total[$i];
 						echo "<br>";
-					}				
+					}
 				}
 				echo "</td>";
 				# Grand total:

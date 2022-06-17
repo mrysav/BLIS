@@ -9,6 +9,7 @@ include("includes/db_lib.php");
 include("includes/script_elems.php");
 include("includes/page_elems.php");
 
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("reports");
 
 include("../users/accesslist.php");
@@ -292,12 +293,12 @@ for($i = 0; $i < count($margin_list); $i++) {
 				<div id="docbody" name="docbody">
 					<div id='logo' >
 						<?php
-						
+
 						# If hospital logo exists, include it
 						$logo_path = "../logos/logo_".$lab_config_id.".jpg";
 						$logo_path2 = "../ajax/logo_".$lab_config_id.".jpg";
 						$logo_path1="../../logo_".$lab_config_id.".jpg";
-						
+
 						if(file_exists($logo_path1) === true)
 						{	copy($logo_path1,$logo_path);
 							?>

@@ -7,6 +7,7 @@
 include("../includes/db_lib.php");
 include("../includes/script_elems.php");
 include("../includes/page_elems.php");
+require_once(__DIR__."/../lang/lang_util.php");
 $script_elems = new ScriptElems();
 $page_elems = new PageElems();
 
@@ -21,7 +22,7 @@ $script_elems->enableJQueryForm();
 		function submit_rating()
 		{
 			$('#submit_progress').show();
-			$('#rating_form').ajaxSubmit( { success:function() { 
+			$('#rating_form').ajaxSubmit( { success:function() {
 					$('#submit_progress').hide();
 					window.location="logout.php";
 				}
@@ -31,7 +32,7 @@ $script_elems->enableJQueryForm();
 		{
 		document.getElementById("skipped").setAttribute("value","-1");
 			$('#submit_progress').show();
-			$('#rating_form').ajaxSubmit( { success:function() { 
+			$('#rating_form').ajaxSubmit( { success:function() {
 					$('#submit_progress').hide();
 					window.location="logout.php";
 				}
@@ -39,7 +40,7 @@ $script_elems->enableJQueryForm();
 		}
 		</script>
 		<?php include("../includes/styles.php"); ?>
-		
+
 	</head>
 	<body>
 	<form name='rating_form' id='rating_form' action='user_rating_submit.php'>

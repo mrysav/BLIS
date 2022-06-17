@@ -9,6 +9,7 @@ include("includes/page_elems.php");
 include("barcode/barcode_lib.php");
 require_once("includes/user_lib.php");
 
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("reports");
 
 $page_elems = new PageElems();
@@ -170,7 +171,7 @@ $(document).ready(function(){
 	?>
 	var code = $('#barcodeCode<?php echo $i;?>').val();
 	$('.patientBarcode<?php echo $i;?>').barcode(code, '<?php echo $code_type; ?>',{barWidth:<?php echo $bar_width; ?>, barHeight:<?php echo $bar_height; ?>, fontSize:<?php echo $font_size; ?>, output:'css'});
-	<?php } ?> 
+	<?php } ?>
 });
 </script>
 
@@ -193,13 +194,13 @@ $(document).ready(function(){
 <input type='text' name="barcodeWidth" id="barcodeWidth" value='<?php echo $bar_width ?>' size="2" maxlength="2"></input>
 &nbsp;&nbsp;
 <?php echo LangUtil::$generalTerms['HEIGHT']; ?> &nbsp;&nbsp;&nbsp;&nbsp;
-<input type='text' name="barcodeHeight" id="barcodeHeight" value='<?php echo $bar_height ?>' size="2" maxlength="2"></input> 
+<input type='text' name="barcodeHeight" id="barcodeHeight" value='<?php echo $bar_height ?>' size="2" maxlength="2"></input>
 &nbsp;&nbsp;
 <?php echo LangUtil::$generalTerms['FONT_SIZE']; ?> &nbsp;&nbsp;&nbsp;&nbsp;
-<input type='text' name="barcodeFontSize" id="barcodeFontSize" value='<?php echo $font_size ?>' size="2" maxlength="2"></input> 
+<input type='text' name="barcodeFontSize" id="barcodeFontSize" value='<?php echo $font_size ?>' size="2" maxlength="2"></input>
 &nbsp;&nbsp;
 <?php echo LangUtil::$generalTerms['COL_COUNT']; ?> &nbsp;&nbsp;&nbsp;&nbsp;
-<input type='text' name="columnCount" id="columnCount" value='<?php echo $column ?>' size="2" maxlength="2"></input> 
+<input type='text' name="columnCount" id="columnCount" value='<?php echo $column ?>' size="2" maxlength="2"></input>
 &nbsp;&nbsp;
 <input type='button' onclick="javascript:refresh_print_form();" value='<?php echo LangUtil::$generalTerms['CMD_REFRESH']; ?>'></input>
 
@@ -225,7 +226,7 @@ $(document).ready(function(){
 	echo "&nbsp;&nbsp;<b>".LangUtil::$generalTerms['TO_DATE']."&nbsp;&nbsp;</b>: ".DateLib::mysqlToString($date_to)."&nbsp;&nbsp;";
  }
  ?>
-  
+
 <?php
 if( (count($patient_list) == 0 || $patient_list == null) && (count($patient_list_U) == 0 || $patient_list_U == null) )
 {
@@ -241,10 +242,10 @@ if( (count($patient_list) == 0 || $patient_list == null) && (count($patient_list
 <?php echo "<b>".LangUtil::$generalTerms['PATIENT_ID']."</b>";?> &nbsp;&nbsp;<?php echo $patient->getSurrogateId(); ?>&nbsp;|&nbsp; <?php echo "<b>".LangUtil::$generalTerms['PATIENT_NAME']."</b>";?> &nbsp;&nbsp;<?php echo $patient->getName();?>&nbsp;|&nbsp; <?php echo "<b>".LangUtil::$generalTerms['AGE']."</b>";?> &nbsp;&nbsp;<?php echo $patient->getAge();?>&nbsp;
 <br/><br/>
 <table style="border='0'" border="0" >
-	<?php for ($rowno = 1; $rowno <= ceil($patient->getSpecimenCount()/$column); $rowno++) {?> 
+	<?php for ($rowno = 1; $rowno <= ceil($patient->getSpecimenCount()/$column); $rowno++) {?>
 	<tr>
 	<td><div id="patientBarcode<?php echo $patientCount;?>" class="patientBarcode<?php echo $patientCount;?>"></div></td>
-	
+
 	<?php for ($j = 2 ; $j<=$column ; $j++){ ?>
 		<?php if($column*($rowno-1)+$j <= $patient->getSpecimenCount()) {?>
 		<td><div id="patientBarcode<?php echo $patientCount;?>" class="patientBarcode<?php echo $patientCount;?>"></div></td>
@@ -252,19 +253,19 @@ if( (count($patient_list) == 0 || $patient_list == null) && (count($patient_list
 		<td><?php echo "-"; ?></td>
 		<?php } ?>
 	<?php } ?>
-	
+
 	</tr>
-	
+
 	<?php }?>
 </table>
 <br/>
 
-<?php for($breakTime=0; $breakTime<$column; $breakTime++) 
+<?php for($breakTime=0; $breakTime<$column; $breakTime++)
 	{
 		echo "-------------------------------------------------------";
 	} echo "<br/><br/>"
 ?>
-	
+
 <?php $patientCount++; }?>
 
 <br><br>

@@ -4,9 +4,10 @@
 #
 include("redirect.php");
 include("includes/header.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("lab_configs");
 
-//$script_elems->enableJWizard(); 
+//$script_elems->enableJWizard();
 $script_elems->enableDatePicker();
 
 putUILog('lab_config_new', 'X', basename($_SERVER['REQUEST_URI'], ".php"), 'X', 'X', 'X');
@@ -26,7 +27,7 @@ $(document).ready(function(){
 	$('.3').hide();
 	$('.4').hide();
 	$('.5').hide();
-	
+
 	$('.stype_entry').change(function() {
 		//check_compatible();
 	});
@@ -67,7 +68,7 @@ function check_compatible()
 		}
 	}
 }
-	
+
 function loadnext(divout,divin){
 	if (divout == 1 && divin == 4){
 		userlist = document.getElementById("lab_admin").value;
@@ -119,9 +120,9 @@ function loadnext(divout,divin){
 	else {
 		$("." + divout).hide();
 		//$("." + divin).fadeIn("fast");
-		$("." + divin).show();	
+		$("." + divin).show();
 	}
-	
+
 }
 
 function get_testbox2(stype_id)
@@ -136,7 +137,7 @@ function get_testbox2(stype_id)
 	}
 	$('#test_list_by_site').html("<?php $page_elems->getProgressSpinner(LangUtil::$generalTerms['CMD_FETCHING']); ?>");
 	$('#test_list_by_site').load(
-		"ajax/test_list_by_site.php", 
+		"ajax/test_list_by_site.php",
 		{
 			site_id: stype_val
 		}
@@ -148,7 +149,7 @@ function show_testbox2(st)
 	//var stype_val = $('#'+stype_id).attr("value");
         $('.test_list_forms').hide();
         $('#test_list_'+ st).show();
-	
+
 }
 
 function remove_option(st)
@@ -169,8 +170,8 @@ function remove_option(st)
 
 function remove_option2(st)
 {
-   
-    $("#ilocation option[value='"+st+"']").remove();	
+
+    $("#ilocation option[value='"+st+"']").remove();
 }
 
 function checkandadd()
@@ -194,7 +195,7 @@ function checkandadd()
 		alert("<?php echo LangUtil::$pageTerms['TIPS_MISSING_MGR']; ?>");
 		return;
 	}
-        
+
         var bloc = $('#blocation').attr("value");
 	if(bloc == '0')
 	{
@@ -282,7 +283,7 @@ function checkandadd()
 
   <DIV class="1" style="opacity: 1; display: block; margin-left: 150px;">
     <H3>1: <?php echo LangUtil::$pageTerms['MENU_SITEINFO']; ?></H3>
-    <DIV id="wizardcontent"> 
+    <DIV id="wizardcontent">
 	<br>
 		<table>
 			<tr>
@@ -295,23 +296,23 @@ function checkandadd()
 			</tr>
 			<tr>
 				<td><?php echo "Country" ?><?php $page_elems->getAsterisk(); ?></td>
-				<!--<td><select name='country' id='country'> 
-					<?php 
+				<!--<td><select name='country' id='country'>
+					<?php
 						foreach($labIdArray as $key=>$value)
 							echo "<option value='$key'>$key</option>";
 					?>
 				</select></td>-->
-                                <td><?php 
+                                <td><?php
                                 $usr_c = get_username_by_id($_SESSION['user_id']);
                                 $usr_c = strtolower($usr_c);
                                 $usr_c = ucfirst($usr_c);
                                 $usr_cs = substr($usr_c, 0, strpos($usr_c, "_"));
-                                echo $usr_cs; 
+                                echo $usr_cs;
                                 ?>
                                 <input type="hidden" name="country" value="<?php echo $usr_cs; ?>">
                                 </td>
 			</tr>
-			<?php 
+			<?php
 			//If user is superadmin
 			if(true)
 			{
@@ -321,11 +322,11 @@ function checkandadd()
 				<td>
 					<?php /*
 					<select name='lab_admin' id='lab_admin' class='uniform_width'>
-					<?php 
-					# Fetch list of existing lab admins 
+					<?php
+					# Fetch list of existing lab admins
 					$page_elems->getAdminUserOptions();
 					?>
-					<option value='0'>--New Admin Account--</option>			
+					<option value='0'>--New Admin Account--</option>
 					</select>
 					*/ ?>
 					<input type='text' name='lab_admin' id='lab_admin' class='uniform_width' />
@@ -351,7 +352,7 @@ function checkandadd()
     </UL>
     <DIV style="clear:both"></DIV>
   </DIV>
-  
+
   <DIV id="wizardpanel" class="2" style="opacity: 1; display: none; ">
     <H3>2: <?php echo LangUtil::$generalTerms['SPECIMEN_TYPES']; ?></H3>
     <DIV id="wizardcontent">
@@ -372,17 +373,17 @@ function checkandadd()
     </UL>
 	<DIV style="clear:both"></DIV>
   </DIV>
-  
+
     <DIV id="wizardpanel" class="7" style="opacity: 1; display: none; margin-left: 150px;">
     <H3>3: <?php echo "Base Lab Configuration"; ?></H3>
     <DIV id="wizardcontent">
 	<br>
-        
+
         <!--<form id='base_config_form' name='base_config_form' action='ajax/import_config.php' method='get'>-->
                     <input type='hidden' name='lid' value='<?php echo $lab_config->id; ?>'></input>
-                    
+
                                     <?php echo 'Select the facility to set base configuration:'; ?>
-                    
+
                                 <?php
                                         //$site_list = get_site_list($_SESSION['user_id']);
                                         //print_r($site_list);
@@ -400,7 +401,7 @@ function checkandadd()
                                         <small>If you want to create an empty lab then select 'None' above.</small>
                                         <br>
                                         <small>Setting a base lab configuration also allows you to import tests from other existing labs in the next step.</small></i>
-                                
+
             </form>
 	</DIV>
     <DIV class="buttons">
@@ -418,20 +419,20 @@ function checkandadd()
     </UL>
 	<DIV style="clear:both"></DIV>
   </DIV>
-  
+
   <DIV id="wizardpanel" class="3" style="opacity: 1; display: none; margin-left: 150px;">
     <H3>4: <?php echo LangUtil::$generalTerms['TEST_TYPES']; ?></H3>
     <DIV id="wizardcontent">
 	<br>
-        
+
         <!--<form id='import_config_form' name='import_config_form' action='ajax/import_config.php' method='get'>-->
                     <input type='hidden' name='lid' value='<?php echo $lab_config->id; ?>'></input>
-                    
-                                  
-                                
-                                
+
+
+
+
                                 <?php
-                                   
+
                                         //$site_list = get_site_list($_SESSION['user_id']);
                                         //print_r($site_list);
                                         //echo "<input type='checkbox' name='".$elem_name."[]' id='$elem_id' value='$key'>$value</input>";
@@ -445,7 +446,7 @@ function checkandadd()
                                         ?>
                                         </select>
                                         </div>
-                    
+
                                         <div id="iloc_sites">
                                               <?php echo 'Select the facility from which you want to import tests:'; ?>
                                         <select name='ilocation' id='ilocation' class='uniform_width' disabled="disabled" onchange="javascript:show_testbox2(this.value);">
@@ -477,7 +478,7 @@ function checkandadd()
                                                         <?php echo 'Test Catalog is empty for this site'; ?>
                                                 </span>
                                                 <?php
-                                                
+
                                         }
                                         ?>
                                         <table style='width:auto;' class='hor-minimalist-compact'>
@@ -516,10 +517,10 @@ function checkandadd()
                                         ?>
                                         </tbody>
                                         </table>
-                                        
+
                                         <?php echo "</div>";
                                         } ?>
-                                
+
             </form>
 	</DIV>
     <DIV class="buttons">
@@ -538,7 +539,7 @@ function checkandadd()
 	<DIV style="clear:both"></DIV>
   </DIV>
 
- 
+
   <DIV id="wizardpanel" class="4" style="opacity: 1; display: none; margin-left: 150px;">
     <H3>2: <?php echo LangUtil::$generalTerms['TECHNICIANS']; ?></H3>
     <DIV id="wizardcontent">
@@ -557,11 +558,11 @@ function checkandadd()
       <LI><div class='white_big'>Step 3:<br><?php echo "Base Config"; ?></div></LI>
       <LI><div class='white_big'>Step 4:<br><?php echo LangUtil::$generalTerms['TEST_TYPES']; ?></div></LI>
       <!--<LI class="mainNavNoBg"><div class='white_big'>Step 5:<br><?php echo LangUtil::$pageTerms['MENU_FIELDS']; ?></div></LI>-->
-      
+
     </UL>
 	<DIV style="clear:both"></DIV>
   </DIV>
- 
+
   <DIV id="wizardpanel" class="5" style="display: none; opacity: 1; margin-left: 150px;">
     <H3>5: <?php echo LangUtil::$pageTerms['MENU_FIELDS']; ?></H3>
     <DIV id="wizardcontent">
@@ -592,14 +593,14 @@ function checkandadd()
     </UL>
 	<DIV style="clear:both"></DIV>
   </DIV>
-  
+
    <DIV id="wizardpanel" class="6" style="display: none; opacity: 1; ">
     <H3><?php echo LangUtil::$generalTerms['CMD_SUBMITTING']; ?> ...</H3>
     <DIV id="wizardcontent">
 	<center>
-	<?php 
+	<?php
 		$spinner_message = LangUtil::$pageTerms['TIPS_CREATINGLAB']."<br>";
-		$page_elems->getProgressSpinnerBig($spinner_message);		
+		$page_elems->getProgressSpinnerBig($spinner_message);
 	?>
 	</center>
 	</DIV>
@@ -616,7 +617,7 @@ function checkandadd()
     </UL>
 	<DIV style="clear:both"></DIV>
   </DIV>
-  
+
 </DIV>
 <!--Random Data Section-->
 	<div id='random' style='display:none'>
@@ -647,7 +648,7 @@ function checkandadd()
 		$id_list = $name_list;
 		//$value_list = array($today_array[0], "01", "01");
 		$value_list = array("2009", "01", "01");
-		$page_elems->getDatePicker($name_list, $id_list, $value_list); 
+		$page_elems->getDatePicker($name_list, $id_list, $value_list);
 		?>
 		</td>
 		</tr>
@@ -658,7 +659,7 @@ function checkandadd()
 		$name_list = array("yyyy_to", "mm_to", "dd_to");
 		$id_list = $name_list;
 		$value_list = $today_array;
-		$page_elems->getDatePicker($name_list, $id_list, $value_list); 
+		$page_elems->getDatePicker($name_list, $id_list, $value_list);
 		?>
 		</td>
 		</tr>
@@ -679,7 +680,7 @@ function checkandadd()
 		</div>
 	</div>
 	<!--End of Random Data Section-->
-	
+
 </form>
 <br>
 <?php include("includes/footer.php"); ?>

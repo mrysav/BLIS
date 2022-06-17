@@ -7,6 +7,7 @@ include("../includes/SessionCheck.php");
 include("../includes/db_lib.php");
 include("../includes/page_elems.php");
 
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("lab_config_home");
 $page_elems = new PageElems();
 
@@ -32,5 +33,5 @@ $report_config = $lab_config->getReportConfig($report_type);
 	<form name='report_config_submit_form' id='report_config_submit_form' action='ajax/report_config_update.php' method='post'>
 		<?php $page_elems->getReportConfigForm($report_config); ?>
 	</form>
-	
+
 </div>

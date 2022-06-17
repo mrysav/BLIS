@@ -6,6 +6,7 @@
 
 include("../includes/db_lib.php");
 include("../includes/SessionCheck.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("results_entry");
 
 $attrib_value = $_REQUEST['a'];
@@ -27,12 +28,12 @@ $lab_config = LabConfig::getById($_SESSION['lab_config_id']);
 $query_string = "";
 if($dynamic == 0)
 {
-    $query_string = 
+    $query_string =
 				"SELECT specimen_id FROM test WHERE result='' ".
 				"AND test_type_id IN (SELECT test_type_id FROM test_type WHERE test_category_id=$attrib_value) ".
 				"LIMIT $offset,$result_cap";
-    
-    
+
+
 }
 else
 {
@@ -40,7 +41,7 @@ else
 	"SELECT specimen_id FROM test WHERE result='' ".
 	"AND test_type_id IN (SELECT test_type_id FROM test_type WHERE test_category_id=$attrib_value) ".
 	"LIMIT $offset,$result_cap";
-		     
+
 }
 
 //echo $query_string;
@@ -49,7 +50,7 @@ if(count($resultset) == 0 || $resultset == null)
 {
 	?>
 	<div class='sidetip_nopos'>
-	<?php 
+	<?php
 	if($attrib_type == 0)
 		echo " ".LangUtil::$generalTerms['PATIENT_ID']." ";
 	else if($attrib_type == 1)
@@ -72,7 +73,7 @@ foreach($resultset as $record)
 $specimen_id_list = array_values(array_unique($specimen_id_list));
 ?>
 
-                 
+
 <table class="hor-minimalist-c">
 	<thead>
 		<tr valign='top'>
@@ -232,27 +233,27 @@ if($attrib_type == 3 && $count > 2)
 }
 
 ?>
-<?php 
+<?php
         if(isset($_REQUEST['l']))
-        { 
-            $next_link = "../ajax/result_data_page_labsection.php?a=".$_REQUEST['a']."&l=".$_REQUEST['l']."&result_cap=".$result_cap."&result_counter=".($result_counter+1); 
+        {
+            $next_link = "../ajax/result_data_page_labsection.php?a=".$_REQUEST['a']."&l=".$_REQUEST['l']."&result_cap=".$result_cap."&result_counter=".($result_counter+1);
         }
         else
         {
-            $next_link = "../ajax/result_data_page_labsection.php?a=".$_REQUEST['a']."&result_cap=".$result_cap."&result_counter=".($result_counter+1);             
+            $next_link = "../ajax/result_data_page_labsection.php?a=".$_REQUEST['a']."&result_cap=".$result_cap."&result_counter=".($result_counter+1);
         }
         if(isset($_REQUEST['l']))
-        { 
-            $prev_link = "../ajax/result_data_page_labsection.php?a=".$_REQUEST['a']."&l=".$_REQUEST['l']."&result_cap=".$result_cap."&result_counter=".($result_counter - 1); 
+        {
+            $prev_link = "../ajax/result_data_page_labsection.php?a=".$_REQUEST['a']."&l=".$_REQUEST['l']."&result_cap=".$result_cap."&result_counter=".($result_counter - 1);
         }
         else
         {
-            $prev_link = "../ajax/result_data_page_labsection.php?a=".$_REQUEST['a']."&result_cap=".$result_cap."&result_counter=".($result_counter - 1);             
+            $prev_link = "../ajax/result_data_page_labsection.php?a=".$_REQUEST['a']."&result_cap=".$result_cap."&result_counter=".($result_counter - 1);
         }
-    ?>        
-<div class="prev_link">                       
+    ?>
+<div class="prev_link">
      <small><a href="javascript:get_prev('<?php echo $prev_link; ?>', '<?php echo $result_counter - 1; ?>', '<?php echo $result_cap; ?>');">&lt;&nbsp;Previous&nbsp;</a></small>
 </div>
-<div class="next_link">                
+<div class="next_link">
      <small><a href="javascript:get_next('<?php echo $next_link; ?>', '<?php echo $result_counter + 1; ?>', '<?php echo $result_cap; ?>');">&nbsp;Next&nbsp&nbsp;&gt;</a></small>
 </div>

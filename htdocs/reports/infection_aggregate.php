@@ -9,6 +9,7 @@ include("includes/stats_lib.php");
 include("includes/script_elems.php");
 require_once("includes/user_lib.php");
 
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("reports");
 
 $script_elems = new ScriptElems();
@@ -55,9 +56,9 @@ function print_content(div_id)
 
 function publishValues( $test, $measure, $age_total, $age_total1, $age_total2, $male_total, $female_total, $cross_gender_total, $grand_total) {
 	global $site_settings;
-	
+
 	$disease_report = GlobalInfectionReport::getByKeys($_SESSION['user_id'], $test->testId, $measure->measureId);
-	
+
 	$is_range_options = true;
 	if(strpos($measure->range, "/") === false)
 			$is_range_options = false;
@@ -66,13 +67,13 @@ function publishValues( $test, $measure, $age_total, $age_total1, $age_total2, $
 	if($is_range_options) {
 		# Alphanumeric options
 		$range_values1 = explode("/", $measure->range);
-		$range_values=str_replace("#","/",$range_values1);	
+		$range_values=str_replace("#","/",$range_values1);
 	}
 	else {
 		# Numeric ranges: Fetch ranges configured for this test-type/measure from DB
 		$range_values = $disease_report->getMeasureGroupAsList();
 	}
-				
+
 	$row_id = "row_".$test->testId."_".$measure->measureId;
 	echo "<tr valign='top' id='$row_id'>";
 	echo "<td>".$measure->name."</td>";
@@ -83,12 +84,12 @@ function publishValues( $test, $measure, $age_total, $age_total1, $age_total2, $
 			echo "$range_value<br>";
 		else
 			echo "$range_value[0]-$range_value[1]<br>";
-		
+
 		if($site_settings->groupByGender == 1)
 			echo "<br>";
 	}
 	echo "</td>";
-					
+
 	if($site_settings->groupByGender == 1) {
 		# Group by gender set to true
 		echo "<td>";
@@ -96,7 +97,7 @@ function publishValues( $test, $measure, $age_total, $age_total1, $age_total2, $
 				echo "M<br>F<br>";
 		echo "</td>";
 	}
-				
+
 	if($site_settings->groupByAge == 1) {
 		# Group by age set to true: Fetch age slots from DB
 		$age_slot_list = $site_settings->getAgeGroupAsList();
@@ -106,10 +107,10 @@ function publishValues( $test, $measure, $age_total, $age_total1, $age_total2, $
 			$k=0;
 			foreach($range_values as $range_value) {
 				$range_type = DiseaseSetFilter::$CONTINUOUS;
-				
+
 				if($is_range_options == true)
 					$range_type = DiseaseSetFilter::$DISCRETE;
-				
+
 				if($site_settings->groupByGender == 0)
 					echo $age_total[$j][$k]."<br>";
 				else {
@@ -179,10 +180,10 @@ if( count($lab_config_ids) == 1 && $lab_config_ids[0] == 0 ) {
 }
 else if ( count($lab_config_ids) == 1 )
 	$site_list = $lab_config_ids;
-else 
+else
 	$site_list = $lab_config_ids;
 
-foreach($site_list as $labConfigId) 
+foreach($site_list as $labConfigId)
 	$labNames .= LabConfig::getById($labConfigId)->name.", ";
 
 $labNames = substr($labNames, 0, strlen($labNames)-2);
@@ -202,7 +203,7 @@ if($cat_code != 0) {
 else {
 	$userId = $_SESSION['user_id'];
 	$saved_db = DbUtil::switchToGlobal();
-	$query_string = 
+	$query_string =
 		"SELECT test_category_id from test_category_mapping ".
 		"WHERE user_id=$userId";
 	$resultset = query_associative_all($query_string);
@@ -247,7 +248,7 @@ $age_group_list = $site_settings->getAgeGroupAsList();
 				echo DateLib::mysqlToString($date_from);
 			}
 			else
-			{	
+			{
 				echo DateLib::mysqlToString($date_from)." to ".DateLib::mysqlToString($date_to);
 			}
 			?>
@@ -309,7 +310,7 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
 			{
 				echo "<th ></th>";
 			}
-			
+
 			if($site_settings->groupByAge == 1)
 			{
 				foreach($age_group_list as $age_slot)
@@ -343,7 +344,7 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
 					$testIds[$labId] = $testId;
 			}
 			$measures = $globalTestType->getMeasures();
-			foreach($measures as $measure) {			
+			foreach($measures as $measure) {
 				$disease_report = GlobalInfectionReport::getByKeys($_SESSION['user_id'], $globalTestType->testId, $measure->measureId);
 				$male_total = array();
 				$female_total = array();
@@ -365,25 +366,25 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
 					StatsLib::setDiseaseSetList($lab_config, $testType, $date_from, $date_to);
 					DbUtil::switchRestore($saved_db);
 					$is_range_options = true;
-					
+
 					if(strpos($measure->range, "/") === false)
 						$is_range_options = false;
-						
+
 					$range_values = array();
-					
+
 					if($is_range_options) {
 						# Alphanumeric options
 						$range_values1 = explode("/", $measure->range);
 						$range_values=str_replace("#","/",$range_values1);
-						
+
 					}
 					else {
 						# Numeric ranges: Fetch ranges configured for this test-type/measure from DB
 						$range_values = $disease_report->getMeasureGroupAsList();
 					}
-					
+
 					$grand_total = 0;
-					
+
 					if($site_settings->groupByAge == 1) {
 						# Group by age set to true: Fetch age slots from DB
 						$age_slot_list = $site_settings->getAgeGroupAsList();
@@ -451,13 +452,13 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
 						$range_value_count = 0;
 							foreach($range_values as $range_value) {
 								$range_value_count++;
-								
+
 								if(!isset($male_total[$range_value_count])) {
 									$male_total[$range_value_count] = 0;
 									$female_total[$range_value_count] = 0;
 									$cross_gender_total[$range_value_count] = 0;
 								}
-								
+
 								$curr_male_total = 0;
 								$curr_female_total = 0;
 								$curr_cross_gender_total = 0;
@@ -501,7 +502,7 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
 								$cross_gender_total[$range_value_count] += $curr_male_total + $curr_female_total;
 							}
 					}
-					
+
 					if($site_settings->groupByGender == 1) {
 						for($i = 1; $i <= count($range_values); $i++) {
 							$this_male_total = $male_total[$i];
@@ -509,7 +510,7 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
 							$this_cross_gender_total = $this_male_total + $this_female_total;
 						}
 					}
-						
+
 					if($site_settings->groupByGender == 1)
 						$grand_total = array_sum($male_total) + array_sum($female_total);
 					else

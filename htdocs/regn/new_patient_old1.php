@@ -3,22 +3,23 @@
 # Main page for adding new patient into the system
 #
 /*
-$load_time = microtime(); 
-$load_time = explode(' ',$load_time); 
-$load_time = $load_time[1] + $load_time[0]; 
-$page_start = $load_time; 
+$load_time = microtime();
+$load_time = explode(' ',$load_time);
+$load_time = $load_time[1] + $load_time[0];
+$page_start = $load_time;
 */
 
 include("redirect.php");
 include("includes/header.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("new_patient");
- 
+
 $script_elems->enableDatePicker();
 $script_elems->enableJQueryForm();
 $script_elems->enableFacebox();
 
 $lab_config = get_lab_config_by_id($_SESSION['lab_config_id']);
-$daily_num = get_daily_number(); 
+$daily_num = get_daily_number();
 $session_num = get_session_number();
 $uiinfo = "qr=".$_REQUEST['n'];
 putUILog('new_patient', $uiinfo, basename($_SERVER['REQUEST_URI'], ".php"), 'X', 'X', 'X');
@@ -46,12 +47,12 @@ $(document).ready(function(){
 	$('#name').keydown(function() {
 		prefetch_pname();
 	});
-	
-	$('#custom_field_form').submit(function() { 
-		// submit the form 
-		$(this).ajaxSubmit({async:false}); 
-		// return false to prevent normal browser submit and page navigation 
-		return false; 
+
+	$('#custom_field_form').submit(function() {
+		// submit the form
+		$(this).ajaxSubmit({async:false});
+		// return false to prevent normal browser submit and page navigation
+		return false;
 	});
 });
 
@@ -103,7 +104,7 @@ function add_patient()
 	var error_message = "";
 	var error_flag = 0;
 	var partial_dob_ym = 0;
-	var partial_dob_y = 0; 
+	var partial_dob_y = 0;
 	for(i = 0; i < document.new_record.sex.length; i++)
 	{
 		if(document.new_record.sex[i].checked)
@@ -122,7 +123,7 @@ function add_patient()
 		error_flag = 1;
 		error_message += "<?php echo LangUtil::$generalTerms['ERROR'].": ".LangUtil::$generalTerms['GENDER']; ?>\n";
 	}
-	
+
 	if(card_num == "" || !card_num)
 	{
 		error_message += "<?php echo LangUtil::$generalTerms['ERROR'].": ".LangUtil::$generalTerms['PATIENT_ID']; ?>\n";
@@ -133,7 +134,7 @@ function add_patient()
 		alert("<?php echo LangUtil::$generalTerms['ERROR'].": ".LangUtil::$generalTerms['PATIENT_NAME']; ?>");
 		return;
 	}
-	
+
 	//Age not given
 	if(age.trim() == "")
 	{
@@ -148,7 +149,7 @@ function add_patient()
 				return;
 			}
 			partial_dob_ym =  1;
-			
+
 		}
 		else if(yyyy.trim() != "" && mm.trim() == "" && dd.trim() == "")
 		{
@@ -180,13 +181,13 @@ function add_patient()
 	}
 	else if (isNaN(age))
 	{
-	
+
 		if(age_param!=5)
 		{
 			alert("<?php echo LangUtil::$generalTerms['ERROR'].": ".LangUtil::$generalTerms['AGE']; ?>");
 			return;
 		}
-	}	
+	}
 	if(sex == "" || !sex)
 	{
 		alert("<?php echo LangUtil::$generalTerms['ERROR'].": ".LangUtil::$generalTerms['GENDER']; ?>");
@@ -210,26 +211,26 @@ function add_patient()
 	{
 		$("#progress_spinner").show();
 		//Submit form by ajax
-		$.ajax({  
-			type: "POST",  
-			url: "ajax/patient_add.php", 
+		$.ajax({
+			type: "POST",
+			url: "ajax/patient_add.php",
 			data: data_string,
-			success: function(data) { 
+			success: function(data) {
 				//Add custom fields
 				//$('#custom_field_form').ajaxSubmit();
-					
+
 				$('#custom_field_form').submit();
 				$("#progress_spinner").hide();
-				
+
 				/* Retrieve actual DB Key used */
 				var pidStart = data.indexOf("VALUES") + 8;
 				var pidEnd = data.indexOf(",",pidStart);
 				var new_card_num = data.substring(pidStart,pidEnd);
-				
-				/* If DB key used was different from one sent, increase daily num if set in session and card_num to new DB key 
+
+				/* If DB key used was different from one sent, increase daily num if set in session and card_num to new DB key
 				if ( new_card_num != card_num ) {
-						<?php 
-							if($_SESSION['dnum'] != 0) 
+						<?php
+							if($_SESSION['dnum'] != 0)
 							{
 						?>
 								dnum = parseInt(dnum) + 1;
@@ -239,7 +240,7 @@ function add_patient()
 				*/
 					card_num = new_card_num;
 				<?php
-				if( is_numeric($_SESSION['dnum']) && $_SESSION['dnum'] != 0 ) 
+				if( is_numeric($_SESSION['dnum']) && $_SESSION['dnum'] != 0 )
 				{
 				?>
 					window.location = "new_specimen.php?pid="+card_num+"&dnum="+dnum+"&session_num=<?php echo $session_num ?>";
@@ -369,7 +370,7 @@ function reset_new_patient()
 		$id_list1 = array("receipt_yyyy", "receipt_mm", "receipt_dd");
 		$value_list1 = array($today_array1[0], $today_array1[1], $today_array1[2]);
 		$page_elems->getDatePicker($name_list1, $id_list1, $value_list1, true);
-		
+
 		?>
 		</td>
 	</tr>
@@ -400,11 +401,11 @@ function reset_new_patient()
 	<tr<?php
 	if($_SESSION['pname'] == 0)
 		echo " style='display:none;' ";
-	?>>	
+	?>>
 		<td><?php echo LangUtil::$generalTerms['NAME']; ?><?php $page_elems->getAsterisk(); ?> </td>
 		<td><input type="text" name="name" id="name" value="" size="20" class='uniform_width' /></td>
 	</tr>
-	
+
 	<tr<?php
 	if($_SESSION['sex'] == 0)
 		echo " style='display:none;' ";
@@ -414,10 +415,10 @@ function reset_new_patient()
 			<INPUT TYPE=RADIO NAME="sex" id="sex" VALUE="M" checked><?php echo LangUtil::$generalTerms['MALE']; ?>
 			<INPUT TYPE=RADIO NAME="sex" VALUE="F"><?php echo LangUtil::$generalTerms['FEMALE']; ?>
 		<br>
-			
+
 		</td>
 	</tr>
-	
+
 	<tr><?php
 	if($_SESSION['age'] == 0)
 		echo " style='display:none;' ";
@@ -430,7 +431,7 @@ function reset_new_patient()
 		<td>
 		<font style='color:red'><?php echo LangUtil::$pageTerms['TIPS_DOB_AGE'];?></font>
 			<input type="text" name="age" id="age" value="" size="4" maxlength="10" class='uniform_width' />
-			
+
 			<select name='age_param' id='age_param'>
 				<option value='1'><?php echo LangUtil::$generalTerms['YEARS']; ?></option>
 				<option value='2'><?php echo LangUtil::$generalTerms['MONTHS']; ?></option>
@@ -438,15 +439,15 @@ function reset_new_patient()
 				<option value='4'>Weeks</option>
 				<option value='5'>Range(Years)</option>
 			</select>
-			
+
 		</td>
 	</tr>
 	<tr valign='top'<?php
 	if($_SESSION['dob'] == 0)
 		echo " style='display:none;' ";
-	?>>	
+	?>>
 		<td>
-			<?php echo LangUtil::$generalTerms['DOB']; ?> 
+			<?php echo LangUtil::$generalTerms['DOB']; ?>
 			<?php
 			if($_SESSION['dob'] == 2)
 				$page_elems->getAsterisk();
@@ -457,13 +458,13 @@ function reset_new_patient()
 		$name_list = array("yyyy", "mm", "dd");
 		$id_list = $name_list;
 		$value_list = array("", "", "");
-		$page_elems->getDatePicker($name_list, $id_list, $value_list); 
+		$page_elems->getDatePicker($name_list, $id_list, $value_list);
 		?>
 		</td>
 	</tr>
-		
+
 </form>
-	
+
 <form id='custom_field_form' name='custom_field_form' action='ajax/patient_add_custom.php' method='get'>
 <input type='hidden' name='pid2' id='pid2' value=''></input>
 	<?php
@@ -482,7 +483,7 @@ function reset_new_patient()
 	}
 	?>
 </form>
-	
+
 	<tr>
 		<td></td>
 		<td>
@@ -519,20 +520,20 @@ function reset_new_patient()
 	</div>
 	<br><br><br><br><br><br><br>
 	<div id='patient_prompt_div'>
-	
+
 	</div>
 </div>
 </td>
 </tr>
 </table>
-<?php 
+<?php
 /*
-$load_time = microtime(); 
-$load_time = explode(' ',$load_time); 
-$load_time = $load_time[1] + $load_time[0]; 
-$page_end = $load_time; 
-$final_time = ($page_end - $page_start); 
-$page_load_time = number_format($final_time, 4, '.', ''); 
-echo("Page generated in " . $page_load_time . " seconds"); 
+$load_time = microtime();
+$load_time = explode(' ',$load_time);
+$load_time = $load_time[1] + $load_time[0];
+$page_end = $load_time;
+$final_time = ($page_end - $page_start);
+$page_load_time = number_format($final_time, 4, '.', '');
+echo("Page generated in " . $page_load_time . " seconds");
 */
 include("includes/footer.php"); ?>

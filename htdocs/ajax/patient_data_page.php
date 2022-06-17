@@ -3,6 +3,7 @@
 include("../includes/SessionCheck.php");
 include("../includes/db_lib.php");
 include("../includes/script_elems.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("find_patient");
 
 $script_elems = new ScriptElems();
@@ -47,7 +48,7 @@ if($a == 0)
         {
             $patient_list = search_patients_by_id_dyn($q, $result_cap, $result_counter);
         }
-        
+
 }
 else if($a == 1)
 {
@@ -60,7 +61,7 @@ else if($a == 1)
         {
             $patient_list = search_patients_by_name_dyn($q, $result_cap, $result_counter, $c);
         }
-	//DB Merging - Currently Disabled 
+	//DB Merging - Currently Disabled
 	# See if there's a patient by the exact same name in another lab
 	//$patient = searchPatientByName($q);
 	/*if($patient != null) {
@@ -92,13 +93,13 @@ else if($a == 3)
             $patient_list = search_patients_by_dailynum_dyn("-".$q, $result_cap, $result_counter);
         }
 }
-//DB Merging - Currently disabled 
+//DB Merging - Currently disabled
 else if( (count($patient_list) == 0 || $patient_list[0] == null) && ($patient != null) ) {
 	?>
 	<br>
 	<div class='sidetip_nopos'>
 	<?php
-		echo "A record of the patient has been found in another hospital.<br><br>"; 
+		echo "A record of the patient has been found in another hospital.<br><br>";
 	?>
             </div>
 		<a rel='facebox' href='viewPatientInfo.php?pid=<?php echo $patient->patientId; ?>&type=national'>View Patient Info>></a><br>
@@ -135,10 +136,10 @@ else if( (count($patient_list) == 0 || $patient_list[0] == null) && ($patient !=
 			}
 			?>
 			<?php  #TODO: Add check if user has patient name/private data access here ?>
-                        
+
 			<th><?php echo LangUtil::$generalTerms['NAME']; ?></th>
 			<th><?php echo LangUtil::$generalTerms['GENDER']; ?></th>
-                        
+
                         <?php
 			if($lab_config->age >= 11)
 			{
@@ -146,7 +147,7 @@ else if( (count($patient_list) == 0 || $patient_list[0] == null) && ($patient !=
 				<th><?php echo LangUtil::$generalTerms['AGE']; ?></th>
 				<?php
 			}?>
-			
+
                         <?php
 			if(strpos($_SERVER["HTTP_REFERER"], "search.php") !== false)
 			{
@@ -225,7 +226,7 @@ else if( (count($patient_list) == 0 || $patient_list[0] == null) && ($patient !=
 				</td>
 				<?php
 			}?>
-                        
+
 			<?php
 			if(strpos($_SERVER["HTTP_REFERER"], "search.php") !== false)
 			{
@@ -251,7 +252,7 @@ else if( (count($patient_list) == 0 || $patient_list[0] == null) && ($patient !=
 			}
 			?>
 			<td>
-				<?php 
+				<?php
 				if(strpos($_SERVER["HTTP_REFERER"], "find_patient.php") !== false || strpos($_SERVER["HTTP_REFERER"], "doctor_register.php") !== false)
 				{
 					# Called from find_patient.php. Show 'profile' and 'register specimen' link
@@ -277,11 +278,11 @@ else if( (count($patient_list) == 0 || $patient_list[0] == null) && ($patient !=
 					<a href='select_test_profile.php?pid=<?php echo $patient->patientId; ?>' title='Click to View Patient Profile'>Select Tests</a>
 										</td>
                                         <td <?php //(is_billing_enabled($_SESSION['lab_config_id']) ? print("") : print("style='display:none'")) ?> >
-                                       
+
                                             <a target="_blank" href=<?php echo $billing_url_string; ?>' title='Click to generate a bill for this patient'>Generate Bill</a>
                                         </td>
-                                           
-					<td>					
+
+					<td>
 					<?php
 				}
 				else
@@ -300,34 +301,34 @@ else if( (count($patient_list) == 0 || $patient_list[0] == null) && ($patient !=
 	?>
 	</tbody>
 </table>
-   <?php 
+   <?php
         if(isset($_REQUEST['l']))
-        { 
-            $next_link = "../ajax/patient_data_page.php?q=".$_REQUEST['q']."&a=".$_REQUEST['a']."&c=".$_REQUEST['c']."&l=".$_REQUEST['l']."&result_cap=".$result_cap."&result_counter=".($result_counter+1); 
+        {
+            $next_link = "../ajax/patient_data_page.php?q=".$_REQUEST['q']."&a=".$_REQUEST['a']."&c=".$_REQUEST['c']."&l=".$_REQUEST['l']."&result_cap=".$result_cap."&result_counter=".($result_counter+1);
         }
         else
         {
-            $next_link = "../ajax/patient_data_page.php?q=".$_REQUEST['q']."&a=".$_REQUEST['a']."&c=".$_REQUEST['c']."&result_cap=".$result_cap."&result_counter=".($result_counter+1);             
+            $next_link = "../ajax/patient_data_page.php?q=".$_REQUEST['q']."&a=".$_REQUEST['a']."&c=".$_REQUEST['c']."&result_cap=".$result_cap."&result_counter=".($result_counter+1);
         }
         if(isset($_REQUEST['l']))
-        { 
-            $prev_link = "../ajax/patient_data_page.php?q=".$_REQUEST['q']."&a=".$_REQUEST['a']."&c=".$_REQUEST['c']."&l=".$_REQUEST['l']."&result_cap=".$result_cap."&result_counter=".($result_counter - 1); 
+        {
+            $prev_link = "../ajax/patient_data_page.php?q=".$_REQUEST['q']."&a=".$_REQUEST['a']."&c=".$_REQUEST['c']."&l=".$_REQUEST['l']."&result_cap=".$result_cap."&result_counter=".($result_counter - 1);
         }
         else
         {
-            $prev_link = "../ajax/patient_data_page.php?q=".$_REQUEST['q']."&a=".$_REQUEST['a']."&c=".$_REQUEST['c']."&result_cap=".$result_cap."&result_counter=".($result_counter - 1);             
+            $prev_link = "../ajax/patient_data_page.php?q=".$_REQUEST['q']."&a=".$_REQUEST['a']."&c=".$_REQUEST['c']."&result_cap=".$result_cap."&result_counter=".($result_counter - 1);
         }
     ?>
                    <?php if($_REQUEST['result_counter'] != 1) {?>
-                
-<div class="prev_link">                
+
+<div class="prev_link">
     <small> <a onclick="javascript:get_prev('<?php echo $prev_link; ?>', '<?php echo $result_counter - 1; ?>', '<?php echo $result_cap; ?>');">&lt;&nbsp;Previous&nbsp;</a></small>
 </div>
                                 <?php } ?>
-                
+
    <?php if($_REQUEST['rem'] > 0) {?>
 
-<div class="next_link">                
-    <small> <a onclick="javascript:get_next('<?php echo $next_link; ?>', '<?php echo $result_counter + 1; ?>', '<?php echo $result_cap; ?>');">&nbsp;Next&nbsp;&gt;</a> </small>            
+<div class="next_link">
+    <small> <a onclick="javascript:get_next('<?php echo $next_link; ?>', '<?php echo $result_counter + 1; ?>', '<?php echo $result_cap; ?>');">&nbsp;Next&nbsp;&gt;</a> </small>
 </div>
                 <?php } ?>

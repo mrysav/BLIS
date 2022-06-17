@@ -9,7 +9,7 @@ require_once("../regn/field_htmlFactory.php");
 require_once("../regn/generate_customize_field_order_patient.php");
 require_once("db_lib.php");
 require_once("field_order_update.php");
-require_once("../lang/lang_util.php");
+require_once(__DIR__."/../lang/lang_util.php");
 
 
 class PageElems
@@ -4760,7 +4760,7 @@ $name_list = array("yyyy_to".$count, "mm_to".$count, "dd_to".$count);
 	function getNewSpecimenForm($form_num, $pid, $dnum, $session_num, $doc="" ,$title ="Dr.", $refTo="")
 	{
 		# Returns HTML for new specimen form
-		LangUtil::setPageId("new_specimen");
+        LangUtil::setPageId("new_specimen");
 		$form_name = 'specimenform_'.$form_num;
 		$form_id = $form_name;
 		$form_class = 'specimenform_class';
@@ -10758,9 +10758,9 @@ $name_list = array("yyyy_to".$count, "mm_to".$count, "dd_to".$count);
 		foreach($zip_list as $backup)
 		{
 			echo "<input type='radio' id='backup-$count' name='$field_name' value='" .
-				$backup->file_name()."'" . 
+				$backup->file_name()."'" .
 				($count == 0 ? " checked " : "") .
-				">" . 
+				">" .
 				"<label for='backup-$count'>" . $backup->friendlyDate() .
 				"</label><br>\n";
 			$count++;

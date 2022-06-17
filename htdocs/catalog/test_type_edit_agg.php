@@ -6,6 +6,7 @@
 include("redirect.php");
 include("includes/header.php");
 include("includes/ajax_lib.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("catalog");
 
 $script_elems->enableJQueryForm();
@@ -23,7 +24,7 @@ $tips_string="To know more about a particular field select on the [?] next to th
 | <a href="country_catalog.php?show_t=1"><?php echo LangUtil::$generalTerms['CMD_CANCEL']; ?></a>
 <br><br>
 
-<?php 
+<?php
 $testTypeMapping = TestTypeMapping::getById($_REQUEST['tid']);
 if($testTypeMapping == null)
 {
@@ -80,11 +81,11 @@ function toggle_range_type(select_elem)
 	var elem_id = select_elem.id;
 	$('.values_section_'+elem_id).hide();
 	if(select_elem.value == <?php echo Measure::$RANGE_OPTIONS; ?>)
-		$('#alpha_'+elem_id).show();	
+		$('#alpha_'+elem_id).show();
 	else if(select_elem.value == <?php echo Measure::$RANGE_NUMERIC; ?>)
 		$('#val_'+elem_id).show();
 	else if(select_elem.value == <?php echo Measure::$RANGE_AUTOCOMPLETE; ?>)
-		$('#autocomplete_'+elem_id).show();	
+		$('#autocomplete_'+elem_id).show();
 }
 
 
@@ -93,11 +94,11 @@ function toggle_range_type(select_elem)
 	var elem_id = select_elem.id;
 	$('.new_values_section_'+elem_id).hide();
 	if(select_elem.value == <?php echo Measure::$RANGE_OPTIONS; ?>)
-		$('#new_alpha_'+elem_id).show();	
+		$('#new_alpha_'+elem_id).show();
 	else if(select_elem.value == <?php echo Measure::$RANGE_NUMERIC; ?>)
 		$('#new_val_'+elem_id).show();
 	else if(select_elem.value == <?php echo Measure::$RANGE_AUTOCOMPLETE; ?>)
-		$('#new_autocomplete_'+elem_id).show();	
+		$('#new_autocomplete_'+elem_id).show();
 }
 
  function add_option_field(mrow_num)
@@ -133,15 +134,15 @@ function update_ttype()
 	var range_type_elems = $("select[name='mtype[]']");
 	var new_range_type_elems = $("select[name='new_mtype[]']");
 	var measure_entered = false;
-	for(var j = 0; j < measure_elems.length; j++) {		
-			if(measure_elems[j].value.trim() != "") {  
+	for(var j = 0; j < measure_elems.length; j++) {
+			if(measure_elems[j].value.trim() != "") {
 				measure_entered = true;
 				if(range_type_elems[j].value == <?php echo Measure::$RANGE_NUMERIC; ?>) {
 					// Check numeric ranges
 					// Check all age ranges specified
-					var range_l_elems = $("input[name='range_l_"+(j+1)+"[]']");	
+					var range_l_elems = $("input[name='range_l_"+(j+1)+"[]']");
 					var range_u_elems = $("input[name='range_u_"+(j+1)+"[]']");
-					
+
 					for(var k = 0; k < range_l_elems.length; k++) {
 						var range_l = range_l_elems[k].value;
 						var range_u = range_u_elems[k].value;
@@ -165,13 +166,13 @@ function update_ttype()
 							alert("Upper bound cannot be less than or equal to lower bound");
 							return;
 						}
-						
+
 						if($("#agerange_l_"+(j+1)+"_"+k).is(":disabled") == true)
 							continue;
-						
+
 						var lower_value = $("#agerange_l_"+(j+1)+"_"+k).attr("value");
 						var upper_value = $("#agerange_u_"+(j+1)+"_"+k).attr("value");
-						
+
 						if(lower_value == undefined || upper_value == undefined)
 							continue;
 
@@ -203,11 +204,11 @@ function update_ttype()
 					var count =0;
 					for(var k = 0; k < option_elems.length; k++) {
 						var option_val = option_elems[k].value;
-						
+
 						if(option_val.trim() != "") {
 							option_exist = true;
 							break;
-						}				
+						}
 					}
 					if(option_exist == false) {
 						alert("<?php echo LangUtil::$generalTerms['INVALID']." ".LangUtil::$generalTerms['DROPDOWN']; ?>");
@@ -234,16 +235,16 @@ function update_ttype()
 				}
 			}
 	}
-	
-	for(var j = 0; j < new_measure_elems.length; j++) {		
-			if(new_measure_elems[j].value.trim() != "") {  
-				
+
+	for(var j = 0; j < new_measure_elems.length; j++) {
+			if(new_measure_elems[j].value.trim() != "") {
+
 				if(new_range_type_elems[j].value == <?php echo Measure::$RANGE_NUMERIC; ?>)
 				{
 					// Check numeric ranges
 					// Check all age ranges specified
 					var range_l_elems = $("input[name='new_range_l_"+(j+1)+"[]']");
-					
+
 					var range_u_elems = $("input[name='new_range_u_"+(j+1)+"[]']");
 					for(var k = 0; k < range_l_elems.length; k++)
 					{
@@ -256,25 +257,25 @@ function update_ttype()
 						}
 						if(isNaN(range_l))
 						{
-							
+
 							alert("Lower Range value should be numeric: Not '"+range_l+"'!");
 							return;
 						}
 						if(isNaN(range_u))
 						{
-							
+
 							alert("Upper Range value should be numeric: Not '"+range_u+"'!");
 							return;
 						}
 						if((range_l.trim()== "")&&(isNaN(range_u)==false))
 						{
-						
+
 							alert("Lower bound cannot be blank");
 							return;
 						}
 						if((range_u.trim()== "")&&(isNaN(range_l)==false))
 						{
-						
+
 							alert("Upper bound cannot be blank");
 							return;
 						}
@@ -283,7 +284,7 @@ function update_ttype()
 							alert("Upper bound cannot be less than or equal to lower bound");
 							return;
 						}
-						
+
 						if($("#agerange_l_"+(j+1)+"_"+k).is(":disabled") == true)
 						{
 							continue;
@@ -326,17 +327,17 @@ function update_ttype()
 					//Check option values
 					var option_elems = $("input[name='new_alpharange_"+(j+1)+"[]']");
 					var option_exist = false;
-					
+
 					for(var k = 0; k < option_elems.length; k++)
 					{
 						var option_val = option_elems[k].value;
-						
-						
+
+
 						if(option_val.trim() != "")
 						{
 							option_exist = true;
 							break
-							
+
 						}
 					}
 					if(option_exist == false)
@@ -435,11 +436,11 @@ if(num_ranges[mrow_num] == 0)
 		num_ranges[mrow_num]++;
 	}
 	var num_row = num_ranges[mrow_num];
-	
-		var map=map_offset-1;									
+
+		var map=map_offset-1;
 	var html_code = "<input type='text' class='range_field' name='range_l_"+mrow_num+"[]' value='' /> : <input type='text' class='range_field' name='range_u_"+mrow_num+"[]' value='' /> <input type='text' class='range_field' name='gender_"+mrow_num+"_"+map+"' value='B'/> <input type='text' class='range_field agerange_l_"+mrow_num+"' name='agerange_l_"+mrow_num+"_"+map+"' id='agerange_l_"+mrow_num+"_"+map+"' value='0' /> : <input type='text' class='range_field agerange_u_"+mrow_num+"' name='agerange_u_"+mrow_num+"_"+map+"' id='agerange_u_"+mrow_num+"_"+map+"' value='100' /><br>";
 	$('#numeric_'+mrow_num).append(html_code);
-}	
+}
 	function add_new_range_field(mrow_num, map_offset)
 	{
 if(num_ranges[mrow_num] == 0)
@@ -451,8 +452,8 @@ if(num_ranges[mrow_num] == 0)
 		num_ranges[mrow_num]++;
 	}
 	var num_row = num_ranges[mrow_num];
-	
-											
+
+
 	var html_code = "<input type='text' class='range_field' name='new_range_l_"+mrow_num+"[]' value='' /> : <input type='text' class='range_field' name='new_range_u_"+mrow_num+"[]' value='' /> <input type='text' class='range_field' name='new_gender_"+mrow_num+"[]' value='B' /> <input type='text' class='range_field agerange_l_"+mrow_num+"[]' name='new_agerange_l_"+mrow_num+"[]' id='new_agerange_l_"+mrow_num+"[]' value='0' /> : <input type='text' class='range_field agerange_u_"+mrow_num+"[]' name='new_agerange_u_"+mrow_num+"[]' id='new_agerange_u_"+mrow_num+"[]' value='100' /><br>";
 	$('#new_numeric_'+mrow_num).append(html_code);
 }
@@ -497,12 +498,12 @@ function validateRow()
 	var clinical_data;
 	var aLeft= new Array();
 	var aRight=new Array();
-    for (i=1; i<=lastRow; i++) 
+    for (i=1; i<=lastRow; i++)
 	{
        aLeft[i-1] = document.getElementById('txtRow' + i+1).value;
        aRight[i-1] = document.getElementById('txtRow' + i+2).value;
     }
-	
+
 		var total="";
 		if(aLeft[0]!="")
 	  total='%%%'+aLeft+'###'+aRight;
@@ -517,13 +518,13 @@ function validateRow()
 	  }
 	  else if(total!="%%%")
 	  clinical_data=total;
-	  else 
+	  else
 	  clinical_data="";
-	
+
 	$('#clinical_data').attr("value",clinical_data);
 	update_ttype();
 }
-  
+
 function addData(list) {
 	var dat=list.split('###');
 	var name=dat[0].split(',');
@@ -572,7 +573,7 @@ function toggle_agerange(measure_num, row_num)
 	else
 	{
 		$('#'+field_id).removeAttr("disabled");
-	}	
+	}
 }
 
 function isInputNumber(evt) {
@@ -599,7 +600,7 @@ function isInputNumber(evt) {
 <input type="hidden" name="testId" id='testId' value=<?php echo $testTypeMapping->testId; ?> ">
 	<table cellspacing='4px'>
 		<tbody>
-			
+
 			<tr valign='top'>
 				<td><?php echo LangUtil::$generalTerms['NAME']; ?><?php $page_elems->getAsterisk(); ?></td>
 				<td><input type='text' name='testName' id='testName' value='<?php echo $testTypeMapping->name; ?>' class='uniform_width'></input></td>
@@ -618,7 +619,7 @@ function isInputNumber(evt) {
 				</span>
 				</td>
 			</tr>
-	
+
 				<tr valign='top'>
 					<td><?php echo LangUtil::$generalTerms['MEASURES']; ?> [<a href='#measures_help' rel='facebox'>?</a>]</td>
 					<td>
@@ -660,27 +661,27 @@ function isInputNumber(evt) {
 											break;
 										case Measure::$RANGE_AUTOCOMPLETE:
 											$range_values = explode("_", $range_string);
-											break;									
+											break;
 									}
 								?>
 								<!--<select class='range_select' id='type_'<?php echo $i; ?>' name='mtype[]' onchange='javascript:add_label(<?php echo $i; ?>);'>-->
 									<select class='range_select' id='<?php echo $i; ?>' name='mtype[]'>
-									<option value='<?php echo GlobalMeasure::$RANGE_NUMERIC; ?>' <?php 
+									<option value='<?php echo GlobalMeasure::$RANGE_NUMERIC; ?>' <?php
 									if($range_type == GlobalMeasure::$RANGE_NUMERIC)
 										echo " selected='selected' ";
 									?>><?php echo LangUtil::$generalTerms['RANGE_NUMERIC']; ?></option>
-									
-									<option value='<?php echo GlobalMeasure::$RANGE_OPTIONS; ?>' <?php 
+
+									<option value='<?php echo GlobalMeasure::$RANGE_OPTIONS; ?>' <?php
 									if($range_type == GlobalMeasure::$RANGE_OPTIONS)
 										echo " selected='selected' ";
 									?>><?php echo LangUtil::$generalTerms['RANGE_ALPHANUM']; ?></option>
-									<option value='<?php echo GlobalMeasure::$RANGE_AUTOCOMPLETE; ?>' <?php 
+									<option value='<?php echo GlobalMeasure::$RANGE_AUTOCOMPLETE; ?>' <?php
 									if($range_type == GlobalMeasure::$RANGE_AUTOCOMPLETE)
 										echo " selected='selected' ";
 									?>><?php echo LangUtil::$generalTerms['RANGE_AUTOCOMPLETE']; ?></option>
 								</select>
 								<?php
-								
+
 								echo "</td>";
 								echo "<td>";
 								?>
@@ -688,11 +689,11 @@ function isInputNumber(evt) {
 								<?php if($range_type != GlobalMeasure::$RANGE_NUMERIC) echo " style='display:none' "; ?>
 								>
 									<?php
-									
+
 									$ref_count = 0;
 									if(count($ref_ranges) == 0 || $ref_ranges == null)
 									{
-										# Reference ranges not configured. 
+										# Reference ranges not configured.
 										# Fetch default values from 'global_measures' table
 										$lower_range="";
 										$upper_range="";
@@ -703,26 +704,26 @@ function isInputNumber(evt) {
 										}
 										?>
 										<span id='numeric_<?php echo $i; ?>'>
-											
+
 											<input type='text' class='range_field' name='range_l_<?php echo $i; ?>[]' value='<?php echo $lower_range; ?>' /> :
 											<input type='text' class='range_field' name='range_u_<?php echo $i; ?>[]' value='<?php echo $upper_range; ?>' />
 											<input type='text' class='gender_field' name='gender_<?php echo $i; ?>[]' value='B'/>
 											<input type='text' class='age_field' name='age_l_<?php echo $i; ?>[]' value='0'/>
 											<input type='text' class='age_field' name='age_u_<?php echo $i; ?>[]' value='100'/>
 											<br>
-											
+
 										</span>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo LangUtil::$generalTerms['RANGE']; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Gender &nbsp;&nbsp;Age_Range
 							<br>
 									<?php
 									}
 									else
-									{	
+									{
 									?>
 									<span id='numeric_<?php echo $i; ?>'>
 									<?php
 									foreach($ref_ranges as $ref_range)
 										{
-											
+
 										?>
 											<input type='text' class='range_field' name='range_l_<?php echo $i; ?>[]' value='<?php echo $ref_range->rangeLower; ?>' /> :
 											<input type='text' class='range_field' name='range_u_<?php echo $i; ?>[]' value='<?php echo $ref_range->rangeUpper; ?>' />
@@ -732,14 +733,14 @@ function isInputNumber(evt) {
 											<br>
 											<?php
 											$ref_count++;
-												
+
 										}
 										?>
 										</span>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo LangUtil::$generalTerms['RANGE']; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Gender &nbsp;&nbsp;Age_Range
 							<br>
 										<?php
 									}
-									?>	<br>						
+									?>	<br>
 									<small><a href="javascript:add_range_field('<?php echo $i; ?>',<?php echo $ref_count+1; ?>);"><?php echo LangUtil::$generalTerms['ADDANOTHER']; ?> &raquo;</a></small>
 									<br><br>
 								</span>
@@ -753,7 +754,7 @@ function isInputNumber(evt) {
 										{ $range_value= str_replace("#", "/", $range_value);
 											$j++;
 										?>
-											<input type='text' class='range_field' name='alpharange_<?php echo $i; ?>[]' value='<?php if($range_type == GlobalMeasure::$RANGE_OPTIONS) echo str_replace("#", "/", $range_value); ?>' /> 
+											<input type='text' class='range_field' name='alpharange_<?php echo $i; ?>[]' value='<?php if($range_type == GlobalMeasure::$RANGE_OPTIONS) echo str_replace("#", "/", $range_value); ?>' />
 										<?php
 											if($j < count($range_values))
 												echo "/ ";
@@ -786,7 +787,7 @@ function isInputNumber(evt) {
 								echo "<input type='text' name='unit[]' value='$curr_measure->unit' />";
 								echo "</td>";
 								echo "</tr>";
-								
+
 							}
 							}
 							# Space for adding new measures
@@ -825,15 +826,15 @@ function isInputNumber(evt) {
 											<input type='text' class='range_field' name='new_gender_<?php echo $i; ?>[]' value='B'/>
 											<input type='text' class='range_field agerange_l_<?php echo $i; ?>' name='new_agerange_l_<?php echo $i; ?>[]' id='new_agerange_l_<?php echo $i; ?>[]' value='0' /> :
 											<input type='text' class='range_field agerange_u_<?php echo $i; ?>' name='new_agerange_u_<?php echo $i; ?>[]' id='new_agerange_u_<?php echo $i; ?>[]' value='100' />
-																
+
 											<br>
 								</span>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo LangUtil::$generalTerms['RANGE']; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Gender &nbsp;&nbsp;Age_Range
 								<br>
 											<small><a href="javascript:add_new_range_field('<?php echo $i; ?>', 0);"><?php echo LangUtil::$generalTerms['ADDANOTHER']; ?> &raquo;</a></small>
 									<br><br>
 								</div>
-								</span>	
-								
+								</span>
+
 								<span id='new_alpha_new_<?php echo $i; ?>' style='display:none' class='new_values_section_new_<?php echo $i; ?>'>
 									<span id='new_alpha_list_<?php echo $i; ?>'>
 										<input type='text' class='range_field' name='new_alpharange_<?php echo $i; ?>[]' value='' /> /
@@ -861,7 +862,7 @@ function isInputNumber(evt) {
 						<a id='new_measure_link' href='javascript:add_new_measure();'><?php echo LangUtil::$generalTerms['ADDANOTHER']; ?> &raquo;</a>
 					</td>
 				</tr>
-					
+
 			<tr valign='top'>
 				<td></td>
 				<td>
@@ -883,12 +884,12 @@ function isInputNumber(evt) {
 <small>
 <b><?php echo LangUtil::$generalTerms['MEASURES']; ?></b>
 <br><br>
-Valid result ranges can be entered for each measure in the 'range' field. 
+Valid result ranges can be entered for each measure in the 'range' field.
 <br><br>
-<u>Numeric ranges</u> can be specified as 'lower:upper'. 
-For e.g., if the valid range lies between 0 and 1000, please enter '0:1000'.By default the gender is B for both and age_range is 0:100. You can modify any of the fields based on the measure. 
+<u>Numeric ranges</u> can be specified as 'lower:upper'.
+For e.g., if the valid range lies between 0 and 1000, please enter '0:1000'.By default the gender is B for both and age_range is 0:100. You can modify any of the fields based on the measure.
 <br><br>
-<u>Alphanumeric values</u> can be specified as 'value1/value2/value3'. 
+<u>Alphanumeric values</u> can be specified as 'value1/value2/value3'.
 For e.g., if test results can be either one from 'P','N' or 'D', please enter 'P/N/D'.
 <br><br>
 <u>Autocomplete</u> can be specified in the textboxes provided. They will be prompted while inputting the results.

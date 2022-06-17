@@ -10,6 +10,7 @@ include("redirect.php");
 include("includes/db_lib.php");
 
 # Set page ID for language translation -- keep unchanged
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("reports");
 
 # Enable javascript files -- keep unchanged
@@ -49,75 +50,75 @@ function print_content(div_id)
 <hr>
 <?php # End of top pane and buttons section ?>
 
-<?php 
-# Next, report content which is displayed on the page 
+<?php
+# Next, report content which is displayed on the page
 # This can also be exported as word or printed out
 ?>
 <div id='report_content'>
 
 	<?php # CSS link for tables in printable reports -- keep unchanged ?>
 	<link rel='stylesheet' type='text/css' href='css/table_print.css' />
-	
+
 	<?php # Report title, content and tables go here ?>
 	<h3>Report Name</h3>
 	<br>
-	
+
 	<?php
 	## Code for read submitted HTML form data
 	## Uncomment appropriate lines below
-	
+
 	## For date from single lab configuration
 	$lab_config_id = $_REQUEST['location'];
-	
+
 	## For single patient/specimen report
 	# $specimen_id = $_REQUEST['specimen_id'];
 	# $patient_id = $_REQUEST['patient_id'];
-	
+
 	## For date range related reports
 	# $date_from = $_REQUEST['yyyy_from']."-".$_REQUEST['mm_from']."-".$_REQUEST['dd_from'];
 	# $date_to = $_REQUEST['yyyy_to']."-".$_REQUEST['mm_to']."-".$_REQUEST['dd_to'];
-	
+
 	## For test type related reports
 	# $test_type_id = $_REQUEST['t_type'];
-	
+
 	## For specimen type related reports
 	# $specimen_type_id =  $_REQUEST['s_type'];
-	
+
 	## For patient related reports
 	# $patient_name = $_REQUEST['p_name'];
 	?>
-	
+
 	<?php
 	# Show Report date
-	echo LangUtil::$generalTerms['DATE'].": ".date('Y-m-d H:i')."<br>"; 
+	echo LangUtil::$generalTerms['DATE'].": ".date('Y-m-d H:i')."<br>";
 	?>
 	<?php
 	# Show Facility name
 	$lab_config = get_lab_config_by_id($lab_config_id);
-	echo LangUtil::$generalTerms['FACILITY'].": ".$lab_config->getSiteName()."<br>"; 
+	echo LangUtil::$generalTerms['FACILITY'].": ".$lab_config->getSiteName()."<br>";
 	?>
-	
+
 	<?php
 	## Build SQL query string from above data
 	## Uncomment and modify appropriate query_string below
-	
+
 	## Blanks string
 	$query_string = "";
-	
+
 	## Patient records
 	# $query_string = "SELECT patient_id FROM patient WHERE [condition]";
-	
-	
+
+
 	## Specimen records
 	# $query_string = "SELECT specimen_id FROM specimen WHERE [condition]";
-	
+
 	## Test records
 	# $query_string = "SELECT test_id FROM test WHERE [condition]";
-	
+
 	## Query the DB and fetch data into PHP -- keep unchanged
 	$saved_db = DbUtil::switchToLabConfig($lab_Config_id);
 	$resultset = query_associative_all($query_string)
-		
+
 	## Comment out appropriate lines
 	## Array storing list of matched specimens
 	$specimen_list = array();
@@ -125,26 +126,26 @@ function print_content(div_id)
 	$patient_list = array();
 	## Array storing list of matched tests
 	$test_list = array();
-	
+
 	# Store fetched specimens
 	foreach($resultset as $record)
 	{
 		$specimen_list[] = Specimen::getById($record['specimen_id']);
 	}
-	
+
 	# Store fetched patients
 	foreach($resultset as $record)
 	{
 		$patient_list[] = Specimen::getById($record['patient_id']);
 	}
-	
+
 	# Store fetched tests
 	foreach($resultset as $record)
 	{
 		$test_list[] = Specimen::getById($record['test_id']);
 	}
 	?>
-	
+
 	<?php
 	## Populate table for report
 	?>
@@ -152,9 +153,9 @@ function print_content(div_id)
 		<thead>
 			<tr>
 			<?php
-			# Table column headings section 
+			# Table column headings section
 			# Comment out appropriate headings
-			
+
 			# Patient related--
 			## Patient ID
 			echo "<th>LangUtil::$generalTerms['PATIENT_ID']</th>";
@@ -166,7 +167,7 @@ function print_content(div_id)
 			echo "<th>LangUtil::$generalTerms['AGE']</th>";
 			## Patient Sex
 			echo "<th>LangUtil::$generalTerms['GENDER']</th>";
-			
+
 			# Specimen related --
 			## Specimen ID
 			echo "<th>LangUtil::$generalTerms['SPECIMEN_ID']</th>";
@@ -182,7 +183,7 @@ function print_content(div_id)
 			echo "<th>LangUtil::$generalTerms['TESTS']</th>";
 			## Specimen status
 			echo "<th>LangUtil::$generalTerms['SP_STATUS']</th>";
-				
+
 			# Test related --
 			## Date result entered
 			echo "<th>LangUtil::$generalTerms['E_DATE']</th>";
@@ -201,13 +202,13 @@ function print_content(div_id)
 			<?php
 			# Table data columns section
 			# Comment out appropriate headings
-			
+
 			# Patient entries --
 			foreach($patient_list as $patient)
 			{
 				# New row
 				echo "<tr>";
-				
+
 				## Patient ID
 				echo "<td>".$patient->getSurrogateId()."</td>";
 				## Patient Name
@@ -218,17 +219,17 @@ function print_content(div_id)
 				echo "<td>".$patient->getAge()."</td>";
 				## Patient Sex
 				echo "<td>".$patient->sex."</td>";
-				
+
 				# End of row
 				echo "</tr>";
 			}
-			
+
 			# Specimen entries --
 			foreach($specimen_list as $specimen)
 			{
 				# New row
 				echo "<tr>";
-				
+
 				## Specimen ID
 				echo "<td>".$specimen->specimenId."</td>";
 				## Specimen Type
@@ -243,16 +244,16 @@ function print_content(div_id)
 				echo "<td>".$specimen->getTestNames()."</td>";
 				## Specimen status
 				echo "<td>".$specimen->getStatus()."</td>";
-				
+
 				# End of row
 				echo "</tr>";
 			}
-			
+
 			foreach($test_list as $test)
 			{
 				# New row
 				echo "<tr>";
-				
+
 				## Date result entered
 				echo "<td>".LangUtil::$generalTerms['E_DATE']."</td>";
 				## Result value
@@ -265,19 +266,19 @@ function print_content(div_id)
                                 echo "<td>".get_username_by_id($test->verifiedBy)."</td>";
 				## Verified by
 				echo "<td>".$test->getVerifiedBy."</td>";
-			
+
 				# End of row
 				echo "</tr>";
 			}
-			
+
 			?>
 		</tbody>
 	</table>
 	<br>
 	<?php # Line for Signature ?>
 	.............................
-	<?php 
-	# Restore database 
+	<?php
+	# Restore database
 	DbUtil::switchRestore($saved_db);
 	?>
 </div>

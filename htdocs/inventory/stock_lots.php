@@ -7,6 +7,7 @@ include("includes/header.php");
 include("includes/stats_lib.php");
 include("lang/lang_xml2php.php");
 include("barcode/barcode_lib.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("stocks");
 
 $script_elems->enableFlotBasic();
@@ -31,18 +32,18 @@ $font_size = 11;
 			$('#current_inventory').tablesorter();
 	});
 
- 
+
  function getBarcode(code)
 {
-    
+
     if(code == '')
         {
              alert('cannot be empty');
                 return;
         }
-    var count = parseInt($('#count').html()); 
+    var count = parseInt($('#count').html());
     count = count + 1;
-    $('#count').html(count);  
+    $('#count').html(count);
     var div = "bar"+count;
     generateBarcode(div, code);
 }
@@ -60,11 +61,11 @@ function generateBarcode(div, code)
 
     function PrintElem(elem, code)
     {
-        
+
         Popup($(elem).html(), code);
     }
 
-    function Popup(data, code) 
+    function Popup(data, code)
     {
         var mywindow = window.open('', 'my div', 'height=400,width=600');
         mywindow.document.write('<html><head><title>Barcodes</title>');
@@ -86,9 +87,9 @@ function get_barcode(code)
              alert('cannot be empty');
                 return;
         }
-    var count = parseInt($('#count').html()); 
+    var count = parseInt($('#count').html());
     count = count + 1;
-    $('#count').html(count);  
+    $('#count').html(count);
     var div = "bar"+count;
     var content = "<br><br><div id='"+div+"'></div>";
     $('#barcodeList').html(content);
@@ -102,7 +103,7 @@ function get_barcode(code)
         mywindow.document.write('</body></html>');
 
         mywindow.print();
-        mywindow.close();    
+        mywindow.close();
 }
 
 </script>
@@ -112,7 +113,7 @@ function get_barcode(code)
 <a href='view_stock.php'>&laquo; <?php echo LangUtil::$generalTerms['CMD_BACK']; ?></a> &nbsp;|&nbsp;<b> <?php echo LangUtil::$pageTerms['Current_Inventory']; ?></b>
 
 <?php echo "<br><br>Item Name: <b>".$reag['name']."</b>";?>
- 
+
 <table class='tablesorter' id='current_inventory'  style='width:700px'>
 	<thead>
 		<tr>
@@ -126,23 +127,23 @@ function get_barcode(code)
                         <th> <?php echo LangUtil::$pageTerms['Remarks']."&nbsp;&nbsp;&nbsp;&nbsp;" ?></th>
                         <th><?php echo "Update"."&nbsp;&nbsp;&nbsp;&nbsp;"; ?></th>
                         <th><?php echo "Action"."&nbsp;&nbsp;&nbsp;&nbsp;"; ?></th>
-                       
+
 		</tr>
 	</thead>
 <?php
-    
-   
+
+
     $stocks_list = Inventory::getStocksList($lid, $r_id);
     foreach($stocks_list as $stock) {
 ?>  <tbody>
 		<tr align='center'>
 			<td><?php echo $stock['lot']; ?></td>
 			<td><?php echo Inventory::getLotQuantity($lid, $r_id, $stock['lot']); ?></td>
-			<td><?php 
+			<td><?php
                         $uni = $reag['unit'];
                             if($uni == '')
                                 echo "units";
-                            else 
+                            else
                                 echo $uni;
                             ?>
                         </td>
@@ -157,30 +158,30 @@ function get_barcode(code)
                             echo $e_date; ?></td>
                         <td><?php echo $stock['remarks']; ?></td>
                         <?php if($view_use == 1){ ?>
-                        <td><?php 
+                        <td><?php
                             echo "<a href='use_stock.php?id=".$reag['id']."&lot=".$stock['lot']."'> Update Stock</a>";
-                           
+
                             ?></td>
                         <?php } ?>
-                        <td><?php 
+                        <td><?php
                             $gencode = $reag['id'].$barcode_seperator.$reag['name'].$barcode_seperator.$stock['lot'];
                             ?>
                             <a href='#' onclick="get_barcode('<?php echo $gencode; ?>')"> Print Barcode</a>
                                 <?php
                             //echo "<a target='_blank' href='print_barcode.php?gencode=".$gencode."'> Print Barcode</a>";
                             ?></td>
-                        
+
 		</tr>
-<?php 
-	} 
+<?php
+	}
 ?>
 	</tbody>
 </table>
 <div id='view_stocks_help' class='right_pane' style='display:none;margin-left:10px;'>
-<ul>	
+<ul>
         <?php
 
-                
+
              echo "Stock lots for the selected Reagent are displayed. Click on 'Update Stock' to log stock usage for the specific lot.";
 
 

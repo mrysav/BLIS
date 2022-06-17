@@ -4,6 +4,7 @@
 #
 include("redirect.php");
 include("includes/header.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("bill_review");
 
 $lab_config_id = $_SESSION['lab_config_id'];
@@ -38,7 +39,7 @@ $script_elems->enableTableSorter();
 		</script>
 		<?php include("../includes/styles.php"); ?>
 	</head>
-	
+
 	<body>
 		<?php
 			$bill = Bill::loadFromId($billId, $lab_config_id);
@@ -61,7 +62,7 @@ $script_elems->enableTableSorter();
 				</tr>
 				<?php
 					foreach ($associations as $assoc)
-					{ 
+					{
 						$test = Test::getById($assoc->getTestId());
 						$testType = TestType::getById($test->testTypeId);
 						$specimen = Specimen::getById($test->specimenId);

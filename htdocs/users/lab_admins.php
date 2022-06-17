@@ -5,14 +5,15 @@
 #
 
 include("../users/accesslist.php");
-if( !(isCountryDir(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $countryDirPageList)) 
+if( !(isCountryDir(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $countryDirPageList))
 	&& !(isSuperAdmin(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $superAdminPageList)) )
 	header( 'Location: home.php' );
 
 include("redirect.php");
 ?>
-<?php 
+<?php
 include("includes/header.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("lab_admins");
 
 $script_elems->enableFacebox();
@@ -88,7 +89,7 @@ else if(isset($_REQUEST['upd']))
 }
 
 $lab_admin_list = get_admin_users();
-$page_elems->getLabAdminTable($lab_admin_list); 
+$page_elems->getLabAdminTable($lab_admin_list);
 ?>
 <br><br><br>
 <?php include("includes/footer.php"); ?>

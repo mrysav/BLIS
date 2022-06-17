@@ -7,6 +7,7 @@ include("../includes/SessionCheck.php");
 include("../includes/db_lib.php");
 include("../includes/script_elems.php");
 include("../includes/page_elems.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("lab_admins");
 
 $script_elems = new ScriptElems();
@@ -33,7 +34,7 @@ $user->phone = $phone;
 $user->createdBy = $_SESSION['user_id'];
 $user->langId = $lang_id;
 $user_exists = check_user_exists($username);
-if($user_exists == false) 
+if($user_exists == false)
 {
 	add_user($user);
 	?>

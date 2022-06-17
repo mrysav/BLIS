@@ -2,12 +2,12 @@
 #
 # (c) C4G, Santosh Vempala, Ruban Monu, Amol Shintre and Naomi Chopra
 # Admin Stock Management Page to add new stock
-# Sneds POST request to stock_details.php 
+# Sneds POST request to stock_details.php
 #
 
 include("../users/accesslist.php");
-/*if( !(isAdmin(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $adminPageList)) 
-     && !(isCountryDir(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $countryDirPageList)) 
+/*if( !(isAdmin(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $adminPageList))
+     && !(isCountryDir(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $countryDirPageList))
 	 && !(isSuperAdmin(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $superAdminPageList)) ) {
 		header( 'Location: home.php' );
 }*/
@@ -15,6 +15,7 @@ include("../users/accesslist.php");
 include("redirect.php");
 include("includes/header.php");
 include("includes/stats_lib.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("stocks");
 $script_elems->enableTableSorter();
 $script_elems->enableDatePicker();
@@ -22,7 +23,7 @@ $lid = $_SESSION['lab_config_id'];
 $sel_id = $_REQUEST['id'];
 putUILog('inv_new_stock', 'X', basename($_SERVER['REQUEST_URI'], ".php"), 'X', 'X', 'X');
 
-?> 
+?>
 <script type='text/javascript'>
 $(document).ready(function() {
             $('#lot_error').hide();
@@ -31,8 +32,8 @@ $(document).ready(function() {
 
 //$("#changeText").click(function() {
     var url_string = "../inventory/get_reagent_unit.php?lid="+"<?php echo $lid; ?>"+"&id="+"<?php echo $sel_id; ?>";
-	$.ajax({ 
-		url: url_string, 
+	$.ajax({
+		url: url_string,
 		success: function(result){
 			//$('#specimenboxes').append(msg);
                             $("#unit_div").html(result);
@@ -43,16 +44,16 @@ $(document).ready(function() {
 });
 function add_specimenbox(){
 	var num= parseInt(document.getElementById('count').value);
-	
+
 	var new_num=num+1;
 	$('#count').attr("value",new_num);
-	
+
 	var url_string = "inventory/add_new_stock.php?num="+new_num;
-	$.ajax({ 
-		url: url_string, 
+	$.ajax({
+		url: url_string,
 		success: function(msg){
 			$('#specimenboxes').append(msg);
-			
+
 		}
 	});
 }
@@ -64,8 +65,8 @@ function validateRow() {
         name = name.replace(" ", "%20");
         vall = $('select').val();
         var url_string = "inventory/check_lot.php?lot="+name+"&lid="+"<?php echo $_SESSION['lab_config_id']; ?>"+"&id="+vall;
-	$.ajax({ 
-		url: url_string, 
+	$.ajax({
+		url: url_string,
                 async : false,
 		success: function(check){
                      if(check == '1')
@@ -87,7 +88,7 @@ function validateRow() {
 	else
 	{
 		$('#lot_error').hide();
-	}   
+	}
         if($('#quant').attr("value") == "")
 	{
 		$('#quant_error').show();
@@ -96,7 +97,7 @@ function validateRow() {
 	else
 	{
 		$('#quant_error').hide();
-	}   
+	}
         if(gcheck == 1)
 	$('#new_test_form').submit();
 }
@@ -105,8 +106,8 @@ function display_unit()
 {
     val = $('select').val();
     var url_string = "../inventory/get_reagent_unit.php?lid="+"<?php echo $lid?>"+"&id="+val;
-	$.ajax({ 
-		url: url_string, 
+	$.ajax({
+		url: url_string,
 		success: function(result){
                             $("#unit_div").html(result);
 
@@ -123,7 +124,7 @@ $page_elems->getSideTip("Tips", $tips_string);
 ?>
 
 <form name='new_test_form' id='new_test_form' action='inventory/add_new_stock.php' method='post'>
-		
+
 		<input type='hidden' name='count' value='1' id='count' />
 		<div class="pretty_box" style="width:500px;">
 			<table>
@@ -164,7 +165,7 @@ $page_elems->getSideTip("Tips", $tips_string);
 				</tr>
 				<tr>
 					<td>
-						&nbsp;<?php echo LangUtil::$pageTerms['Lot_Number']; ?><?php $page_elems->getAsterisk(); ?> 
+						&nbsp;<?php echo LangUtil::$pageTerms['Lot_Number']; ?><?php $page_elems->getAsterisk(); ?>
 					</td>
 					<td></td>
 					<td>
@@ -175,8 +176,8 @@ $page_elems->getSideTip("Tips", $tips_string);
 				</tr>
 				<tr>
 					<td>
-						&nbsp;<?php echo LangUtil::$pageTerms['Expiry_Date']; ?><?php $page_elems->getAsterisk(); ?> 
-						
+						&nbsp;<?php echo LangUtil::$pageTerms['Expiry_Date']; ?><?php $page_elems->getAsterisk(); ?>
+
 					</td>
 					<td></td>
 					<td>
@@ -207,7 +208,7 @@ $page_elems->getSideTip("Tips", $tips_string);
 				</tr>
 				<tr>
 					<td>
-						&nbsp;<?php echo LangUtil::$pageTerms['Quantity_Supplied']; ?><?php $page_elems->getAsterisk(); ?> 
+						&nbsp;<?php echo LangUtil::$pageTerms['Quantity_Supplied']; ?><?php $page_elems->getAsterisk(); ?>
 					</td>
 					<td></td>
 					<td>
@@ -215,7 +216,7 @@ $page_elems->getSideTip("Tips", $tips_string);
                                                 <label class="error" for="quant" id="quant_error"><small><font color="red"><?php echo LangUtil::getGeneralTerm("MSG_REQDFIELD"); ?></font></small></label>
 					</td>
 				</tr>
-				
+
 				<tr>
 					<td>
 						&nbsp;<?php echo LangUtil::$pageTerms['Cost_per_Unit']; ?>
@@ -228,7 +229,7 @@ $page_elems->getSideTip("Tips", $tips_string);
 				<tr>
 					<td>
 						<label for='<?php echo $curr_form_id; ?>_date_1'>
-							&nbsp;<?php echo LangUtil::$pageTerms['Date_received']; ?><?php $page_elems->getAsterisk(); ?> 
+							&nbsp;<?php echo LangUtil::$pageTerms['Date_received']; ?><?php $page_elems->getAsterisk(); ?>
 						</label>
 					</td>
 					<td></td>
@@ -241,8 +242,8 @@ $page_elems->getSideTip("Tips", $tips_string);
 				</tr>
                                 <tr>
 					<td>
-						&nbsp;<?php echo "Remarks"; ?> 
-						
+						&nbsp;<?php echo "Remarks"; ?>
+
 					</td>
 					<td></td>
 					<td>

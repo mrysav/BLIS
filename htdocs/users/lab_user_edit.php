@@ -5,13 +5,14 @@
 #
 
 include("../users/accesslist.php");
-if( !(isAdmin(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $adminPageList)) 
-     && !(isCountryDir(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $countryDirPageList)) 
+if( !(isAdmin(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $adminPageList))
+     && !(isCountryDir(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $countryDirPageList))
 	 && !(isSuperAdmin(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $superAdminPageList)) )
 		header( 'Location: home.php' );
-	
+
 include("redirect.php");
 include("includes/header.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("lab_config_home");
 
 $saved_session = SessionUtil::save();
@@ -63,20 +64,20 @@ function update_lab_user()
 
 /*	var readwriteOption = 0;
     var rwoptions = ',';
-    
+
 	$('input[name="readwriteOpt"]:checked').each(function() {
 		readwriteOption++;
-		rwoptions = rwoptions + this.value+','  ; 
+		rwoptions = rwoptions + this.value+','  ;
 	});
 
 	rwoptions = rwoptions.slice(1,-1);
-	
+
 	if(readwriteOption < 1){
 		alert("Select at least one read or write options");
 		return;
 	}
 
-*/	
+*/
 
 var rwoptions=document.getElementById('hdn_rwopts').value;
 
@@ -160,7 +161,7 @@ else
 <input type="hidden" value="<?php echo $user->rwoptions;?>" id="hdn_rwopts"/>
 <br>
 <a href='javascript:goback();'><?php echo LangUtil::$generalTerms['CMD_BACK']; ?></a> |<b><?php echo LangUtil::$pageTerms['EDIT_LAB_USER']; ?></b>
- 
+
 <br><br>
 <?php
 if($user == null)
@@ -183,7 +184,7 @@ if($user == null)
 				<input type='hidden' name='username' id='username' value="<?php echo $user->username; ?>" class='uniform_width'></input>
 			</td>
 		</tr>
-		
+
 		<tr>
 			<td><?php echo LangUtil::$generalTerms['NAME'] ?></td>
 			<td><input type="text" name="fullname" id="fullname" value="<?php echo $user->actualName; ?>" class='uniform_width' /><br></td>
@@ -217,15 +218,15 @@ if($user == null)
 		</tr>
 <!--		<tr>-->
 <!--<tr id="rw">
-			<?php 
+			<?php
 //			$page_elems->getLabUserReadWriteOptionRO($user->level, $user->rwoptions);
 
 			?>
 //</tr>			-->
-			
+
 <!--		</tr>-->
 		<tr valign='top'>
-		
+
 			<td><div id="patient-entry"><?php echo LangUtil::$pageTerms['USE_PNAME_RESULTS']; ?>?</div></td>
 			<td>
 				<div id="patient-entry_check"><input type="checkbox" name="showpname" id="showpname" <?php
@@ -267,7 +268,7 @@ if($user == null)
 	</table>
 
 </form>
-<?php 
+<?php
 SessionUtil::restore($saved_session);
-include("includes/footer.php"); 
+include("includes/footer.php");
 ?>

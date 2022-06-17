@@ -3,6 +3,7 @@
 include("redirect.php");
 include("includes/header.php");
 include("includes/stats_lib.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("reports");
 
 $script_elems->enableFlotBasic();
@@ -16,7 +17,7 @@ $script_elems->enableLatencyRecord();
 		$('#stat_graph').hide();
 		$('#stat_graph_bar').hide();
 	});
-		
+
 	function showGraph() {
 		$('#stat_graph').show();
 		$('#stat_graph_bar').show();
@@ -25,7 +26,7 @@ $script_elems->enableLatencyRecord();
 		$('#hideTrendSpan').hide();
 		$('#viewTrendSpan').show();
 	}
-	
+
 	function hideGraph() {
 		$('#stat_graph').hide();
 		$('#stat_graph_bar').hide();
@@ -34,7 +35,7 @@ $script_elems->enableLatencyRecord();
 		$('#viewTrendSpan').show();
 		$('#hideTrendSpan').hide();
 	}
-	
+
 	function hideTrends() {
 		$('#stat_graph').hide();
 		$('#stat_graph_bar').hide();
@@ -49,9 +50,9 @@ $script_elems->enableLatencyRecord();
 <script type="text/javascript" src="js/highcharts.js"></script>
 <br>
 <div id = 'links'>
-	<a href='reports.php?show_agg'>&laquo; <?php echo LangUtil::$pageTerms['MSG_BACKTOREPORTS']; ?></a> | 
+	<a href='reports.php?show_agg'>&laquo; <?php echo LangUtil::$pageTerms['MSG_BACKTOREPORTS']; ?></a> |
 	<span id='viewGraphSpan'><a href='javascript:showGraph();'>View Graph</a></span>
-	<span id='hideGraphSpan' style='display:none;'><a href='javascript:hideGraph();'>Hide Graph</a></span> 
+	<span id='hideGraphSpan' style='display:none;'><a href='javascript:hideGraph();'>Hide Graph</a></span>
 	|
 	<span id='viewTrendSpan'><a href='javascript:viewTrends();'>View Trends</a></span>
 	<span id='hideTrendSpan' style='display:none;'><a href='javascript:hideTrends();'>Hide Trends</a></span>
@@ -88,16 +89,16 @@ function publishDates( $date_from, $date_to ) {
 function getWeeklyStats( $lab_config, $test_type_id, $date_from, $date_to, $test_name = null ) {
 			global $xAxisGraph;
 			global $progressGraphData;
-			
+
 			if ( $test_name != null) {
-				
+
 			}
 			$stats = StatsLib::getDiscreteInfectionStatsWeekly($lab_config, $test_type_id, $date_from, $date_to);
 			foreach($stats as $key => $value) {
 				$xAxisGraph[] = date('Y,  n,  j',$key);
 				if( $value[0] != 0) {
 					$progressData[] = round(($value[1]/$value[0])*100,2);
-				}	
+				}
 				else {
 					$progressData[] = 0;
 				}
@@ -109,7 +110,7 @@ if( count($lab_config_id_array) == 1 ) {
 	if ( $test_type_id == 0 )
 		$lab_config_id = $lab_config_id_array;
 	$multipleIndividualLabs = false;
-}	
+}
 else {
 	$multipleIndividualLabs = true;
 }
@@ -133,13 +134,13 @@ if ( !$multipleIndividualLabs ) {
 				<?php echo LangUtil::$pageTerms['TIPS_NODISCRETE']; ?>
 				</div>
 				<?php
-				include("includes/footer.php"); 
+				include("includes/footer.php");
 				return;
 			}
 			publishDates( $date_from, $date_to);
 			?>
 			<div id='stat_table'>
-				<?php 
+				<?php
 					if( $lab_config_id != 0 ) {
 						$lab_config = LabConfig::getById($lab_config_id);
 						$labName = $lab_config->name;
@@ -147,7 +148,7 @@ if ( !$multipleIndividualLabs ) {
 						$page_elems->getInfectionStatsTable($stat_list, $lab_config_id);
 					}
 					else
-						$page_elems->getInfectionStatsTableAggregate($stat_list); 
+						$page_elems->getInfectionStatsTableAggregate($stat_list);
 				?>
 			</div>
 			<?php
@@ -155,48 +156,48 @@ if ( !$multipleIndividualLabs ) {
 		case 'turnaroundTime':
 			view_testwise_weekly();
 			break;
-		case 'infectionReport': 
+		case 'infectionReport':
 			break;
 	}
 }
 else {
 	if ( $reportType == "Prevalence" ) {
-	
+
 		publishDates( $date_from, $date_to );
 		$stat_list = array();
 		$retval = array();
 		$existing_stat_list = array();
 		$testName = null;
-		
+
 		for($i=0; $i < count($lab_config_id_array); $i++) {
-		
+
 			$labIdTestTypeIdSeparated = explode(":",$lab_config_id_array[$i]);
 			$lab_config_id = $labIdTestTypeIdSeparated[0];
 			$test_type_id = $labIdTestTypeIdSeparated[1];
-			
+
 			$retval = StatsLib::getDiscreteInfectionStatsAggregate($lab_config_id, $date_from, $date_to, $test_type_id);
 			$existing_stat_list = $stat_list;
 			$stat_list = array_merge($existing_stat_list, $retval);
-			
+
 			$lab_config = LabConfig::getById($lab_config_id);
 			$labName = $lab_config->name;
 			$labNamesArray[] = $labName;
-			
+
 			getWeeklyStats($lab_config, $test_type_id, $date_from, $date_to);
-			
+
 			if ( !$testName ) {
 				$saved_db = DbUtil::switchToLabConfig($lab_config_id);
 				$testName = get_test_name_by_id($test_type_id);
-				DbUtil::switchRestore($saved_db);		
+				DbUtil::switchRestore($saved_db);
 			}
-			
+
 			if(count($stat_list) == 0) {
 				?>
 				<div class='sidetip_nopos'>
 				<?php echo LangUtil::$pageTerms['TIPS_NODISCRETE']; ?>
 				</div>
 				<?php
-				include("includes/footer.php"); 
+				include("includes/footer.php");
 				return;
 			}
 		}
@@ -204,7 +205,7 @@ else {
 		echo "<div id='stat_table'>";
 		$page_elems->getInfectionStatsTableAggregate($stat_list, $lab_config_id , $multipleIndividualLabs);
 		echo "</div>";
-		
+
 		createGraph();
 		createTrends();
 	}
@@ -242,8 +243,8 @@ function createGraph() {
 					</tr>
 					</tbody>
 					</table>
-					
-					<script id="source" language="javascript" type="text/javascript"> 
+
+					<script id="source" language="javascript" type="text/javascript">
 					$(function () {
 						<?php
 						$x_val = 0;
@@ -278,7 +279,7 @@ function createGraph() {
 								}
 								<?php
 								$count++;
-								$index_count += 2;				
+								$index_count += 2;
 								if($count < count($stat_chunk) + 1)
 								{
 									echo ",";
@@ -299,7 +300,7 @@ function createGraph() {
 			echo "</div>";
 }
 
-function createTrends() { 
+function createTrends() {
 	global $labNamesArray;
 	global $xAxisGraph;
 	global $progressGraphData;
@@ -318,7 +319,7 @@ function createTrends() {
 			$('#hideTrendSpan').show();
 			createChart(x, y, z);
 		}
-	
+
 		function createChart(labNamesArray, xAxisGraph, progressGraphData) {
 
 			var chart;
@@ -350,13 +351,13 @@ function createTrends() {
 				 }
 			  },
 			  series: [{
-				name : ' ', 
+				name : ' ',
 				tickInterval: 7 * 24 * 3600 * 1000, // one week
 				pointStart: Date.UTC(2011, 0, 1),
 				data: [ ]
 			  }]
 		   };
-	   
+
 			for(var i=0;i<labNamesArray.length;i++) {
 				options.series.push({
 					name: labNamesArray[i],
@@ -365,6 +366,6 @@ function createTrends() {
 			}
 		   chart = new Highcharts.Chart(options);
 		}
-		
+
 	</script>
 <?php } ?>

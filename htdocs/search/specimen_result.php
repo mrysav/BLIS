@@ -5,6 +5,7 @@
 include("redirect.php");
 include("includes/header.php");
 include("../includes/ajax_lib.php");
+require_once(__DIR__."/../lang/lang_util.php");
 $script_elems->enableJQueryForm();
 $script_elems->enableJQueryValidate();
 $script_elems->enableTableSorter();
@@ -94,24 +95,24 @@ $test_list = get_tests_by_specimen_id($specimen->specimenId);
 
 		// 59,60,61...,
 		$measure_list = $test_type->getMeasures();
-                
+
                 $submeasure_list = array();
                 $comb_measure_list = array();
                // print_r($measure_list);
-                
+
                 foreach($measure_list as $measure)
                 {
-                    
+
                     $submeasure_list = $measure->getSubmeasuresAsObj();
                     //echo "<br>".count($submeasure_list);
                     //print_r($submeasure_list);
                     $submeasure_count = count($submeasure_list);
-                    
+
                     if($measure->checkIfSubmeasure() == 1)
                     {
                         continue;
                     }
-                        
+
                     if($submeasure_count == 0)
                     {
                         array_push($comb_measure_list, $measure);
@@ -120,16 +121,16 @@ $test_list = get_tests_by_specimen_id($specimen->specimenId);
                     {
                         array_push($comb_measure_list, $measure);
                         foreach($submeasure_list as $submeasure)
-                           array_push($comb_measure_list, $submeasure); 
+                           array_push($comb_measure_list, $submeasure);
                     }
                 }
                 /*
                                 echo "<pre><br>";
                 print_r($measure_list);
- 
+
                 $measure_list = $comb_measure_list;
                 print_r($measure_list);
-                echo "</pre>";  
+                echo "</pre>";
                 */
                 $measure_list = $comb_measure_list;
 		$result_list = explode(",", $test->result);
@@ -193,12 +194,12 @@ $test_list = get_tests_by_specimen_id($specimen->specimenId);
 					{
 					$range_bounds = $measure->getRangeValues($patient);
 					}
-					
+
 					?>
 					<span>
-					&nbsp; <?php echo LangUtil::$generalTerms['RANGE']; ?> (<?php 
+					&nbsp; <?php echo LangUtil::$generalTerms['RANGE']; ?> (<?php
 					$unit=$measure->unit;
-					if(stripos($unit,",")!=false) {	
+					if(stripos($unit,",")!=false) {
 						$units=explode(",",$unit);
 						$lower_parts=explode(".",$range_bounds[0]);
 						$upper_parts=explode(".",$range_bounds[1]);
@@ -226,11 +227,11 @@ $test_list = get_tests_by_specimen_id($specimen->specimenId);
 					?>)<?php
 					}
 					else
-					{	
-						if(stripos($unit,":")!=false) {		
+					{
+						if(stripos($unit,":")!=false) {
 							$units=explode(":",$unit);
 							echo $range_bounds[0]; ?><sup><?php echo $units[0] ?></sup>-<?php echo $range_bounds[1];?><sup><?php echo $units[0] ?></sup>)
-						<?php 
+						<?php
 						}
 						else {
 							echo $range_bounds[0]; ?>-<?php echo $range_bounds[1];?>)<?php echo "&nbsp;".$measure->unit;} ?>
@@ -238,7 +239,7 @@ $test_list = get_tests_by_specimen_id($specimen->specimenId);
 							<input class='uniform_width results_entry' type='text' name='<?php echo $field_name; ?>' id='<?php echo $field_id; ?>' value='<?php echo $field_value; ?>' onchange="javascript:update_remarks(<?php echo $test_type->testTypeId; ?>);">
 							</input>
 						<?php
-					}	
+					}
 				}
 				else if($range_type == Measure::$RANGE_AUTOCOMPLETE)
 				{

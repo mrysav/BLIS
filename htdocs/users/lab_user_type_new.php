@@ -6,8 +6,8 @@
 #
 
 include("../users/accesslist.php");
-if( !(isAdmin(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $adminPageList)) 
-     && !(isCountryDir(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $countryDirPageList)) 
+if( !(isAdmin(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $adminPageList))
+     && !(isCountryDir(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $countryDirPageList))
 	 && !(isSuperAdmin(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $superAdminPageList)) ) {
 		header( 'Location: home.php' );
 }
@@ -15,6 +15,7 @@ if( !(isAdmin(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVE
 include("redirect.php");
 include("includes/page_elems.php");
 include("includes/script_elems.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("lab_config_home");
 
 $script_elems = new ScriptElems();
@@ -83,14 +84,14 @@ function add_lab_user()
 	// readwriteOption = $('#readwriteOpt:checked').length;
     var readwriteOption = 0;
     var rwoptions = ',';
-    
+
 	$('input[name="readwriteOpt"]:checked').each(function() {
 		readwriteOption++;
-		rwoptions = rwoptions + this.value+','  ; 
+		rwoptions = rwoptions + this.value+','  ;
 	});
 
 	rwoptions = rwoptions.slice(1,-1);
-	
+
 	if(readwriteOption < 1){
 		alert("Select at least one read or write options");
 		return;
@@ -130,14 +131,14 @@ function add_user_type(){
 	}
 	var readwriteOption = 0;
     var rwoptions = ',';
-    
+
 	$('input[name="readwriteOpt"]:checked').each(function() {
 		readwriteOption++;
-		rwoptions = rwoptions + this.value+','  ; 
+		rwoptions = rwoptions + this.value+','  ;
 	});
 
 	rwoptions = rwoptions.slice(1,-1);
-	
+
 	if(readwriteOption < 1){
 		alert("Select at least one read or write option");
 		return;
@@ -232,13 +233,13 @@ $(document).ready(function(){
 			<td> <div id="readOrWrite" name="readOrWrite" > Writeable Options </div><?php $page_elems->getAsterisk(); ?>
 		 	</td>
 		 	<td><div id="readWrite_options" name="readWrite_options">
-		 		
+
 					<input type="checkbox" name="readwriteOpt" id='readwriteOpt2' value="2">Patient Registration<br>
 					<input type="checkbox" name="readwriteOpt" id='readwriteOpt3' value="3">Test Results<br>
 					<input type="checkbox" name="readwriteOpt" id='readwriteOpt4' value="4">Search<br>
 					<input type="checkbox" name="readwriteOpt" id='readwriteOpt6' value="6">Inventory<br>
 					<input type="checkbox" name="readwriteOpt" id='readwriteOpt7' value="7">Backup Data <br>
-				
+
 				</div>
 		 	</td>
 		</tr>

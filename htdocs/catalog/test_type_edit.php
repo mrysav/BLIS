@@ -6,6 +6,7 @@
 include("redirect.php");
 include("includes/header.php");
 include("includes/ajax_lib.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("catalog");
 
 putUILog('test_type_edit', 'X', basename($_SERVER['REQUEST_URI'], ".php"), 'X', 'X', 'X');
@@ -66,23 +67,23 @@ $measure_list = array();
 $measure_list_objs = $test_type->getMeasures();
                 //print_r($measure_list);
                 $submeasure_list_objs = array();
-                
+
                 $comb_measure_list = array();
                // print_r($measure_list);
-                
+
                 foreach($measure_list_objs as $measure)
                 {
-                    
+
                     $submeasure_list_objs = $measure->getSubmeasuresAsObj();
                     //echo "<br>".count($submeasure_list);
                     //print_r($submeasure_list);
                     $submeasure_count = count($submeasure_list_objs);
-                    
+
                     if($measure->checkIfSubmeasure() == 1)
                     {
                         continue;
                     }
-                        
+
                     if($submeasure_count == 0)
                     {
                         array_push($comb_measure_list, $measure);
@@ -91,10 +92,10 @@ $measure_list_objs = $test_type->getMeasures();
                     {
                         array_push($comb_measure_list, $measure);
                         foreach($submeasure_list_objs as $submeasure)
-                           array_push($comb_measure_list, $submeasure); 
+                           array_push($comb_measure_list, $submeasure);
                     }
                 }
-                
+
                 $measure_list_ids = array();
                 //echo "<pre>";
                 //print_r($comb_measure_list);
@@ -106,7 +107,7 @@ $measure_list_objs = $test_type->getMeasures();
                 /*
                 echo "<pre>";
                 print_r($measure_list);
-                
+
                 print_r($measure_list_ids);
                 echo "</pre>";
                 */
@@ -155,7 +156,7 @@ function toggle_range_type(select_elem)
 	var elem_id = select_elem.id;
 	$('.values_section_'+elem_id).hide();
 	if(select_elem.value == <?php echo Measure::$RANGE_OPTIONS; ?>)
-		$('#alpha_'+elem_id).show();	
+		$('#alpha_'+elem_id).show();
 	else if(select_elem.value == <?php echo Measure::$RANGE_NUMERIC; ?>)
 		$('#val_'+elem_id).show();
 	else if(select_elem.value == <?php echo Measure::$RANGE_AUTOCOMPLETE; ?>)
@@ -170,13 +171,13 @@ function toggle_range_type(select_elem)
 	var elem_id = select_elem.id;
 	$('.new_values_section_'+elem_id).hide();
 	if(select_elem.value == <?php echo Measure::$RANGE_OPTIONS; ?>)
-		$('#new_alpha_'+elem_id).show();	
+		$('#new_alpha_'+elem_id).show();
 	else if(select_elem.value == <?php echo Measure::$RANGE_NUMERIC; ?>)
 		$('#new_val_'+elem_id).show();
 	else if(select_elem.value == <?php echo Measure::$RANGE_AUTOCOMPLETE; ?>)
-		$('#new_autocomplete_'+elem_id).show();	
+		$('#new_autocomplete_'+elem_id).show();
         else if(select_elem.value == <?php echo Measure::$RANGE_FREETEXT; ?>)
-		$('#new_freetext_'+elem_id).show();	
+		$('#new_freetext_'+elem_id).show();
 }
 
  function add_option_field(mrow_num)
@@ -215,16 +216,16 @@ function update_ttype()
 		var new_range_type_elems = $("select[name='new_mtype[]']");
 		var measure_entered = false;
 		for(var j = 0; j < measure_elems.length; j++)
-		{		
+		{
 			if(measure_elems[j].value.trim() != "")
-			{  
+			{
 				measure_entered = true;
 				if(range_type_elems[j].value == <?php echo Measure::$RANGE_NUMERIC; ?>)
 				{
 					// Check numeric ranges
 					// Check all age ranges specified
 					var range_l_elems = $("input[name='range_l_"+(j+1)+"[]']");
-					
+
 					var range_u_elems = $("input[name='range_u_"+(j+1)+"[]']");
 
 					for(var k = 0; k < range_l_elems.length; k++)
@@ -234,25 +235,25 @@ function update_ttype()
 
 						if(isNaN(range_l))
 						{
-							
+
 							alert("Lower Range value should be numeric: Not '"+range_l+"'!");
 							return;
 						}
 						if(isNaN(range_u))
 						{
-							
+
 							alert("Upper Range value should be numeric: Not '"+range_u+"'!");
 							return;
 						}
 						if((range_l.trim()== "")&&(isNaN(range_u)==false))
 						{
-						
+
 							alert("Lower bound cannot be blank");
 							return;
 						}
 						if((range_u.trim()== "")&&(isNaN(range_l)==false))
 						{
-						
+
 							alert("Upper bound cannot be blank");
 							return;
 						}
@@ -312,15 +313,15 @@ function update_ttype()
 					for(var k = 0; k < option_elems.length; k++)
 					{
 						var option_val = option_elems[k].value;
-						
-						
+
+
 						if(option_val.trim() != "")
 						{
 							option_exist = true;
 							break
-				
+
 						}
-								
+
 					}
 					if(option_exist == false)
 					{
@@ -351,16 +352,16 @@ function update_ttype()
 			}
 		}
 		for(var j = 0; j < new_measure_elems.length; j++)
-		{		
+		{
 			if(new_measure_elems[j].value.trim() != "")
-			{  
-				
+			{
+
 				if(new_range_type_elems[j].value == <?php echo Measure::$RANGE_NUMERIC; ?>)
 				{
 					// Check numeric ranges
 					// Check all age ranges specified
 					var range_l_elems = $("input[name='new_range_l_"+(j+1)+"[]']");
-					
+
 					var range_u_elems = $("input[name='new_range_u_"+(j+1)+"[]']");
 					for(var k = 0; k < range_l_elems.length; k++)
 					{
@@ -373,25 +374,25 @@ function update_ttype()
 						}
 						if(isNaN(range_l))
 						{
-							
+
 							alert("Lower Range value should be numeric: Not '"+range_l+"'!");
 							return;
 						}
 						if(isNaN(range_u))
 						{
-							
+
 							alert("Upper Range value should be numeric: Not '"+range_u+"'!");
 							return;
 						}
 						if((range_l.trim()== "")&&(isNaN(range_u)==false))
 						{
-						
+
 							alert("Lower bound cannot be blank");
 							return;
 						}
 						if((range_u.trim()== "")&&(isNaN(range_l)==false))
 						{
-						
+
 							alert("Upper bound cannot be blank");
 							return;
 						}
@@ -400,7 +401,7 @@ function update_ttype()
 							alert("Upper bound cannot be less than or equal to lower bound");
 							return;
 						}
-						
+
 						if($("#agerange_l_"+(j+1)+"_"+k).is(":disabled") == true)
 						{
 							continue;
@@ -443,17 +444,17 @@ function update_ttype()
 					//Check option values
 					var option_elems = $("input[name='new_alpharange_"+(j+1)+"[]']");
 					var option_exist = false;
-					
+
 					for(var k = 0; k < option_elems.length; k++)
 					{
 						var option_val = option_elems[k].value;
-						
-						
+
+
 						if(option_val.trim() != "")
 						{
 							option_exist = true;
 							break
-							
+
 						}
 					}
 					if(option_exist == false)
@@ -533,8 +534,8 @@ function update_ttype()
 		$('#prevalenceThresholdError').show();
 		return;
 	}
-	
-	var old_name = "<?php echo $test_type->name;?>";	
+
+	var old_name = "<?php echo $test_type->name;?>";
 	var name = $('#name').attr("value").trim();
 	var name_valid=true;
 
@@ -543,16 +544,16 @@ function update_ttype()
 	if(old_name != name)
 	{
 		var check_url = "ajax/test_type_name_check.php?test_name="+name;
-		$.ajax({ url: check_url, async : false, success: function(response){			
-				if(response == "1")		
-				{	
+		$.ajax({ url: check_url, async : false, success: function(response){
+				if(response == "1")
+				{
 					alert("Test name: "+name + " already exist");
-					name_valid=false;								
-				}			
+					name_valid=false;
+				}
 		}
 		});
 	}
-	
+
 	if(name_valid)
 	{
 		$('#update_ttype_progress').show();
@@ -621,11 +622,11 @@ if(num_ranges[mrow_num] == 0)
 		num_ranges[mrow_num]++;
 	}
 	var num_row = num_ranges[mrow_num];
-	
-		var map=map_offset-1;									
+
+		var map=map_offset-1;
 	var html_code = "<input type='text' class='range_field' name='range_l_"+mrow_num+"[]' value='' /> : <input type='text' class='range_field' name='range_u_"+mrow_num+"[]' value='' /> <input type='text' class='range_field' name='gender_"+mrow_num+"[]' value='B'/> <input type='text' class='range_field agerange_l_"+mrow_num+"' name='agerange_l_"+mrow_num+"[]' id='agerange_l_"+mrow_num+"_"+map+"' value='0' /> : <input type='text' class='range_field agerange_u_"+mrow_num+"' name='agerange_u_"+mrow_num+"[]' id='agerange_u_"+mrow_num+"_"+map+"' value='100' /><br>";
 	$('#numeric_'+mrow_num).append(html_code);
-}	
+}
 
 
 
@@ -640,8 +641,8 @@ if(num_ranges[mrow_num] == 0)
 		num_ranges[mrow_num]++;
 	}
 	var num_row = num_ranges[mrow_num];
-	
-											
+
+
 	var html_code = "<input type='text' class='range_field' name='new_range_l_"+mrow_num+"[]' value='' /> : <input type='text' class='range_field' name='new_range_u_"+mrow_num+"[]' value='' /> <input type='text' class='range_field' name='new_gender_"+mrow_num+"[]' value='B' /> <input type='text' class='range_field agerange_l_"+mrow_num+"[]' name='new_agerange_l_"+mrow_num+"[]' id='new_agerange_l_"+mrow_num+"[]' value='0' /> : <input type='text' class='range_field agerange_u_"+mrow_num+"[]' name='new_agerange_u_"+mrow_num+"[]' id='new_agerange_u_"+mrow_num+"[]' value='100' /><br>";
 	$('#new_numeric_'+mrow_num).append(html_code);
 }
@@ -652,8 +653,8 @@ function removeMeasure(measure_num)
 	$('#new_mrow_'+measure_num).hide();
 	for(var i = 1; i <= num_submeasures[measure_num]; i++)
 	{
-		$('#smrow_'+measure_num+'_'+i).hide();		
-		
+		$('#smrow_'+measure_num+'_'+i).hide();
+
 	}
 }
 
@@ -702,12 +703,12 @@ function validateRow()
 	var clinical_data;
 	var aLeft= new Array();
 	var aRight=new Array();
-    for (i=1; i<=lastRow; i++) 
+    for (i=1; i<=lastRow; i++)
 	{
        aLeft[i-1] = document.getElementById('txtRow' + i+1).value;
        aRight[i-1] = document.getElementById('txtRow' + i+2).value;
     }
-	
+
 		var total="";
 		if(aLeft[0]!="")
 	  total='%%%'+aLeft+'###'+aRight;
@@ -722,13 +723,13 @@ function validateRow()
 	  }
 	  else if(total!="%%%")
 	  clinical_data=total;
-	  else 
+	  else
 	  clinical_data="";
-	
+
 	$('#clinical_data').attr("value",clinical_data);
 	update_ttype();
 }
-  
+
 function addData(list) {
 	var dat=list.split('###');
 	var name=dat[0].split(',');
@@ -777,7 +778,7 @@ function toggle_agerange(measure_num, row_num)
 	else
 	{
 		$('#'+field_id).removeAttr("disabled");
-	}	
+	}
 }
 function isInputNumber(evt) {
 	var characterCode = (evt.which) ? evt.which : event.keyCode
@@ -837,10 +838,10 @@ function isInputCurrency(evt) {
 				<td><textarea type='text' name='description' id='description' class='uniform_width'><?php echo trim($test_type->description); ?></textarea></td>
 			</tr>
 		<tr valign='top'>
-		
+
 		<td>Clinical Data  [<a href='#clinical_help' rel='facebox'>?</a>] </td><td>
-		
-			<?php 
+
+			<?php
 			$data=$test_type->clinical_data;
 			$text="-";
 			$table="";
@@ -858,8 +859,8 @@ function isInputCurrency(evt) {
 			else
 			$text="";
 			?>
-		
-		
+
+
 			<textarea name='clinical_data' id='clinical_data' class='uniform_width'><?php echo $text;?></textarea>
 			</td></tr>
 			<tr><td>
@@ -874,10 +875,10 @@ function isInputCurrency(evt) {
 			<div id="tblSample1" style="display:none">
 			<table border="1" id="tblSample" >
 			<tr>
-				
+
 			</tr>
 			<tr>
-				
+
 				<td>
 					<input type="text" name="txtRow11" id="txtRow11" size="40"  />
 				</td>
@@ -891,15 +892,15 @@ function isInputCurrency(evt) {
 			<input type="button" value="Remove Row" onclick="removeRowFromTable();" />
 			</div>
 		</td>
-		
+
 		</tr>
-			
+
 			<?php if($table!="")
 			{
 			echo "<script language=javascript>addData('$table')</script>";
 			}
 
-				
+
 			# TODO: Add option to manage panel tests or add new measures
 			if($test_type->isPanel == true)
 			{
@@ -935,8 +936,8 @@ function isInputCurrency(evt) {
 								echo "<td align='center'>";
 								echo "<input type=checkbox name='delete_".$curr_measure->measureId."'  />";
 								echo "</td><td>";
-                                                                
-                                                                
+
+
 								$encName = $curr_measure->name;
 								$start_tag = "\$sub*";
 								$end_tag = "/\$";
@@ -983,26 +984,26 @@ function isInputCurrency(evt) {
 								?>
 								<!--<select class='range_select' id='type_'<?php echo $i; ?>' name='mtype[]' onchange='javascript:add_label(<?php echo $i; ?>);'>-->
 									<select class='range_select' id='<?php echo $i; ?>' name='mtype[]'>
-									<option value='<?php echo Measure::$RANGE_NUMERIC; ?>' <?php 
+									<option value='<?php echo Measure::$RANGE_NUMERIC; ?>' <?php
 									if($range_type == Measure::$RANGE_NUMERIC)
 										echo " selected='selected' ";
 									?>><?php echo LangUtil::$generalTerms['RANGE_NUMERIC']; ?></option>
-									
-									<option value='<?php echo Measure::$RANGE_OPTIONS; ?>' <?php 
+
+									<option value='<?php echo Measure::$RANGE_OPTIONS; ?>' <?php
 									if($range_type == Measure::$RANGE_OPTIONS)
 										echo " selected='selected' ";
 									?>><?php echo LangUtil::$generalTerms['RANGE_ALPHANUM']; ?></option>
-									<option value='<?php echo Measure::$RANGE_AUTOCOMPLETE; ?>' <?php 
+									<option value='<?php echo Measure::$RANGE_AUTOCOMPLETE; ?>' <?php
 									if($range_type == Measure::$RANGE_AUTOCOMPLETE)
 										echo " selected='selected' ";
 									?>><?php echo LangUtil::$generalTerms['RANGE_AUTOCOMPLETE']; ?></option>
-                                                                        <option value='<?php echo Measure::$RANGE_FREETEXT; ?>' <?php 
+                                                                        <option value='<?php echo Measure::$RANGE_FREETEXT; ?>' <?php
 									if($range_type == Measure::$RANGE_FREETEXT)
 										echo " selected='selected' ";
 									?>><?php echo "Free Text"; ?></option>
 								</select>
 								<?php
-								
+
 								echo "</td>";
 								echo "<td>";
 								?>
@@ -1010,11 +1011,11 @@ function isInputCurrency(evt) {
 								<?php if($range_type != Measure::$RANGE_NUMERIC) echo " style='display:none' "; ?>
 								>
 									<?php
-									
+
 									$ref_count = 0;
 									if(count($ref_ranges) == 0 || $ref_ranges == null)
 									{
-										# Reference ranges not configured. 
+										# Reference ranges not configured.
 										# Fetch default values from 'measure' table
 										$lower_range="";
 										$upper_range="";
@@ -1025,26 +1026,26 @@ function isInputCurrency(evt) {
 										}
 										?>
 										<span id='numeric_<?php echo $i; ?>'>
-											
+
 											<input type='text' class='range_field' name='range_l_<?php echo $i; ?>[]' value='<?php echo $lower_range; ?>' /> :
 											<input type='text' class='range_field' name='range_u_<?php echo $i; ?>[]' value='<?php echo $upper_range; ?>' />
 											<input type='text' class='range_field' name='gender_<?php echo $i; ?>[]' value='B'/>
 											<input type='text' class='range_field' name='age_l_<?php echo $i; ?>[]' value='0'/>
 											<input type='text' class='range_field' name='age_u_<?php echo $i; ?>[]' value='100'/>
 											<br>
-											
+
 										</span>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo LangUtil::$generalTerms['RANGE']; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Gender &nbsp;&nbsp;Age_Range
 							<br>
 									<?php
 									}
 									else
-									{	
+									{
 									?>
 									<span id='numeric_<?php echo $i; ?>'>
 									<?php
 									foreach($ref_ranges as $ref_range)
 										{
-											
+
 										?>
 											<input type='text' class='range_field' name='range_l_<?php echo $i; ?>[]' value='<?php echo $ref_range->rangeLower; ?>' /> :
 											<input type='text' class='range_field' name='range_u_<?php echo $i; ?>[]' value='<?php echo $ref_range->rangeUpper; ?>' />
@@ -1054,14 +1055,14 @@ function isInputCurrency(evt) {
 											<br>
 											<?php
 											$ref_count++;
-												
+
 										}
 										?>
 										</span>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo LangUtil::$generalTerms['RANGE']; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Gender &nbsp;&nbsp;Age_Range
 							<br>
 										<?php
 									}
-									?>	<br>						
+									?>	<br>
 									<small><a href="javascript:add_range_field('<?php echo $i; ?>',<?php echo $ref_count+1; ?>);"><?php echo LangUtil::$generalTerms['ADDANOTHER']; ?> &raquo;</a></small>
 									<br><br>
 								</span>
@@ -1075,7 +1076,7 @@ function isInputCurrency(evt) {
 										{ $range_value= str_replace("#", "/", $range_value);
 											$j++;
 										?>
-											<input type='text' class='range_field' name='alpharange_<?php echo $i; ?>[]' value='<?php if($range_type == Measure::$RANGE_OPTIONS) echo str_replace("#", "/", $range_value); ?>' /> 
+											<input type='text' class='range_field' name='alpharange_<?php echo $i; ?>[]' value='<?php if($range_type == Measure::$RANGE_OPTIONS) echo str_replace("#", "/", $range_value); ?>' />
 										<?php
 											if($j < count($range_values))
 												echo "/ ";
@@ -1115,7 +1116,7 @@ function isInputCurrency(evt) {
 								echo "<input type='text' name='unit[]' value='$curr_measure->unit' />";
 								echo "</td>";
 								echo "</tr>";
-								
+
 							}
 							}
 							# Space for adding new measures
@@ -1140,7 +1141,7 @@ function isInputCurrency(evt) {
                                         ?>
                                         <small><a id='new_submeasure_link' href='javascript:add_new_submeasure(<?php echo $i; ?>);'><?php echo 'Add Sub Measure'; ?> &raquo;</a></small>
                                         <?php
-                                                                
+
 								echo "</td>";
 								echo "<td>";
 								?>
@@ -1162,15 +1163,15 @@ function isInputCurrency(evt) {
 											<input type='text' class='range_field' name='new_gender_<?php echo $i; ?>[]' value='B'/>
 											<input type='text' class='range_field agerange_l_<?php echo $i; ?>' name='new_agerange_l_<?php echo $i; ?>[]' id='new_agerange_l_<?php echo $i; ?>[]' value='0' /> :
 											<input type='text' class='range_field agerange_u_<?php echo $i; ?>' name='new_agerange_u_<?php echo $i; ?>[]' id='new_agerange_u_<?php echo $i; ?>[]' value='100' />
-																
+
 											<br>
 								</span>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo LangUtil::$generalTerms['RANGE']; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Gender &nbsp;&nbsp;Age_Range
 								<br>
 											<small><a href="javascript:add_new_range_field('<?php echo $i; ?>', 1);"><?php echo LangUtil::$generalTerms['ADDANOTHER']; ?> &raquo;</a></small>
 									<br><br>
 								</div>
-								</span>	
-								
+								</span>
+
 								<span id='new_alpha_new_<?php echo $i; ?>' style='display:none' class='new_values_section_new_<?php echo $i; ?>'>
 									<span id='new_alpha_list_<?php echo $i; ?>'>
 										<input type='text' class='range_field' name='new_alpharange_<?php echo $i; ?>[]' value='' /> /
@@ -1199,22 +1200,22 @@ function isInputCurrency(evt) {
 									echo "<small><a href='javascript:removeMeasure($i);'> Remove</a></small>";
 								echo "</td>";
 								echo "</tr>";
-                                                                
-                                                                
+
+
                                         # submeasures
-                                        
+
                                         $max_num_submeasures = 15;
                                         $us = '_';
                                     for($y = 1; $y <= $max_num_submeasures; $y += 1)
                                     {
                                             echo "<tr valign='top' id='smrow_$i$us$y' style='display:none;'";
-                                            
+
                                             echo ">";
-                                            
+
                                             echo "<td align='center'>";
 							//	echo "<input type=checkbox name='delete_".$curr_measure->name."'  />";
 								echo "</td>";
-                                            
+
                                             echo "<td>";
                                             ?>
                                             Sub: <input type='text' name='submeasure[<?php echo $i; ?>][]' value='' />
@@ -1241,7 +1242,7 @@ function isInputCurrency(evt) {
                                                             <input type='text' class='range_field' name='gender_<?php echo $i.$us.$y; ?>[]' value='B'/>
                                                             <input type='text' class='range_field'  name='agerange_l_<?php echo $i.$us.$y; ?>[]' id='agerange_l_<?php echo $i.$us.$y; ?>[]' value='0' /> :
                                                             <input type='text' class='range_field' name='agerange_u_<?php echo $i.$us.$y; ?>[]' id='agerange_u_<?php echo $i.$us.$y; ?>[]' value='100' />
-                                                           
+
                                                     </span>
                                                     &nbsp;&nbsp;&nbsp;&nbsp;<?php echo LangUtil::$generalTerms['RANGE']; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Gender &nbsp;&nbsp;Age_Range
                                                             <br>
@@ -1281,14 +1282,14 @@ function isInputCurrency(evt) {
                                             ?>
                                             <div id='new_subentries' style='display:none;'>
                                             </div>
-                                            
 
-                                            
+
+
                                         <?php
                                         }// end of submeasures for each measure
                                         ?>
-                                        
-                                      <?php  
+
+                                      <?php
 							}// end of new measures
 						?>
 						</table>
@@ -1305,7 +1306,7 @@ function isInputCurrency(evt) {
 					<br>
 				</td>
 			</tr>
-			
+
 			<tr valign='top'>
 				<td>Hide Patient Name in Report </td>
 				<td>
@@ -1318,7 +1319,7 @@ function isInputCurrency(evt) {
 							<option value="1" selected>Yes</option>
 						<?php } ?>
 					</select>
-				</td>		
+				</td>
 			</tr>
 
 			<tr valign='top'>
@@ -1372,12 +1373,12 @@ function isInputCurrency(evt) {
 <small>
 <b><?php echo LangUtil::$generalTerms['MEASURES']; ?></b>
 <br><br>
-Valid result ranges can be entered for each measure in the 'range' field. 
+Valid result ranges can be entered for each measure in the 'range' field.
 <br><br>
-<u>Numeric ranges</u> can be specified as 'lower:upper'. 
-For e.g., if the valid range lies between 0 and 1000, please enter '0:1000'.By default the gender is B for both and age_range is 0:100. You can modify any of the fields based on the measure. 
+<u>Numeric ranges</u> can be specified as 'lower:upper'.
+For e.g., if the valid range lies between 0 and 1000, please enter '0:1000'.By default the gender is B for both and age_range is 0:100. You can modify any of the fields based on the measure.
 <br><br>
-<u>Alphanumeric values</u> can be specified as 'value1/value2/value3'. 
+<u>Alphanumeric values</u> can be specified as 'value1/value2/value3'.
 For e.g., if test results can be either one from 'P','N' or 'D', please enter 'P/N/D'.
 <br><br>
 <u>Autocomplete</u> can be specified in the textboxes provided. They will be prompted while inputting the results.

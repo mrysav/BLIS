@@ -1,6 +1,7 @@
 <?php
     require_once("../includes/header.php");
     require_once("../includes/keymgmt.php");
+    require_once(__DIR__."/../lang/lang_util.php");
     //$labConfigId = $_REQUEST['id'];
     $labConfigId =$_SESSION['lab_config_id'];
     putUILog('backup_data_ui', 'X', basename($_SERVER['REQUEST_URI'], ".php"), 'X', 'X', 'X');

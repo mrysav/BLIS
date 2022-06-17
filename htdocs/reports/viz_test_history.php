@@ -3,16 +3,17 @@
 # Lists patient test history in printable format
 #
 /*
-$load_time = microtime(); 
-$load_time = explode(' ',$load_time); 
-$load_time = $load_time[1] + $load_time[0]; 
-$page_start = $load_time; 
+$load_time = microtime();
+$load_time = explode(' ',$load_time);
+$load_time = $load_time[1] + $load_time[0];
+$page_start = $load_time;
 */
 
 include("redirect.php");
 include("includes/db_lib.php");
 include("includes/script_elems.php");
 include("includes/page_elems.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("reports");
 include("../users/accesslist.php");
  if(!(isLoggedIn(get_user_by_id($_SESSION['user_id']))))
@@ -45,7 +46,7 @@ function get_records_to_print($lab_config, $patient_id) {
 		if(isset($_REQUEST['yf']))
 			$query_string .= "AND (sp.date_collected BETWEEN '$date_from' AND '$date_to') ";
 		$query_string .= "ORDER BY sp.date_collected DESC";
-	
+
 	}
 	else {
 		# Include pending tests
@@ -55,26 +56,26 @@ function get_records_to_print($lab_config, $patient_id) {
 			"AND sp.patient_id=$patient_id ";
 		if(isset($_REQUEST['yf']))
 			$query_string .= "AND (sp.date_collected BETWEEN '$date_from' AND '$date_to') ";
-		$query_string .= "ORDER BY sp.date_collected DESC";		
-	
+		$query_string .= "ORDER BY sp.date_collected DESC";
+
 	}
-	
+
 	$resultset = query_associative_all($query_string);
-	
+
 	if(count($resultset) == 0 || $resultset == null)
 		return $retval;
-	
+
 	foreach($resultset as $record) {
 		$test = Test::getObject($record);
 		$hide_patient_name = TestType::toHidePatientName($test->testTypeId);
-		
+
 		if( $hide_patient_name == 1 )
 					$hidePatientName = 1;
-		
+
 		$specimen = get_specimen_by_id($test->specimenId);
-		$retval[] = array($test, $specimen, $hide_patient_name);		
+		$retval[] = array($test, $specimen, $hide_patient_name);
 	}
-	
+
 	return $retval;
 }
 
@@ -92,19 +93,19 @@ for($i = 0; $i < count($margin_list); $i++) {
 <html>
 <head>
 
-<style type="text/css"> 
+<style type="text/css">
 	.btn {
-		color:white; 
-		background-color:#9fc748;/*#3B5998;*/ 
-		border-style:none; 
-		font-weight:bold; 
-		font-size:14px; 
-		height:25px; 
+		color:white;
+		background-color:#9fc748;/*#3B5998;*/
+		border-style:none;
+		font-weight:bold;
+		font-size:14px;
+		height:25px;
 		/*width:60px;*/
 		cursor:pointer;
 	}
-	
-</style> 
+
+</style>
 
 <?php
 $script_elems = new ScriptElems();
@@ -138,11 +139,11 @@ if(isset($_REQUEST['ip']) && $_REQUEST['ip'] == 0)
 else
     $include_pending = 1;?>
 d3.json("reports/viz_test_result_data.php?patient_id=<?php echo $_REQUEST['patient_id'];?>&inc_p=<?php echo $include_pending;?>", function(patient_data){
-	
+
 	// get test results data
 	var patient_data_by_tests = new Array();
 	var patient_data_by_tests_header = new Array();
-	
+
 	/*
 	<?php if($report_config->useTestName == 1) { ?>
 		patient_data_by_tests_header.push("<?php echo LangUtil::$generalTerms['TEST']; ?>");
@@ -157,10 +158,10 @@ d3.json("reports/viz_test_result_data.php?patient_id=<?php echo $_REQUEST['patie
 		patient_data_by_tests_header.push("<?php echo LangUtil::$generalTerms['RESULT_COMMENTS']; ?>");
 	<?php } ?>
 	*/
-	
+
 	patient_data_by_tests_header = ["<?php echo LangUtil::$generalTerms['TEST']; ?>","<?php echo LangUtil::$generalTerms['DATE']; ?>",
 	"<?php echo LangUtil::$generalTerms['RESULTS']; ?>","<?php echo LangUtil::$generalTerms['RESULT_COMMENTS']; ?>"];
-	
+
 	// reformat data
 	for(var i in patient_data){
 		if(i=="has") break;
@@ -170,26 +171,26 @@ d3.json("reports/viz_test_result_data.php?patient_id=<?php echo $_REQUEST['patie
 		var range = patient_data[i].range;
 		var test_result = patient_data[i].result;
 		var comment = patient_data[i].comment;
-		
+
 		if(test_result==""){
 			test_result = "Pending";
 		}else{
-			
+
 			if(range!=""){
 				// add unit to remarks (comment)
 				var split_range = range.split(" ");
 				var unit = split_range[split_range.length-1];
-				
+
 				if(comment=="-"){
 					comment = test_result + " " + unit;
 				}else{
-					comment += ", " + test_result + " " + unit;	
+					comment += ", " + test_result + " " + unit;
 				}
 			}
-			
+
 			test_result += "::" + range;
 		}
-		
+
 		/*
 		patient_data_by_tests[i] = new Array();
 		<?php if($report_config->useTestName == 1) { ?>
@@ -203,14 +204,14 @@ d3.json("reports/viz_test_result_data.php?patient_id=<?php echo $_REQUEST['patie
 		<?php }
 		if($report_config->useRemarks == 1) {?>
 			patient_data_by_tests[i].push(comment);
-		<?php } ?>		
+		<?php } ?>
 		*/
-		patient_data_by_tests[i] = [test_name, test_date, test_result, comment];	
+		patient_data_by_tests[i] = [test_name, test_date, test_result, comment];
 	}
-	
-	
+
+
 	var body = d3.select("#viz_table");
-	
+
 	body.append("hr");
 
 	body.append("table")
@@ -220,10 +221,10 @@ d3.json("reports/viz_test_result_data.php?patient_id=<?php echo $_REQUEST['patie
 		.data(patient_data_by_tests_header)
 		.enter().append("td")
 		.style("width", function(d, i){
-			
+
 			switch(i){
 			case 0:
-				return "150px"; 
+				return "150px";
 				break;
 			case 1:
 				return "80px";
@@ -240,7 +241,7 @@ d3.json("reports/viz_test_result_data.php?patient_id=<?php echo $_REQUEST['patie
 		.style("padding", "5px")
 		.style("font-weight", "bold")
 		.text(function(d){return d;});
-	
+
 	var vis = body.append("table")
 		.style("border-collapse", "collapse")
 		.selectAll("tr")
@@ -252,7 +253,7 @@ d3.json("reports/viz_test_result_data.php?patient_id=<?php echo $_REQUEST['patie
 		.style("width", function(d, i){
 			switch(i){
 			case 0:
-				return "150px"; 
+				return "150px";
 			case 1:
 				return "80px";
 			case 2:
@@ -271,12 +272,12 @@ d3.json("reports/viz_test_result_data.php?patient_id=<?php echo $_REQUEST['patie
 					var result = result_range_array[0];
 					var range = result_range_array[1];
 					var result_parsable = false;
-					
+
 					// check to see if result contains a numeric, parsable value
 					if(result.match("[0-9]+")){
 						result_parsable = true;
 					}
-					
+
 					if(range=="" || !result_parsable){ // if the range is empty, put the results
 						return result;
 					}else{
@@ -288,7 +289,7 @@ d3.json("reports/viz_test_result_data.php?patient_id=<?php echo $_REQUEST['patie
 			})
 		.append("svg")
 			.attr("width", function(d,i){
-				
+
 				// set chart size, 0 for not required
 				switch(i){
 					case 0:
@@ -300,12 +301,12 @@ d3.json("reports/viz_test_result_data.php?patient_id=<?php echo $_REQUEST['patie
 						var result = result_range_array[0];
 						var range = result_range_array[1];
 						var result_parsable = false;
-						
+
 						// check to see if result contains a numeric, parsable value
 						if(result.match("[0-9]+")){
 							result_parsable = true;
 						}
-						
+
 						if(d=="Pending" || range=="" || !result_parsable){
 							return 0;
 						}else{
@@ -316,13 +317,13 @@ d3.json("reports/viz_test_result_data.php?patient_id=<?php echo $_REQUEST['patie
 				}
 			})
 			.attr("height",10);
-	
+
 		// draw range bar: low
 		vis.append("rect")
 			.attr("width", function(d,i){
 				if(i==2){
 					if(getVisualizationType(d)==0){
-						return chart_column_width/4;	
+						return chart_column_width/4;
 					}else if(getVisualizationType(d)==1){
 						return 0;
 					}
@@ -337,7 +338,7 @@ d3.json("reports/viz_test_result_data.php?patient_id=<?php echo $_REQUEST['patie
 			.attr("x", function(d,i){
 				if(i==2){
 					if(getVisualizationType(d)==0){
-						return chart_column_width/4;	
+						return chart_column_width/4;
 					}else if(getVisualizationType(d)==1){
 						return 0;
 					}
@@ -346,7 +347,7 @@ d3.json("reports/viz_test_result_data.php?patient_id=<?php echo $_REQUEST['patie
 			.attr("width", function(d,i){
 				if(i==2){
 					if(getVisualizationType(d)==0){
-						return chart_column_width/2;	
+						return chart_column_width/2;
 					}else if(getVisualizationType(d)==1){
 						return chart_column_width/2;
 					}
@@ -356,13 +357,13 @@ d3.json("reports/viz_test_result_data.php?patient_id=<?php echo $_REQUEST['patie
 			.attr("left", 10)
 			.attr("fill", d3.rgb(0,0,0))
 			.style("opacity", 0.3);
-	
+
 		// draw range bar: high
 		vis.append("rect")
 			.attr("x", function(d,i){
 				if(i==2){
 					if(getVisualizationType(d)==0){
-						return 3*(chart_column_width/4);	
+						return 3*(chart_column_width/4);
 					}else if(getVisualizationType(d)==1){
 						return chart_column_width/2;
 					}
@@ -371,7 +372,7 @@ d3.json("reports/viz_test_result_data.php?patient_id=<?php echo $_REQUEST['patie
 			.attr("width", function(d,i){
 				if(i==2){
 					if(getVisualizationType(d)==0){
-						return chart_column_width/4;	
+						return chart_column_width/4;
 					}else if(getVisualizationType(d)==1){
 						return chart_column_width/2;
 					}
@@ -381,7 +382,7 @@ d3.json("reports/viz_test_result_data.php?patient_id=<?php echo $_REQUEST['patie
 			.attr("left", 10)
 			.attr("fill", d3.rgb(0,0,0))
 			.style("opacity", 0.15);
-		
+
 		// draw result bar on range bar
 		vis.append("rect")
 			.attr("x", function(d, i){
@@ -392,7 +393,7 @@ d3.json("reports/viz_test_result_data.php?patient_id=<?php echo $_REQUEST['patie
 			.attr("width", function(d, i){
 				if(i==2){
 					if(getVisualizationType(d)==0){
-						return 3;	
+						return 3;
 					}else if(getVisualizationType(d)==1){
 						if(parseResultX(d, chart_column_width)==0){
 							// color the whole normal range if the result is normal (< a number)
@@ -416,7 +417,7 @@ function getVisualizationType(resultRange){
 	if(result.match("[-+]?[0-9]*\.?[0-9]+") && (range.indexOf("<")!=-1)){
 		return 1;
 	}else{
-		return 0;		
+		return 0;
 	}
 }
 
@@ -426,56 +427,56 @@ function parseResultX(resultRange, chart_column_width){
 	var result = result_range_array[0];
 	var range = result_range_array[1];
 	var chart_location = 0;
-	
+
 	// time range
 	if(result.match("[0-9]+min [0-9]+sec")){
-		
+
 		// result
 		var min = result.split("min ")[0];
 		var sec = result.split("min ")[1].split("sec")[0];
 		var total_seconds = min*60+parseInt(sec);
-		
+
 		// range
 		var low_range = range.split(" min")[0].split("-")[0];
 		var high_range = range.split("min")[0].split("-")[1];
 		var full_range = (high_range - low_range)*60;
 		var seconds_offset = total_seconds - low_range*60;
-		
-		chart_location = 
+
+		chart_location =
 			(chart_column_width/4) + (chart_column_width/2)*(seconds_offset/full_range);
 
 	}else if(result.match("[-+]?[0-9]*\.?[0-9]+") && (range.indexOf("<")!=-1)){
-		
+
 		// have one-sided range, format < 6-, <6-
 		var splitRange = range.split(" ");
-		
+
 		// < 6-
 		if(splitRange[1].indexOf("-")!=-1){
 			numeric_part = splitRange[1];
 		}else{ // <6-
 			numeric_part = splitRange[0].split("<")[1];
 		}
-		
+
 		// 6-
 		var full_range = numeric_part.split("-")[0];
-		
+
 		// check result format, could be a number, <6, or < 6
 		var result_offset = 0;
 		if(isNumeric(result)){
-			result_offset = parseFloat(result); 
+			result_offset = parseFloat(result);
 		}else{
 			// format <6 or < 6
 			var result_number = result.split("<")[1];
-			result_offset = parseFloat(result_number); 
-			
+			result_offset = parseFloat(result_number);
+
 			// just place it to 0, when the result is < something, it is in the normal range
 			result_offset = 0;
 		}
-		
+
 		chart_location = (chart_column_width/2)*(result_offset/full_range);
-		
+
 	}else if(result.match("[-+]?[0-9]*\.?[0-9]+")){
-		
+
 		// numeric results with a specified range
 		var numeric_part = range.split(" ")[0];
 		var low_range = numeric_part.split("-")[0];
@@ -483,7 +484,7 @@ function parseResultX(resultRange, chart_column_width){
 		var full_range = (high_range - low_range);
 		var result_offset = parseFloat(result) - low_range;
 
-		chart_location = 
+		chart_location =
 			(chart_column_width/4) + (chart_column_width/2)*(result_offset/full_range);
 	}
 
@@ -492,7 +493,7 @@ function parseResultX(resultRange, chart_column_width){
 	}else if(chart_location>chart_column_width){
 		chart_location = chart_column_width-3;
 	}
-	
+
 	return chart_location;
 }
 
@@ -546,7 +547,7 @@ $(document).ready(function() {
 	$('#report_content_table1').tablesorter();
 	$('.editable').editInPlace({
 		callback: function(unused, enteredText) {
-			return enteredText; 
+			return enteredText;
 		},
 		show_buttons: false,
 		bg_over: "FFCC66",
@@ -562,13 +563,13 @@ $(document).ready(function() {
 
 function change_orientation() {
 	var do_landscape = $("input[name='do_landscape']:checked").attr("value");
-	
+
 	if(do_landscape == "Y" && curr_orientation == 0) {
 		$('#report_config_content').removeClass("portrait_content");
 		$('#report_config_content').addClass("landscape_content");
 		curr_orientation = 1;
 	}
-	
+
 	if(do_landscape == "N" && curr_orientation == 1) {
 		$('#report_config_content').removeClass("landscape_content");
 		$('#report_config_content').addClass("portrait_content");
@@ -604,7 +605,7 @@ $(document).ready(function(){
 	$('#report_content table th').css('font-size', newFontSize);
 	return false;
   });
-  
+
    $(".bold").click(function(){
   	 var selObj = window.getSelection();
 		alert(selObj);
@@ -645,18 +646,18 @@ $monthago_array = explode("-", $monthago_date);
 			else {
 				$value_list = array($_REQUEST['yf'], $_REQUEST['mf'], $_REQUEST['df']);
 			}
-			$page_elems->getDatePickerPlain($name_list, $id_list, $value_list); 
+			$page_elems->getDatePickerPlain($name_list, $id_list, $value_list);
 			?>
 	</td>
 	<td>
 	&nbsp;&nbsp;&nbsp;&nbsp;
 			<input type='button' onclick="javascript:print_content('report_content');" value='<?php echo LangUtil::$generalTerms['CMD_PRINT']; ?>'></input>
-			
+
 	</td>
 	<td>
 		<table class='no border'>
 	<tr valign='top'>
-		
+
 	<td>
 	<input type='radio' name='do_landscape' value='N'<?php
 			//if($report_config->landscape == false) echo " checked ";
@@ -671,9 +672,9 @@ $monthago_array = explode("-", $monthago_date);
 	</tr>
 	</table>
 	</td>
-	
+
 	<td>
-		<input type='checkbox' name='ip' id='ip'></input> 
+		<input type='checkbox' name='ip' id='ip'></input>
 		<?php echo LangUtil::$pageTerms['MSG_INCLUDEPENDING']; ?>
 	</td>
 	<td>
@@ -714,7 +715,7 @@ $monthago_array = explode("-", $monthago_date);
 	<td>
 	<input type='button' class="decreaseFont" value='Decrease' title="Decrease Font-size"></input> <br>
 	<!--<input type='button' class="bold" value='Bold' title="Bold"></input> <br>-->
-	
+
 	</td>
 	</tr>
 	</table>
@@ -727,7 +728,7 @@ $monthago_array = explode("-", $monthago_date);
 	&nbsp;&nbsp;
 	<input type='button' onclick="javascript:window.close();" value='Close' title='<?php echo LangUtil::$generalTerms['CMD_CLOSEPAGE']; ?>'></input>
 	</td>
-	
+
 	</tr>
 </table>
 <hr>
@@ -814,7 +815,7 @@ if(isset($_REQUEST['yf']))
 	if($date_from == $date_to) {
 		echo LangUtil::$generalTerms['DATE'].": ".DateLib::mysqlToString($date_from);
 	}
-	else {	
+	else {
 		echo LangUtil::$generalTerms['FROM_DATE'].": ".DateLib::mysqlToString($date_from);
 		echo " | ";
 		echo LangUtil::$generalTerms['TO_DATE'].": ".DateLib::mysqlToString($date_to);
@@ -832,7 +833,7 @@ if($patient == null)
 else
 {
 	# Fetch test entries to print in report
-	$record_list = get_records_to_print($lab_config, $patient_id); 
+	$record_list = get_records_to_print($lab_config, $patient_id);
 	# If single date supplied, check if-
 	# 1. Physician name is the same for all
 	# 2. Patient daily number is the same for all
@@ -848,16 +849,16 @@ else
 		$previous_physician = "";
 		$previous_daily_num = "";
 		$count_list= count($record_list);
-		
+
 		foreach($record_list as $record_set) {
 			$value = $record_set;
 			$test = $value[0];
 			//check for test_id if its in the array
 			//http://www.w3schools.com/php/func_array_in_array.asp
 			$specimen = $value[1];
-			if( $hidePatientName == 0) 
+			if( $hidePatientName == 0)
 				$hidePatientName = $value[2];
-				
+
 			if($record_count != 0) {
 				if(strcasecmp($previous_physician, $specimen->getDoctor()) != 0) {
 					$physician_same = false;
@@ -880,15 +881,15 @@ else
 	<div id="printhead" name="printhead">
 		<?php
 			if($report_config->usePatientName == 1) {
-				echo $patient->name; 
+				echo $patient->name;
 				echo "\n";?><br><?php
 			}
 			if($report_config->useAge == 1) {
-				echo $patient->getAge(); 
+				echo $patient->getAge();
 				echo "\n";?><br><?php
 			}
 			if($report_config->useGender == 1) {
-				echo $patient->sex; 
+				echo $patient->sex;
 				echo "\n";?><br><?php
 			}
 			?>
@@ -910,7 +911,7 @@ else
 					<td><?php echo LangUtil::$generalTerms['PATIENT_DAILYNUM']; ?></td>
 					<td><?php echo $previous_daily_num; ?></td>
 				</tr>
-				<?php 
+				<?php
 			}
 			if($report_config->usePatientRegistrationDate == 1) {
 				?>
@@ -926,7 +927,7 @@ else
 					<td><?php echo LangUtil::$generalTerms['ADDL_ID']; ?></td>
 					<td><?php echo $patient->getAddlId(); ?></td>
 				</tr>
-				<?php 
+				<?php
 			}
 			if( ($report_config->usePatientName == 1) && ($hidePatientName != 1) ) {
 				?>
@@ -945,8 +946,8 @@ else
 				<?php
 			}
 			if($report_config->useGender == 1) {
-				?>			
-				<tr valign='top'>	
+				?>
+				<tr valign='top'>
 					<td><?php echo LangUtil::$generalTerms['GENDER']; ?></td>
 					<td><?php echo $patient->sex; ?></td>
 				</tr>
@@ -958,14 +959,14 @@ else
 					<td><?php echo LangUtil::$generalTerms['DOB']; ?></td>
 					<td><?php echo $patient->getDob(); ?></td>
 				</tr>
-				<?php 
+				<?php
 			}
 			# Patient Custom fields here
 			$custom_field_list = $lab_config->getPatientCustomFields();
-			
+
 			foreach($custom_field_list as $custom_field) {
-				if(in_array($custom_field->id, $report_config->patientCustomFields)) {	
-					$field_name = $custom_field->fieldName;				
+				if(in_array($custom_field->id, $report_config->patientCustomFields)) {
+					$field_name = $custom_field->fieldName;
 					?>
 					<tr valign='top'>
 					<?php
@@ -983,7 +984,7 @@ else
 							$field_value = "-";
 						echo $field_value;
 					}
-					echo "</td>";					
+					echo "</td>";
 					?>
 					</tr>
 					<?php
@@ -995,7 +996,7 @@ else
 					<td><?php echo LangUtil::$generalTerms['DOCTOR']; ?></td>
 					<td><?php echo $previous_physician; ?></td>
 				</tr>
-				<?php 
+				<?php
 			}
 			?>
 		</tbody>
@@ -1003,7 +1004,7 @@ else
 	<br>
 	<div id="viz_table"> </div>
 	<?php
-	
+
 }
 
 if(count($record_list) != 0)
@@ -1029,19 +1030,19 @@ if(count($record_list) != 0)
 			var html_string = "";
 			if(date_from == date_to)
 			{
-				html_string = "<br><?php echo LangUtil::$generalTerms['DATE'].": "; ?>"+date_from;		
+				html_string = "<br><?php echo LangUtil::$generalTerms['DATE'].": "; ?>"+date_from;
 			}
 			else
 			{
 				html_string = "<br><?php echo LangUtil::$generalTerms['FROM_DATE'].": "; ?>"+date_from+" | <?php echo LangUtil::$generalTerms['TO_DATE'].": "; ?>"+date_to;
 			}
-			
+
 			$('#date_section').html(html_string);
 		});
 
 		function change_to_bold() {
 			$("#myPara").css("font-style","bold");
-		} 
+		}
 	</script>
 	<?php
 	}
@@ -1055,7 +1056,7 @@ if(count($record_list) != 0)
 </div>
 <!--p class="main">
 ............................................-->
-<?php 
+<?php
 $new_footer_part="............................................";
 $footerText=explode(";" ,$report_config->footerText);
 $designation=explode(";" ,$report_config->designation);
@@ -1079,13 +1080,13 @@ $lab_config_id=$_SESSION['lab_config_id'];
 <td align="center"<?php if($lab_config_id==234) {?>style="font-size:14pt;"<?php }?> ><?php echo $designation[$j]; ?></td>
 <?php }
 /*
-$load_time = microtime(); 
-$load_time = explode(' ',$load_time); 
-$load_time = $load_time[1] + $load_time[0]; 
-$page_end = $load_time; 
-$final_time = ($page_end - $page_start); 
-$page_load_time = number_format($final_time, 4, '.', ''); 
-echo("Page generated in " . $page_load_time . " seconds"); 
+$load_time = microtime();
+$load_time = explode(' ',$load_time);
+$load_time = $load_time[1] + $load_time[0];
+$page_end = $load_time;
+$final_time = ($page_end - $page_start);
+$page_load_time = number_format($final_time, 4, '.', '');
+echo("Page generated in " . $page_load_time . " seconds");
 */
 ?>
 </tr>

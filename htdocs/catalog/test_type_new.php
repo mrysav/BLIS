@@ -4,6 +4,7 @@
 #
 include("redirect.php");
 include("includes/header.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("catalog");
 
 putUILog('test_type_new', 'X', basename($_SERVER['REQUEST_URI'], ".php"), 'X', 'X', 'X');
@@ -42,14 +43,14 @@ function toggle_range_type(select_elem)
 	var elem_id = select_elem.id;
 	$('.values_section_'+elem_id).hide();
 	if(select_elem.value == <?php echo Measure::$RANGE_OPTIONS; ?>)
-		$('#alpha_'+elem_id).show();	
+		$('#alpha_'+elem_id).show();
 	else if(select_elem.value == <?php echo Measure::$RANGE_NUMERIC; ?>)
 		$('#val_'+elem_id).show();
 	else if(select_elem.value == <?php echo Measure::$RANGE_AUTOCOMPLETE; ?>)
 		$('#autocomplete_'+elem_id).show();
         else if(select_elem.value == <?php echo Measure::$RANGE_FREETEXT; ?>)
 		$('#freetext_'+elem_id).show();
-                
+
 }
 
 
@@ -79,8 +80,8 @@ function add_range_field(mrow_num)
 		num_ranges[mrow_num]++;
 
 	var num_row = num_ranges[mrow_num];
-	
-//		var map=map_offset-1;									
+
+//		var map=map_offset-1;
 	var html_code = "<input type='text' class='range_field' name='range_l_"+mrow_num+"[]' value='' /> : <input type='text' class='range_field' name='range_u_"+mrow_num+"[]' value='' /> <input type='text' class='range_field' name='gender_"+mrow_num+"[]' value='B'/> <input type='text' class='range_field agerange_l_"+mrow_num+"' name='agerange_l_"+mrow_num+"[]' id='agerange_l_"+mrow_num+"[]' value='0' /> : <input type='text' class='range_field agerange_u_"+mrow_num+"' name='agerange_u_"+mrow_num+"[]' id='agerange_u_"+mrow_num+"[]' value='100' /> <br>";
 	$('#numeric_'+mrow_num).append(html_code);
 }
@@ -139,8 +140,8 @@ function removeMeasure(measure_num)
 	$('#mrow_'+measure_num).hide();
 	for(var i = 1; i <= num_submeasures[measure_num]; i++)
 	{
-		$('#smrow_'+measure_num+'_'+i).hide();		
-		
+		$('#smrow_'+measure_num+'_'+i).hide();
+
 	}
 }
 
@@ -149,7 +150,7 @@ function removeSubMeasure(measure,submeasure)
 	$('#smrow_'+measure+'_'+submeasure).hide();
 }
 
- 
+
 function addRowToTable()
 {
   var tbl = document.getElementById('tblSample');
@@ -159,7 +160,7 @@ function addRowToTable()
   var row = tbl.insertRow(lastRow);
   // right cell
   var cellRight = row.insertCell(0);
-  
+
   var el = document.createElement('input');
   el.type = 'text';
   el.name = 'txtRow' + iteration+'1';
@@ -191,12 +192,12 @@ function validateRow()
 	var clinical_data;
 	var aLeft= new Array();
 	var aRight=new Array();
-    for (i=1; i<=lastRow; i++) 
+    for (i=1; i<=lastRow; i++)
 	{
        aLeft[i-1] = document.getElementById('txtRow' + i+1).value;
        aRight[i-1] = document.getElementById('txtRow' + i+2).value;
     }
-	
+
 		var total="";
 		if(aLeft[0]!="")
 	  total='%%%'+aLeft+'###'+aRight;
@@ -211,14 +212,14 @@ function validateRow()
 	  }
 	  else if(total!="%%%")
 	  clinical_data=total;
-	  else 
+	  else
 	  clinical_data="";
-	
+
 	$('#clinical_data').attr("value",clinical_data);
-	
+
   check_input();
   }
-  
+
  function addData(list)
 {
 var dat=list.split('###');
@@ -304,7 +305,7 @@ function check_input()
 					// Check all age ranges specified
 					var range_l_elems = $("input[name='range_l_"+(j+1)+"[]']");
 					var range_u_elems = $("input[name='range_u_"+(j+1)+"[]']");
-					
+
 					for(var k = 0; k < range_l_elems.length; k++)
 					{
 						var range_l = range_l_elems[k].value;
@@ -316,25 +317,25 @@ function check_input()
 						}
 						if(isNaN(range_l))
 						{
-							
+
 							alert("Lower Range value should be numeric: Not '"+range_l+"'!");
 							return;
 						}
 						if(isNaN(range_u))
 						{
-							
+
 							alert("Upper Range value should be numeric: Not '"+range_u+"'!");
 							return;
 						}
 						if((range_l.trim()== "")&&(isNaN(range_u)==false))
 						{
-						
+
 							alert("Lower bound cannot be blank");
 							return;
 						}
 						if((range_u.trim()== "")&&(isNaN(range_l)==false))
 						{
-						
+
 							alert("Upper bound cannot be blank");
 							return;
 						}
@@ -371,7 +372,7 @@ function check_input()
 						{
 							alert("<?php echo LangUtil::$generalTerms['INVALID']." ".LangUtil::$generalTerms['AGE']; ?>: '"+upper_value+"'");
 							return;
-						}						
+						}
 						else if((upper_value.trim()-lower_value.trim())<=0)
 						{
 							alert("Age range cannot be negative.");
@@ -382,9 +383,9 @@ function check_input()
 							alert("Age range: Min age should not ne same as max age.");
 							return;
 						}
-					}				
+					}
 				}
-			
+
 				else if(range_type_elems[j].value == <?php echo Measure::$RANGE_OPTIONS; ?>)
 				{
 					//Check option values
@@ -425,7 +426,7 @@ function check_input()
 						return;
 					}
 				}
-			}			
+			}
 		}
 		if(measure_entered == false)
 		{
@@ -448,13 +449,13 @@ function check_input()
 		alert("<?php echo LangUtil::$pageTerms['TIPS_MISSING_SELECTEDSPECIMEN']; ?>");
 		return;
 	}
-	
-	
+
+
 	var check_url = "ajax/test_type_name_check.php?test_name="+test_name;
-	$.ajax({ url: check_url, async : false, success: function(response){			
-			if(response == "1")		
-			{	
-				alert("Test name: "+test_name + " already exist");				
+	$.ajax({ url: check_url, async : false, success: function(response){
+			if(response == "1")
+			{
+				alert("Test name: "+test_name + " already exist");
 			}
 			else
 			{
@@ -463,8 +464,8 @@ function check_input()
 			}
 	}
 	});
-	
-	
+
+
 }
 
 function toggle_agerange(measure_num, row_num)
@@ -486,7 +487,7 @@ function toggle_agerange(measure_num, row_num)
 	else
 	{
 		$('#'+field_id).removeAttr("disabled");
-	}	
+	}
 }
 
 function isInputNumber(evt) {
@@ -514,14 +515,14 @@ function isInputNumber(evt) {
 <table class='smaller_font'>
 	<tr>
 		<td><?php echo LangUtil::$generalTerms['NAME']; ?> <?php $page_elems->getAsterisk(); ?></td>
-		<td><input type='text' name='test_name' id='test_name' class='uniform_width' /> 
+		<td><input type='text' name='test_name' id='test_name' class='uniform_width' />
 			</td>
 	</tr>
 	<tr>
 		<td><?php echo LangUtil::$generalTerms['LAB_SECTION']; ?> <?php $page_elems->getAsterisk(); ?></td>
 		<td>
 			<SELECT name='cat_code' id='cat_code' onchange="javascript:check_if_new_category(this);" class='uniform_width'>
-			<option value="-2">--<?php echo LangUtil::$generalTerms['CMD_SELECT']; ?>--</option>			
+			<option value="-2">--<?php echo LangUtil::$generalTerms['CMD_SELECT']; ?>--</option>
 			<?php $page_elems->getTestCategorySelect(); ?>
 				<option value='-1'>--<?php echo LangUtil::$pageTerms['NEW_LAB_SECTION']; ?>--</option>
 			</select>
@@ -565,9 +566,9 @@ function isInputNumber(evt) {
 			</div>
 			</td>
 			</div>
-		
+
 		</tr>
-			
+
 			<?php if((stripos($test_type->clinical_data ,"%%%"))===0)
 			{
 			$string=$test_type->clinical_data;
@@ -587,7 +588,7 @@ function isInputNumber(evt) {
 			<?php $page_elems->getMeasureCheckboxes(); ?>
 		</td>
 	</tr>
-	
+
 	<tr valign='top' class='nonpanel_row'>
 		<td>
 			<?php echo LangUtil::$generalTerms['MEASURES']; ?> <?php $page_elems->getAsterisk(); ?> [<a href='#measures_help' rel='facebox'>?</a>]
@@ -634,7 +635,7 @@ function isInputNumber(evt) {
 					?>
 					<span id='val_<?php echo $i; ?>' class='values_section_<?php echo $i; ?>'>
 						<span id='numeric_<?php echo $i; ?>'>
-							
+
 							<input type='text' class='range_field' name='range_l_<?php echo $i; ?>[]' value='' /> :
 							<input type='text' class='range_field' name='range_u_<?php echo $i; ?>[]' value=''/>
 							<input type='text' class='range_field' name='gender_<?php echo $i; ?>[]' value='B'/>
@@ -674,15 +675,15 @@ function isInputNumber(evt) {
 						echo "<small><a href='javascript:removeMeasure($i);'> Remove</a></small>";
 					echo "</td>";
 					echo "</tr>";
-                                        
+
                                         # submeasures
-                                        
+
                                        // $max_num_submeasures = 5;
                                         $us = '_';
                                     for($y = 1; $y <= $max_num_submeasures; $y += 1)
                                     {
                                             echo "<tr valign='top' id='smrow_$i$us$y' style='display:none;'";
-                                            
+
                                             echo ">";
                                             echo "<td>";
                                             ?>
@@ -749,22 +750,22 @@ function isInputNumber(evt) {
                                             echo "</tr>";
                                             ?>
                                             <div id='new_subentries' style='display:none;'>
-                                            
-											</div>
-                                            
 
-                                            
+											</div>
+
+
+
                                         <?php
                                         }// end of submeasures for each measure
                                         ?>
-                                        
-                                      <?php  
+
+                                      <?php
 				}//end of measures
 				?>
-                                        
-			
+
+
 			</table>
-                        
+
 			<div id='new_entries'>
 			</div>
 			<a id='new_measure_link' href='javascript:add_new_measure();'><?php echo LangUtil::$generalTerms['ADDANOTHER']; ?> &raquo;</a>
@@ -772,7 +773,7 @@ function isInputNumber(evt) {
 	</tr>
 	<tr valign='top'>
 		<td>
-			<?php echo LangUtil::$generalTerms['COMPATIBLE_SPECIMENS']; ?> <?php $page_elems->getAsterisk(); ?>  [<a href='#specimen_help' rel='facebox'>?</a>]  
+			<?php echo LangUtil::$generalTerms['COMPATIBLE_SPECIMENS']; ?> <?php $page_elems->getAsterisk(); ?>  [<a href='#specimen_help' rel='facebox'>?</a>]
 		</td>
 		<td>
 			<?php $page_elems->getSpecimenTypeCheckboxes($_SESSION['lab_config_id']); ?>
@@ -781,14 +782,14 @@ function isInputNumber(evt) {
 	<td></td>
 	<tr valign='top'>
 		<td>
-			Hide Patient Name in Report 
+			Hide Patient Name in Report
 		</td>
 		<td>
 			<select name="hidePatientName">
 				<option value="0">No</option>
 				<option value="1">Yes</option>
 			</select>
-		</td>		
+		</td>
 	</tr>
 	<tr valign='top'>
 		<td>Prevalence Threshold </td>
@@ -798,7 +799,7 @@ function isInputNumber(evt) {
 		</span>
 		</td>
 	</tr>
-			
+
 	<tr valign='top'>
 		<td>Target TAT</td>
 		<td><input id='targetTat' name='targetTat' type='text' size='3' maxLength='3' onkeypress="return isInputNumber(event);" />
@@ -812,7 +813,7 @@ function isInputNumber(evt) {
                     <input id='cost_to_patient_dollars' name='cost_to_patient_cents' type='number' size='2' maxLength='2' onkeypress="return isInputNumber(event);" value='00' />
                     <?php echo get_currency_type_from_lab_config_settings(); ?>
                 </td>
-	</tr>        
+	</tr>
 	<td>
 	</td>
 	<td>
@@ -831,12 +832,12 @@ function isInputNumber(evt) {
 <small>
 <b><?php echo LangUtil::$generalTerms['MEASURES']; ?></b>
 <br><br>
-Valid result ranges can be entered for each measure in the 'range' field. 
+Valid result ranges can be entered for each measure in the 'range' field.
 <br><br>
-<u>Numeric ranges</u> can be specified as 'lower:upper'. 
-For e.g., if the valid range lies between 0 and 1000, please enter '0:1000'.By default the gender is B for both and age_range is 0:100. You can modify any of the fields based on the measure. 
+<u>Numeric ranges</u> can be specified as 'lower:upper'.
+For e.g., if the valid range lies between 0 and 1000, please enter '0:1000'.By default the gender is B for both and age_range is 0:100. You can modify any of the fields based on the measure.
 <br><br>
-<u>Alphanumeric values</u> can be specified as 'value1/value2/value3'. 
+<u>Alphanumeric values</u> can be specified as 'value1/value2/value3'.
 For e.g., if test results can be either one from 'P','N' or 'D', please enter 'P/N/D'.
 <br><br>
 <u>Autocomplete</u> can be specified in the textboxes provided. They will be prompted while inputting the results.

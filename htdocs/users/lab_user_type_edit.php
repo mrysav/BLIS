@@ -5,13 +5,14 @@
 #
 
 include("../users/accesslist.php");
-if( !(isAdmin(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $adminPageList)) 
-     && !(isCountryDir(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $countryDirPageList)) 
+if( !(isAdmin(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $adminPageList))
+     && !(isCountryDir(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $countryDirPageList))
 	 && !(isSuperAdmin(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $superAdminPageList)) )
 		header( 'Location: home.php' );
-	
+
 include("redirect.php");
 include("includes/header.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("lab_config_home");
 
 $saved_session = SessionUtil::save();
@@ -62,20 +63,20 @@ function update_lab_user()
 
 	var readwriteOption = 0;
     var rwoptions = ',';
-    
+
 	$('input[name="readwriteOpt"]:checked').each(function() {
 		readwriteOption++;
-		rwoptions = rwoptions + this.value+','  ; 
+		rwoptions = rwoptions + this.value+','  ;
 	});
 
 	rwoptions = rwoptions.slice(1,-1);
-	
+
 	if(readwriteOption < 1){
 		alert("Select at least one read or write options");
 		return;
 	}
 
-	
+
 	var data_string = 'id=<?php echo $user_id; ?>&un='+username+'&p='+pwd+'&fn='+fullname+'&em='+email+'&ph='+phone+'&lev='+level+'&lang='+lang_id+"&showpname="+showpname+"&opt="+rwoptions;
 	$('#edit_user_progress').show();
 	$.ajax({
@@ -102,14 +103,14 @@ function update_lab_user_type()
 
 	var readwriteOption = 0;
     var rwoptions = ',';
-    
+
 	$('input[name="readwriteOpt"]:checked').each(function() {
 		readwriteOption++;
-		rwoptions = rwoptions + this.value+','  ; 
+		rwoptions = rwoptions + this.value+','  ;
 	});
 
 	rwoptions = rwoptions.slice(1,-1);
-	
+
 	if(readwriteOption < 1){
 		alert("Select at least one read or write options");
 		return;
@@ -221,7 +222,7 @@ else
 </script>
 <br>
 <a href='javascript:goback();'><?php echo LangUtil::$generalTerms['CMD_BACK']; ?></a> |<b><?php echo "Edit User Type"; ?></b>
- 
+
 <br><br>
 <?php
 if($user == null)
@@ -245,7 +246,7 @@ if($user == null)
 			</td>
 		</tr>
 		<tr valign='top'>
-		
+
 			<td>Display by default</td>
 			<td>
 				<div id="patient-entry_check"><input type="checkbox" name="showpname" id="showpname" <?php
@@ -258,13 +259,13 @@ if($user == null)
 			<td> <div id="readOrWrite" name="readOrWrite" > Writeable Options </div><?php $page_elems->getAsterisk(); ?>
 		 	</td>
 		 	<td><div id="readWrite_options" name="readWrite_options">
-		 		
+
 					<input type="checkbox" name="readwriteOpt" id='readwriteOpt2' value="2">Patient Registration<br>
 					<input type="checkbox" name="readwriteOpt" id='readwriteOpt3' value="3">Test Results<br>
 					<input type="checkbox" name="readwriteOpt" id='readwriteOpt4' value="4">Search<br>
 					<input type="checkbox" name="readwriteOpt" id='readwriteOpt6' value="6">Inventory<br>
 					<input type="checkbox" name="readwriteOpt" id='readwriteOpt7' value="7">Backup Data <br>
-				
+
 				</div>
 		 	</td>
 		</tr>
@@ -292,7 +293,7 @@ if($user == null)
 		</tr>
 	</table>
 </form>
-<?php 
+<?php
 SessionUtil::restore($saved_session);
-include("includes/footer.php"); 
+include("includes/footer.php");
 ?>

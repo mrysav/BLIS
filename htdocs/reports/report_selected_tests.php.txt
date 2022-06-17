@@ -6,6 +6,7 @@ include("redirect.php");
 include("includes/db_lib.php");
 include("includes/script_elems.php");
 include("includes/page_elems.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("reports");
 
 $date_from = "";
@@ -38,7 +39,7 @@ function get_records_to_print($lab_config, $patient_id)
 		if(isset($_REQUEST['yf']))
 			$query_string .= "AND (sp.date_collected BETWEEN '$date_from' AND '$date_to') ";
 		$query_string .= "ORDER BY sp.date_collected DESC";
-	
+
 	}
 	else
 	{
@@ -49,8 +50,8 @@ function get_records_to_print($lab_config, $patient_id)
 			"AND sp.patient_id=$patient_id ";
 		if(isset($_REQUEST['yf']))
 			$query_string .= "AND (sp.date_collected BETWEEN '$date_from' AND '$date_to') ";
-		$query_string .= "ORDER BY sp.date_collected DESC";		
-	
+		$query_string .= "ORDER BY sp.date_collected DESC";
+
 	}
 	$resultset = query_associative_all($query_string);
 	if(count($resultset) == 0 || $resultset == null)
@@ -61,7 +62,7 @@ function get_records_to_print($lab_config, $patient_id)
 		$specimen = get_specimen_by_id($test->specimenId);
 		$retval[] = array($test, $specimen);
 	}
-	
+
 	return $retval;
 	}
 
@@ -145,10 +146,10 @@ $(document).ready(function(){
 	$('#report_content_table1').tablesorter();
 	$('.editable').editInPlace({
 		callback: function(unused, enteredText) {
-			return enteredText; 
+			return enteredText;
 		},
 		show_buttons: false,
-		bg_over: "FFCC66"			
+		bg_over: "FFCC66"
 	});
 	$("input[name='do_landscape']").click( function() {
 		change_orientation();
@@ -200,7 +201,7 @@ $(document).ready(function(){
 	$('#report_content table th').css('font-size', newFontSize);
 	return false;
   });
-  
+
    $(".bold").click(function(){
   	 var selObj = window.getSelection();
 		alert(selObj);
@@ -243,18 +244,18 @@ $monthago_array = explode("-", $monthago_date);
 			{
 				$value_list = array($_REQUEST['yf'], $_REQUEST['mf'], $_REQUEST['df']);
 			}
-			$page_elems->getDatePickerPlain($name_list, $id_list, $value_list); 
+			$page_elems->getDatePickerPlain($name_list, $id_list, $value_list);
 			?>
 	</td>
 	<td>
 	&nbsp;&nbsp;&nbsp;&nbsp;
 			<input type='button' onclick="javascript:print_content('report_content');" value='<?php echo LangUtil::$generalTerms['CMD_PRINT']; ?>'></input>
-			
+
 	</td>
 	<td>
 		<table class='no border'>
 	<tr valign='top'>
-		
+
 	<td>
 	<input type='radio' name='do_landscape' value='N'<?php
 			//if($report_config->landscape == false) echo " checked ";
@@ -269,9 +270,9 @@ $monthago_array = explode("-", $monthago_date);
 	</tr>
 	</table>
 	</td>
-	
+
 	<td>
-		<input type='checkbox' name='ip' id='ip'></input> 
+		<input type='checkbox' name='ip' id='ip'></input>
 		<?php echo LangUtil::$pageTerms['MSG_INCLUDEPENDING']; ?>
 	</td>
 	<td>
@@ -314,7 +315,7 @@ $monthago_array = explode("-", $monthago_date);
 	<td>
 	<input type='button' class="decreaseFont" value='Decrease' title="Decrease Font-size"></input> <br>
 	<!--<input type='button' class="bold" value='Bold' title="Bold"></input> <br>-->
-	
+
 	</td>
 	</tr>
 	</table>
@@ -327,7 +328,7 @@ $monthago_array = explode("-", $monthago_date);
 	&nbsp;&nbsp;
 	<input type='button' onclick="javascript:window.close();" value='Close' title='<?php echo LangUtil::$generalTerms['CMD_CLOSEPAGE']; ?>'></input>
 	</td>
-	
+
 	</tr>
 </table>
 <hr>
@@ -416,7 +417,7 @@ if(isset($_REQUEST['yf']))
 		echo LangUtil::$generalTerms['DATE'].": ".DateLib::mysqlToString($date_from);
 	}
 	else
-	{	
+	{
 		echo LangUtil::$generalTerms['FROM_DATE'].": ".DateLib::mysqlToString($date_from);
 		echo " | ";
 		echo LangUtil::$generalTerms['TO_DATE'].": ".DateLib::mysqlToString($date_to);
@@ -434,7 +435,7 @@ if($patient == null)
 else
 {
 	# Fetch test entries to print in report
-	$record_list = get_records_to_print($lab_config, $patient_id); 
+	$record_list = get_records_to_print($lab_config, $patient_id);
 	# If single date supplied, check if-
 	# 1. Physician name is the same for all
 	# 2. Patient daily number is the same for all
@@ -451,7 +452,7 @@ else
 		$previous_physician = "";
 		$previous_daily_num = "";
 		$count_list= count($record_list);
-		
+
 		foreach($record_list as $record_set)
 		{
 			$value = $record_set;
@@ -486,17 +487,17 @@ else
 		<?php
 			if($report_config->usePatientName == 1)
 			{
-			 echo $patient->name; 
+			 echo $patient->name;
 			 echo "\n";?><br><?php
 			}
 			if($report_config->useAge == 1)
 			{
-			 echo $patient->getAge(); 
+			 echo $patient->getAge();
 			 echo "\n";?><br><?php
 			}
 			if($report_config->useGender == 1)
 			{
-			echo $patient->sex; 
+			echo $patient->sex;
 			echo "\n";?><br><?php
 			}
 			?>
@@ -520,7 +521,7 @@ else
 					<td><?php echo LangUtil::$generalTerms['PATIENT_DAILYNUM']; ?></td>
 					<td><?php echo $previous_daily_num; ?></td>
 				</tr>
-				<?php 
+				<?php
 			}
 			if($report_config->usePatientAddlId == 1)
 			{
@@ -551,8 +552,8 @@ else
 			}
 			if($report_config->useGender == 1)
 			{
-			?>			
-			<tr valign='top'>	
+			?>
+			<tr valign='top'>
 				<td><?php echo LangUtil::$generalTerms['GENDER']; ?></td>
 				<td><?php echo $patient->sex; ?></td>
 			</tr>
@@ -565,16 +566,16 @@ else
 				<td><?php echo LangUtil::$generalTerms['DOB']; ?></td>
 				<td><?php echo $patient->getDob(); ?></td>
 			</tr>
-			<?php 
+			<?php
 			}
 			# Patient Custom fields here
 			$custom_field_list = $lab_config->getPatientCustomFields();
-			
+
 			foreach($custom_field_list as $custom_field)
 			{
 				if(in_array($custom_field->id, $report_config->patientCustomFields))
-				{	
-					$field_name = $custom_field->fieldName;				
+				{
+					$field_name = $custom_field->fieldName;
 					?>
 					<tr valign='top'>
 					<?php
@@ -594,7 +595,7 @@ else
 							$field_value = "-";
 						echo $field_value;
 					}
-					echo "</td>";					
+					echo "</td>";
 					?>
 					</tr>
 					<?php
@@ -607,30 +608,30 @@ else
 					<td><?php echo LangUtil::$generalTerms['DOCTOR']; ?></td>
 					<td><?php echo $previous_physician; ?></td>
 				</tr>
-				<?php 
+				<?php
 			}
 			?>
 		</tbody>
 	</table>
 	<br>
-	<?php 
+	<?php
 	if($all_tests_completed === true && count($record_list) != 0)
 	{
-		echo LangUtil::$pageTerms['MSG_ALLTESTSCOMPLETED']; 
+		echo LangUtil::$pageTerms['MSG_ALLTESTSCOMPLETED'];
 	}
 	else
 	{
-		echo LangUtil::$generalTerms['TESTS']; 
+		echo LangUtil::$generalTerms['TESTS'];
 	}
 	?>
-	<?php 
+	<?php
 	if(count($record_list) == 0)
 	{
 		echo LangUtil::$generalTerms['MSG_NOTFOUND'];
 	}
 	else
 	{ if(1)
-	{ 
+	{
 	?>
 		<table class='print_entry_border draggable' id='report_content_table1'>
 			<thead>
@@ -666,7 +667,7 @@ else
 				if($report_config->useTestName == 1)
 				{
 					echo "<th>".LangUtil::$generalTerms['TEST'];
-					
+
 					echo "</th>";
 				}
 				if($report_config->useComments == 1)
@@ -746,7 +747,7 @@ else
 				{
 					echo "<td>".$specimen->getDailyNum()."</td>";
 				}
-				
+
 				if($report_config->useSpecimenName == 1)
 				{
 					echo "<td class='editable'>".get_specimen_name_by_id($specimen->specimenTypeId)."</td>";
@@ -770,9 +771,9 @@ else
 						else
 						{
 							$field_value = $custom_data->getFieldValueString($lab_config->id, 1);
-							if($field_value == "" or $field_value == null) 
+							if($field_value == "" or $field_value == null)
 							$field_value = "-";
-							echo $field_value; 
+							echo $field_value;
 						}
 						echo "</td>";
 					}
@@ -781,8 +782,8 @@ else
 				{
 					echo "<td class='editable'>".get_test_name_by_id($test->testTypeId)."</td>";
 				}
-				
-				
+
+
 				if($report_config->useComments == 1)
 				{
 					echo "<td class='editable'>";
@@ -820,7 +821,7 @@ else
 					{
 						$test_type = TestType::getById($test->testTypeId);
 						$measure_list = $test_type->getMeasures();
-						
+
 						foreach($measure_list as $measure)
 						{
 						$type=$measure->getRangeType();
@@ -860,29 +861,29 @@ else
 		}else if(stripos($unit,":")!=false)
 		{
 		$units=explode(":",$unit);
-		echo "(";	
+		echo "(";
 		echo $lower;
-		?><sup><?php echo $units[0]; ?></sup> - 
+		?><sup><?php echo $units[0]; ?></sup> -
 		<?php echo $upper;?> <sup> <?php echo $units[0]; ?> </sup>
 		<?php
 		echo " ".$units[1].")";
 		}
-		
+
 		else
-		{	echo "(";		
-			echo $lower; ?>-<?php echo $upper; 
+		{	echo "(";
+			echo $lower; ?>-<?php echo $upper;
 			echo " ".$measure->unit.")";
-		}?>&nbsp;&nbsp;	
-			
+		}?>&nbsp;&nbsp;
+
 			<?php
 		//echo " ".$measure->unit.")";
 		//echo "<br>";
-		
-		
-		
-		
+
+
+
+
 	}
-					
+
 			else
 				{
 				if($measure->unit=="")
@@ -922,7 +923,7 @@ else
 				{
 					echo "<td class='editable'>".$test->getStatus()."</td>";
 				}
-				
+
 				?>
 				</tr>
 			<?php
@@ -932,15 +933,15 @@ else
 		</table>
 		<br><br>
 		<?php if($report_config->useClinicalData == 1)
-		
-	{ 		
+
+	{
 			if(count($data_list)==1&&count(record_list)==1)
 	{
 		?>
 		<b>
 			Clinical Data:
 			</b>
-			<?php  
+			<?php
 			foreach($data_list as $key=>$value)
 		{
 			if(stripos($value,"!#!")===0)
@@ -973,7 +974,7 @@ else
 			?><table>
 			<?php for($i=0;$i<count($name);$i++)
 			{
-			
+
 			if($name[$i]!=" ")
 			{
 			?>
@@ -985,22 +986,22 @@ else
 			<?php echo $value[$i];?>
 			</td>
 			</tr>
-			<?php 
+			<?php
 			}
 			}
 			?>
 			</table>
 			<?php
-			
+
 			}
 			?>
-			
-		
+
+
 			<br><br>
 			<?php
 		}
-				
-		else 
+
+		else
 		{
 			$bullet=1;
 			foreach($data_list as $key=>$value)
@@ -1037,7 +1038,7 @@ else
 			$value_array=$contents[1];
 			$name=explode(",",$name_array);
 			$value=explode(",",$value_array);
-			
+
 			?>
 			<table>
 			<?php for($i=0;$i<count($name);$i++)
@@ -1053,19 +1054,19 @@ else
 			<?php echo $value[$i];?>
 			</td>
 			</tr>
-			<?php 
-		
+			<?php
+
 		}
 		}?>
 			</table> <?php }?>
 			<br><br>
 			<?php
-			
+
 	}
 		}
 		}
 		}else{
-		
+
 			if(isset($_REQUEST['sid']))
 			{
 				# Called after result entry for a single specimen
@@ -1081,9 +1082,9 @@ else
 				$specimen = $value[1];
 				$id=$test->testTypeId;
 				$clinical_data=get_clinical_data_by_id($test->testTypeId);
-		?>	
+		?>
 				<?php
-				
+
 				if($report_config->useSpecimenName == 1)
 				{
 					echo "<h3>";
@@ -1142,9 +1143,9 @@ else
 						else
 						{
 							$field_value = $custom_data->getFieldValueString($lab_config->id, 1);
-							if($field_value == "" or $field_value == null) 
+							if($field_value == "" or $field_value == null)
 							$field_value = "-";
-							echo $field_value; 
+							echo $field_value;
 						}
 						echo "<br>";
 					}
@@ -1187,7 +1188,7 @@ else
 					{
 						$test_type = TestType::getById($test->testTypeId);
 						$measure_list = $test_type->getMeasures();
-						
+
 						foreach($measure_list as $measure)
 						{
 						$type=$measure->getRangeType();
@@ -1228,19 +1229,19 @@ else
 							else if(stripos($unit,":")!=false)
 								{
 								$units=explode(":",$unit);
-								echo "(";	
+								echo "(";
 								echo $lower;
-								?><sup><?php echo $units[0]; ?></sup> - 
+								?><sup><?php echo $units[0]; ?></sup> -
 								<?php echo $upper;?> <sup> <?php echo $units[0]; ?> </sup>
 								<?php
 								echo " ".$units[1].")";
 							}
-							
+
 							else
-							{	echo "(";		
-								echo $lower; ?>-<?php echo $upper; 
+							{	echo "(";
+								echo $lower; ?>-<?php echo $upper;
 								echo " ".$measure->unit.")";
-							}	
+							}
 						}
 						else
 						{
@@ -1285,21 +1286,21 @@ else
 					echo LangUtil::$generalTerms['SP_STATUS']."&nbsp;&#45;&nbsp;";
 					echo $test->getStatus()."<br>";
 				}
-			
+
 			}
 			?>
-		
+
 		<br><br>
 		<?php if($report_config->useClinicalData == 1)
-		
-	{ 		
+
+	{
 			if(count($data_list)==1&&count(record_list)==1)
 	{
 		?>
 		<b>
 			Clinical Data:
 			</b>
-			<?php  
+			<?php
 			foreach($data_list as $key=>$value)
 		{
 			if(stripos($value,"!#!")===0)
@@ -1332,7 +1333,7 @@ else
 			?><table>
 			<?php for($i=0;$i<count($name);$i++)
 			{
-			
+
 			if($name[$i]!=" ")
 			{
 			?>
@@ -1344,22 +1345,22 @@ else
 			<?php echo $value[$i];?>
 			</td>
 			</tr>
-			<?php 
+			<?php
 			}
 			}
 			?>
 			</table>
 			<?php
-			
+
 			}
 			?>
-			
-		
+
+
 			<br><br>
 			<?php
 		}
-				
-		else 
+
+		else
 		{
 			$bullet=1;
 			foreach($data_list as $key=>$value)
@@ -1396,7 +1397,7 @@ else
 			$value_array=$contents[1];
 			$name=explode(",",$name_array);
 			$value=explode(",",$value_array);
-			
+
 			?>
 			<table>
 			<?php for($i=0;$i<count($name);$i++)
@@ -1412,23 +1413,23 @@ else
 			<?php echo $value[$i];?>
 			</td>
 			</tr>
-			<?php 
-		
+			<?php
+
 		}
 		}?>
 			</table> <?php }?>
 			<br><br>
 			<?php
-			
+
 	}
 		}
 		}
-		
-		
-		
+
+
+
 		}
 	}
-	
+
 	}
 if(count($record_list) != 0)
 {
@@ -1454,13 +1455,13 @@ $(document).ready(function(){
 	var html_string = "";
 	if(date_from == date_to)
 	{
-		html_string = "<br><?php echo LangUtil::$generalTerms['DATE'].": "; ?>"+date_from;		
+		html_string = "<br><?php echo LangUtil::$generalTerms['DATE'].": "; ?>"+date_from;
 	}
 	else
 	{
 		html_string = "<br><?php echo LangUtil::$generalTerms['FROM_DATE'].": "; ?>"+date_from+" | <?php echo LangUtil::$generalTerms['TO_DATE'].": "; ?>"+date_to;
 	}
-	
+
 	$('#date_section').html(html_string);
 });
 </script>
@@ -1476,7 +1477,7 @@ $(document).ready(function(){
 </div>
 <!--p class="main">
 ............................................-->
-<?php 
+<?php
 $new_footer_part="............................................";
 $footerText=explode(";" ,$report_config->footerText);
 $designation=explode(";" ,$report_config->designation);

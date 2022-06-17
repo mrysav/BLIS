@@ -1,4 +1,4 @@
-<?php 
+<?php
 /*
 Buea : cameroon : 129
 bamenda : cameroon : 128
@@ -8,6 +8,7 @@ kaneshie: ghana : 153
 include("redirect.php");
 
 include("includes/header.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("home");
 
 

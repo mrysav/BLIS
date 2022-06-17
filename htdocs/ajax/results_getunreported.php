@@ -6,11 +6,12 @@
 include("../includes/SessionCheck.php");
 include("../includes/db_lib.php");
 include("../includes/page_elems.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("results_entry");
 
 $page_elems = new PageElems();
 ?>
-<?php 
+<?php
 $form_name = 'report_results_form';
 $form_id = $form_name;
 $specimen_list = Specimen::getUnreported();
@@ -26,7 +27,7 @@ else
 {
 	?>
 	<div id='report_results_form_div'>
-	<form name='<?php echo $form_name; ?>' id='<?php echo $form_id; ?>' 
+	<form name='<?php echo $form_name; ?>' id='<?php echo $form_id; ?>'
 		action='ajax/results_markasreported.php' method='post'>
 	<?php $page_elems->getReportResultsForm($form_name, $form_id); ?>
 	<input type='button' value='<?php echo LangUtil::$pageTerms['CMD_MARKASREPORTED']; ?>' onclick='javascript:mark_reported();'></input>

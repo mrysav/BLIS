@@ -5,12 +5,13 @@
 #
 
 include("../users/accesslist.php");
-if( !(isCountryDir(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $countryDirPageList)) 
+if( !(isCountryDir(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $countryDirPageList))
 	&& !(isSuperAdmin(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $superAdminPageList)) )
 	header( 'Location: home.php' );
 
 include("redirect.php");
 include("includes/header.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("countrycatalog");
 
 $script_elems->enableTableSorter();
@@ -29,7 +30,7 @@ $(document).ready(function(){
 		load_right_pane('specimen_types_div');
 		<?php
 	}
-	else if( isset($_REQUEST['show_tc'])) { 
+	else if( isset($_REQUEST['show_tc'])) {
 		?>
 		load_right_pane('test_category_types_div');
 		<?php
@@ -185,7 +186,7 @@ function hide_right_pane()
 <table cellpadding='10px'>
 <tr valign='top'>
 <td id='left_pane' class='left_menu' width='150'>
-    
+
 <a href="javascript:load_right_pane('test_types_div');" class='menu_option' id='test_types_div_menu'>
 	<?php echo LangUtil::$generalTerms['TEST_TYPES']; ?>
 </a>
@@ -212,9 +213,9 @@ function hide_right_pane()
 			<?php $page_elems->getTestTypesCountryLevel(); ?>
 		</div>
 	</div>
-	
-	
-	
+
+
+
 	<div id='test_category_types_div' class='content_div' style='display:none;'>
 		<form id="testCategoryNamesSelector">
 		<?php $page_elems->getTestCategoryNamesSelector(); ?>
@@ -230,8 +231,8 @@ function hide_right_pane()
 			<?php $page_elems->getTestCategoryTypesCountryLevel(); ?>
 		</div>
 	</div>
-	
-	
+
+
 </td>
 </tr>
 </table>

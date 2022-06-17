@@ -6,6 +6,7 @@ include("includes/script_elems.php");
 include("includes/page_elems.php");
 include("includes/header.php");
 
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("reports");
 
 
@@ -42,8 +43,8 @@ foreach($rem_recs as $rem_rec)
 		$(document).ready(function(){
 			//$('#test_history_table').tablesorter();
 		});
-		
-		
+
+
 		</script>
                 <form name="del" id="del" action='reports/ret_tests.php'  method='post'>
                 <input type='hidden' name='category' value='specimen' />
@@ -72,7 +73,7 @@ foreach($rem_recs as $rem_rec)
                             if(!in_array($specimen->specimenId, $rem_specs))
                                     continue;
                             ?>
-		
+
                         <tr valign='top'>
                                 <?php
                                 if($_SESSION['s_addl'] != 0)
@@ -99,11 +100,11 @@ foreach($rem_recs as $rem_rec)
                                 </td>
                                 <?php
                                 $sid=$specimen->specimenId;
-                                
+
                                 ?>
                                 <input type="hidden" name="sp[]" value="<?php echo $sid ?>" />
                         </tr>
-                        
+
 			<?php
                         }
 			?>

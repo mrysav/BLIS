@@ -3,6 +3,7 @@
 # Functions for date calculations and date formatting
 #
 
+require_once(__DIR__."/../lang/lang_util.php");
 
 class DateLib
 {
@@ -44,33 +45,33 @@ class DateLib
 		}
 		*/
 		$labConfig = LabConfig::getById($_SESSION['lab_config_id']);
-		
+
 		$today = date('Y-m-d');
 		$diff = abs(strtotime($today) - strtotime($dob));
-		
-		# explode below gives Y-m-d (Required, because the difference function to get years, months & days is approximate. 
+
+		# explode below gives Y-m-d (Required, because the difference function to get years, months & days is approximate.
 		# Therefore if current day is same as dob day, do display days.
-		$dob_array = explode("-", $dob); 
+		$dob_array = explode("-", $dob);
 		$today_array = explode("-", $today);
 		$value = "";
-		
+
 		$years = floor($diff / (365*60*60*24));
 		if( $years >= $labConfig->ageLimit ) {
 			$value .= $years . " " . LangUtil::$generalTerms['YEARS'];
 		}
 		else {
 			$months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
-			$days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));		
-			
+			$days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
+
 			if ( $years > 0 )
 				$value .= $years . " " . LangUtil::$generalTerms['YEARS'];
 			if ( $months > 0 ) {
-				if ( $years > 0 ) 
+				if ( $years > 0 )
 					$value .= ", ";
 				$value .= $months . " " . LangUtil::$generalTerms['MONTHS'];
 			}
-			
-			if($dob_array[2] != $today_array[2]) { 
+
+			if($dob_array[2] != $today_array[2]) {
 				if ( $days > 0 ) {
 					if ( $months > 0 || $years > 0 )
 						$value .= ", ";
@@ -80,10 +81,10 @@ class DateLib
 		}
 		return $value;
 	}
-	
+
 	public static function dobToAgeNumber($dob)
 	{
-		# Converts date of birth to age in years without appendin string " years" 
+		# Converts date of birth to age in years without appendin string " years"
 		$today = date("m-d-Y");
 		$dob_array = explode("-", $dob); # gives Y-m-d
 		$dob_formatted = $dob_array[1]."-".$dob_array[2]."-".$dob_array[0];
@@ -97,7 +98,7 @@ class DateLib
 		# Input in "Y-m-d" format
 		$target_format = "";
 		if($lab_config == null)
-		{	
+		{
 			# Fetch format from session variable
 			$target_format = $_SESSION['dformat'];
 		}

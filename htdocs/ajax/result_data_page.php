@@ -5,6 +5,7 @@
 #
 include("../includes/SessionCheck.php");
 include("../includes/db_lib.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("results_entry");
 
 $attrib_value = $_REQUEST['a'];
@@ -37,7 +38,7 @@ if($dynamic == 0)
     if($attrib_type == 5)
     {
             # Search by specimen aux ID
-            $query_string = 
+            $query_string =
                     "SELECT s.specimen_id FROM specimen s, test t, patient p ".
                     "WHERE p.patient_id=s.patient_id ".
                     "AND s.aux_id='$attrib_value'".
@@ -47,7 +48,7 @@ if($dynamic == 0)
     if($attrib_type == 0)
     {
             # Search by patient ID
-            $query_string = 
+            $query_string =
                     "SELECT s.specimen_id FROM specimen s, test t, patient p ".
                     "WHERE p.patient_id=s.patient_id ".
                     "AND p.surr_id='$attrib_value'".
@@ -59,10 +60,10 @@ if($dynamic == 0)
             # Search by patient name
 			if(empty($c))
 				$attrib_value.='%';
-			else	
+			else
 				$attrib_value=str_replace('[pq]',$attrib_value,$c);
-				
-            $query_string = 
+
+            $query_string =
                     "SELECT COUNT(*) AS val FROM patient WHERE name LIKE '$attrib_value'";
             $record = query_associative_one($query_string);
             if($record['val'] == 0)
@@ -74,7 +75,7 @@ if($dynamic == 0)
                     <?php
                     return;
             }
-            $query_string = 
+            $query_string =
                     "SELECT s.specimen_id FROM specimen s, test t, patient p ".
                     "WHERE s.specimen_id=t.specimen_id ".
                     "AND t.result = '' ".
@@ -84,7 +85,7 @@ if($dynamic == 0)
     else if($attrib_type == 3)
     {
             # Search by patient daily number
-            $query_string = 
+            $query_string =
                     "SELECT specimen_id FROM specimen ".
                     "WHERE daily_num LIKE '%-$attrib_value' ".
                     "AND ( status_code_id=".Specimen::$STATUS_PENDING." ".
@@ -96,10 +97,10 @@ else
 {
     if($attrib_type == 5)
     {
-    	
+
             # Search by specimen aux ID
     	if($lab_section == 0) {
-    		$query_string = 
+    		$query_string =
                     "SELECT s.specimen_id FROM specimen s, test t, patient p ".
                     "WHERE p.patient_id=s.patient_id ".
                     "AND s.aux_id='$attrib_value'".
@@ -119,7 +120,7 @@ else
     {
             # Search by patient ID
     	if($lab_section == 0) {
-    		$query_string = 
+    		$query_string =
                     "SELECT s.specimen_id FROM specimen s, test t, patient p ".
                     "WHERE p.patient_id=s.patient_id ".
                     "AND p.surr_id='$attrib_value'".
@@ -140,10 +141,10 @@ else
             # Search by patient name
 			if(empty($c))
 				$attrib_value.='%';
-			else	
+			else
 				$attrib_value=str_replace('[pq]',$attrib_value,$c);
-				
-            $query_string = 
+
+            $query_string =
                     "SELECT COUNT(*) AS val FROM patient WHERE name LIKE '$attrib_value'";
             $record = query_associative_one($query_string);
             if($record['val'] == 0)
@@ -155,9 +156,9 @@ else
                     <?php
                     return;
             }
-            
+
             if($lab_section == 0) {
-            $query_string = 
+            $query_string =
                     "SELECT s.specimen_id FROM specimen s, test t, patient p ".
                     "WHERE s.specimen_id=t.specimen_id ".
                     "AND t.result = '' ".
@@ -177,7 +178,7 @@ else
     {
             # Search by patient daily number
     	if($lab_section == 0) {
-    		$query_string = 
+    		$query_string =
                     "SELECT specimen_id FROM specimen ".
                     "WHERE daily_num LIKE '%-$attrib_value' ".
                     "AND ( status_code_id=".Specimen::$STATUS_PENDING." ".
@@ -191,16 +192,16 @@ else
 					"OR status_code_id=".Specimen::$STATUS_REFERRED." ) AND t.test_type_id IN
 					(SELECT test_type_id FROM test_type WHERE test_category_id=$lab_section)".
 					"ORDER BY date_collected DESC LIMIT $offset,$result_cap";
-    		
+
     	}
-    } 
+    }
     else if($attrib_type == 9)
     {
             # Search by patient specimen id
                 $decoded = decodeSpecimenBarcode($attrib_value);
                 if($lab_section == 0) {
 
-				$query_string = 
+				$query_string =
                     "SELECT specimen_id FROM specimen ".
                     "WHERE specimen_id = $decoded[1] ".
                     "AND ( status_code_id=".Specimen::$STATUS_PENDING." ".
@@ -214,14 +215,14 @@ else
 						"OR status_code_id=".Specimen::$STATUS_REFERRED." ) ".
 						"ORDER BY date_collected DESC LIMIT $offset,$result_cap";
 				}
-    } 
+    }
 	}
 $resultset = query_associative_all($query_string);
 if(count($resultset) == 0 || $resultset == null)
 {
 	?>
 	<div class='sidetip_nopos'>
-	<?php 
+	<?php
 	if($attrib_type == 0)
 		echo " ".LangUtil::$generalTerms['PATIENT_ID']." ";
 	else if($attrib_type == 1)
@@ -244,7 +245,7 @@ foreach($resultset as $record)
 $specimen_id_list = array_values(array_unique($specimen_id_list));
 ?>
 
-                 
+
 <table class="hor-minimalist-c">
 	<thead>
 		<tr valign='top'>
@@ -404,27 +405,27 @@ if($attrib_type == 3 && $count > 2)
 }
 
 ?>
-<?php 
+<?php
         if(isset($_REQUEST['l']))
-        { 
-            $next_link = "../ajax/result_data_page.php?a=".$_REQUEST['a']."&t=".$_REQUEST['t']."&l=".$_REQUEST['l']."&result_cap=".$result_cap."&result_counter=".($result_counter+1); 
+        {
+            $next_link = "../ajax/result_data_page.php?a=".$_REQUEST['a']."&t=".$_REQUEST['t']."&l=".$_REQUEST['l']."&result_cap=".$result_cap."&result_counter=".($result_counter+1);
         }
         else
         {
-            $next_link = "../ajax/result_data_page.php?a=".$_REQUEST['a']."&t=".$_REQUEST['t']."&result_cap=".$result_cap."&result_counter=".($result_counter+1);             
+            $next_link = "../ajax/result_data_page.php?a=".$_REQUEST['a']."&t=".$_REQUEST['t']."&result_cap=".$result_cap."&result_counter=".($result_counter+1);
         }
         if(isset($_REQUEST['l']))
-        { 
-            $prev_link = "../ajax/result_data_page.php?a=".$_REQUEST['a']."&t=".$_REQUEST['t']."&l=".$_REQUEST['l']."&result_cap=".$result_cap."&result_counter=".($result_counter - 1); 
+        {
+            $prev_link = "../ajax/result_data_page.php?a=".$_REQUEST['a']."&t=".$_REQUEST['t']."&l=".$_REQUEST['l']."&result_cap=".$result_cap."&result_counter=".($result_counter - 1);
         }
         else
         {
-            $prev_link = "../ajax/result_data_page.php?a=".$_REQUEST['a']."&t=".$_REQUEST['t']."&result_cap=".$result_cap."&result_counter=".($result_counter - 1);             
+            $prev_link = "../ajax/result_data_page.php?a=".$_REQUEST['a']."&t=".$_REQUEST['t']."&result_cap=".$result_cap."&result_counter=".($result_counter - 1);
         }
-    ?>        
-<div class="prev_link">                       
+    ?>
+<div class="prev_link">
      <small><a onclick="javascript:get_prev('<?php echo $prev_link; ?>', '<?php echo $result_counter - 1; ?>', '<?php echo $result_cap; ?>');">&lt;&nbsp;Previous&nbsp;</a></small>
 </div>
-<div class="next_link">                
+<div class="next_link">
      <small><a onclick="javascript:get_next('<?php echo $next_link; ?>', '<?php echo $result_counter + 1; ?>', '<?php echo $result_cap; ?>');">&nbsp;Next&nbsp&nbsp;&gt;</a></small>
 </div>

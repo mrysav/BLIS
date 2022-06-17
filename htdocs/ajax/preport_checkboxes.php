@@ -6,6 +6,7 @@
 #
 include("../includes/SessionCheck.php");
 include("../includes/db_lib.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("reports");
 
 $lab_config_id = $_REQUEST['l'];
@@ -52,7 +53,7 @@ if(count($specimen_list) == 0)
 			if(count($specimen_list) == 1)
 				echo " style='display:none;' ";
 			?>></th>
-			
+
 			<th><?php echo LangUtil::$generalTerms['PATIENT']; ?></th>
 			<?php
 			if($lab_config->dailyNum == 1 || $lab_config->dailyNum == 11 || $lab_config->dailyNum == 2 || $lab_config->dailyNum == 12)
@@ -95,7 +96,7 @@ foreach($specimen_list as $specimen)
 				<td><?php echo $specimen->getDailyNumFull(); ?></td>
 			<?php
 			}
-			?>	
+			?>
 	<!--
 	<td>
 		<?php # echo $specimen->specimenId; ?>

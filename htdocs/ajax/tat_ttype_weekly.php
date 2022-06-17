@@ -8,6 +8,7 @@ include("../includes/db_lib.php");
 include("../includes/stats_lib.php");
 include("../includes/page_elems.php");
 
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("reports");
 
 $page_elems = new PageElems();
@@ -33,9 +34,9 @@ else if ( $lab_config_id != 0 )
 	$lab_config_ids[] = $lab_config_id;
 
 $stat_list = array();
-	
-/* All Tests & All Labs */ 
-if ( $test_type_id == 0 && $lab_config_id == 0 ) { 
+
+/* All Tests & All Labs */
+if ( $test_type_id == 0 && $lab_config_id == 0 ) {
 	$site_list = get_site_list($_SESSION['user_id']);
 
 	foreach( $site_list as $key => $value) {
@@ -63,11 +64,11 @@ else if ( $test_type_id == 0 && count($lab_config_ids) > 1 ) {
 		$lab_config = LabConfig::getById($key);
 		$namesArray[] = $lab_config->name;
 		$stat_list = StatsLib::getTatWeeklyProgressionStats($lab_config, $test_type_id, $date_from, $date_to, $include_pending);
-		ksort($stat_list); 
+		ksort($stat_list);
 		$stat_lists[] = $stat_list;
 		unset($stat_list);
 	}
-}	
+}
 else {
 	/* Build Array Map with Lab Id as Key and Test Id as corresponding Value, if using aggregation */
 	$testIds = array();
@@ -78,12 +79,12 @@ else {
 				$labId = $labIdTestIdsSeparated[0];
 				$testId = $labIdTestIdsSeparated[1];
 				$testIds[$labId] = $testId;
-		}	
+		}
 	}
 	else {
 			$testIds[$lab_config_id] = $test_type_id;
 	}
-	
+
 	/* Single Test for All Labs */
 	if ( $test_type_id != 0 && $lab_config_id == 0 ) {
 		$site_list = get_site_list($_SESSION['user_id']);
@@ -93,7 +94,7 @@ else {
 			$test_type_id = $testIds[$lab_config->id];
 			$namesArray[] = $lab_config->name;
 			$stat_list = StatsLib::getTatWeeklyProgressionStats($lab_config, $test_type_id, $date_from, $date_to, $include_pending);
-			ksort($stat_list); 
+			ksort($stat_list);
 			$stat_lists[] = $stat_list;
 			unset($stat_list);
 		}
@@ -110,13 +111,13 @@ else {
 	}
 	/* Single Test for Multiple Labs */
 	else if ( $test_type_id != 0 && count($lab_config_ids) > 1 ) {
-		
+
 		foreach( $lab_config_ids as $key) {
 				$lab_config = LabConfig::getById($key);
 				$test_type_id = $testIds[$lab_config->id];
 				$namesArray[] = $lab_config->name;
 				$stat_list = StatsLib::getTatWeeklyProgressionStats($lab_config, $test_type_id, $date_from, $date_to, $include_pending);
-				ksort($stat_list); 
+				ksort($stat_list);
 				$stat_lists[] = $stat_list;
 				unset($stat_list);
 		}
@@ -147,7 +148,7 @@ $legend_id = "tlegend_".$testTypeId;
 			var progressTrendsData = new Array();
 			var namesArray = <?php echo json_encode($namesArray); ?>;
 			var progressTrendsDataTemp = <?php echo json_encode($progressTrendsData); ?>;
-			var dateStart = Date.UTC(<?php echo $date_from_js; ?>); 
+			var dateStart = Date.UTC(<?php echo $date_from_js; ?>);
 
 			var values, value1, value2;
 			/* Convert the string timestamps to floatvalue timestamps */
@@ -164,7 +165,7 @@ $legend_id = "tlegend_".$testTypeId;
 					}
 				}
 			}
-			
+
 			var chart;
 			var options = {
 			chart: {
@@ -176,7 +177,7 @@ $legend_id = "tlegend_".$testTypeId;
 			  },
 			  xAxis: {
 				 type: 'datetime',
-				 dateTimeLabelFormats: { 
+				 dateTimeLabelFormats: {
 					month: '%e. %b',
 					year: '%b'
 				 },
@@ -196,8 +197,8 @@ $legend_id = "tlegend_".$testTypeId;
 				data: []
 			  }]
 		   };
-	   
-			
+
+
 			for(var i=0;i<namesArray.length;i++) {
 
 				options.series.push({
@@ -206,7 +207,7 @@ $legend_id = "tlegend_".$testTypeId;
 					/*
 					data: (function(progressTrendsDataTemp) {
 						var data = [];
-					
+
 						for(var i=0;i<progressTrendsDataTemp[i].length;i++) {
 							var values = new String(progressTrendsDataTemp[0][i]);
 							var value = values.split(",");
@@ -220,7 +221,7 @@ $legend_id = "tlegend_".$testTypeId;
 					*/
 				});
 			}
-			
+
 		   chart = new Highcharts.Chart(options);
 
 </script>
@@ -265,7 +266,7 @@ if($testTypeId != 0) {
 		<a href="javascript:toggle('<?php echo $table_id; ?>');">&nbsp;&nbsp;<?php echo LangUtil::$generalTerms['CMD_VIEW'] ?> &raquo;</a>
 		</div>
 		</center>
-		
+
 		<table class='tablesorter' id='<?php echo $table_id; ?>' style='display:none;'>
 			<thead>
 				<tr>
@@ -347,7 +348,7 @@ if($testTypeId != 0) {
 			$total_pending += count($value[4]);
 		}
 		echo $total_pending." ".LangUtil::$pageTerms['TIPS_TATPENDING'];
-		?>	
+		?>
 		<a href="javascript:toggle('<?php echo $table_id; ?>');">&nbsp;&nbsp;<?php echo LangUtil::$generalTerms['CMD_VIEW'] ?> &raquo;</a>
 		</div>
 		</center>

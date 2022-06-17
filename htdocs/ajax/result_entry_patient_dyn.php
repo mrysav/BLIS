@@ -6,6 +6,7 @@
 
 include("../includes/db_lib.php");
 include("../includes/SessionCheck.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("results_entry");
 if(!isset($_REQUEST['result_cap']))
     $result_cap = $rcap;
@@ -50,13 +51,13 @@ width:100%;
 border-collapse:collapse;
 table-layout:inherit
 }
-.customers td, .customers th 
+.customers td, .customers th
 {
 font-size:1em;
 border:1px solid #98bf21;
 padding:3px 7px 2px 7px;
 }
-.customers th 
+.customers th
 {
 font-size:1.1em;
 text-align:left;
@@ -65,7 +66,7 @@ padding-bottom:4px;
 background-color:#A7C942;
 color:#ffffff;
 }
-.customers tr.alt td 
+.customers tr.alt td
 {
 color:#000000;
 background-color:#EAF2D3;
@@ -96,14 +97,14 @@ background-color:#EAF2D3;
         var cap = parseInt($('#rcap').html());
         //console.log(cap);
                                         $('.prev_link').hide();
-        $.ajax({ 
-		url: url_string, 
+        $.ajax({
+		url: url_string,
                 async : false,
 		success: function(count){
                     var icount = parseInt(count);
                      if(icount < cap/*parseInt('<?php echo $_REQUEST['result_cap']; ?>')*/)
                         {
-                         		
+
                                 $('.next_link').hide();
                                 if(icount == 0)
                                     {
@@ -123,7 +124,7 @@ background-color:#EAF2D3;
                         else
                         {
                                 $('#result_counts').html(count + ' Results');
-                                
+
                                 if(icount % cap == 0)
                                     var max_pages = parseInt(icount / cap);
                                 else
@@ -134,7 +135,7 @@ background-color:#EAF2D3;
                                 var rem = icount - cap;
                                 $('#rem').html(rem);
                         }
-                    
+
 get_first(count);
                }
 	});
@@ -142,14 +143,14 @@ get_first(count);
 });
 function get_first(count)
 {
-<?php 
+<?php
         if(isset($_REQUEST['labsec']))
-        { 
-$url_str= "../ajax/result_data_page_new.php?a=".$_REQUEST['a']."&t=".$_REQUEST['t']."&l=".$_REQUEST['labsec']."&result_cap=".$rcap."&result_counter=1&c=".$_REQUEST['c']; 
+        {
+$url_str= "../ajax/result_data_page_new.php?a=".$_REQUEST['a']."&t=".$_REQUEST['t']."&l=".$_REQUEST['labsec']."&result_cap=".$rcap."&result_counter=1&c=".$_REQUEST['c'];
         }
         else
         {
-$url_str = "../ajax/result_data_page_new.php?a=".$_REQUEST['a']."&t=".$_REQUEST['t']."&result_cap=".$rcap."&result_counter=1&c=".$_REQUEST['c'];             
+$url_str = "../ajax/result_data_page_new.php?a=".$_REQUEST['a']."&t=".$_REQUEST['t']."&result_cap=".$rcap."&result_counter=1&c=".$_REQUEST['c'];
         }
 ?>
 var url='<?php echo $url_str;?>';
@@ -164,8 +165,8 @@ var url='<?php echo $url_str;?>';
     if(displayed > tot)
         displayed = tot;
     $('#page_counts').html(page + '/' + mpage + ' Page');
-    
-    $('.prev_link').hide();    
+
+    $('.prev_link').hide();
     $('.next_link').hide();
     url = url + '&rem=' + rem;
     var div_name = 'resultset'+1;
@@ -176,36 +177,36 @@ var url='<?php echo $url_str;?>';
 {
 if(displayed>=tot)
 {
-    $('.prev_link').hide();    
+    $('.prev_link').hide();
     $('.next_link').hide();
 }
 if(page===1)
 {
-    $('.prev_link').hide();    
+    $('.prev_link').hide();
 }
 });
-}   
+}
 
 function get_next(url, sno, cap)
 {
 <?php
         if(isset($_REQUEST['labsec']))
-        { 
+        {
 ?>
-url= "../ajax/result_data_page_new.php?a=<?php echo $_REQUEST['a'];?>&t=<?php echo $_REQUEST['t'];?>&l=<?php echo $_REQUEST['labsec']?>&result_cap=<?php echo $rcap;?>&result_counter="+sno+"&c=<?php echo $_REQUEST['c'];?>"; 
+url= "../ajax/result_data_page_new.php?a=<?php echo $_REQUEST['a'];?>&t=<?php echo $_REQUEST['t'];?>&l=<?php echo $_REQUEST['labsec']?>&result_cap=<?php echo $rcap;?>&result_counter="+sno+"&c=<?php echo $_REQUEST['c'];?>";
 <?php
         }
         else
         {
 ?>
-url= "../ajax/result_data_page_new.php?a=<?php echo $_REQUEST['a'];?>&t=<?php echo $_REQUEST['t'];?>&result_cap=<?php echo $rcap;?>&result_counter="+sno+"&c=<?php echo $_REQUEST['c'];?>"; 
+url= "../ajax/result_data_page_new.php?a=<?php echo $_REQUEST['a'];?>&t=<?php echo $_REQUEST['t'];?>&result_cap=<?php echo $rcap;?>&result_counter="+sno+"&c=<?php echo $_REQUEST['c'];?>";
 <?php
         }
 ?>
-    var page = parseInt($('#page').html()); 
+    var page = parseInt($('#page').html());
     page = page + 1;
     $('#page').html(page);
-    var rem = parseInt($('#rem').html()); 
+    var rem = parseInt($('#rem').html());
     var tot = parseInt($('#tot').html());
     var cap = parseInt($('#rcap').html());
      rem = rem - cap;
@@ -216,8 +217,8 @@ url= "../ajax/result_data_page_new.php?a=<?php echo $_REQUEST['a'];?>&t=<?php ec
     if(displayed > tot)
         displayed = tot;
     $('#page_counts').html(page + '/' + mpage + ' Page');
-    
-    $('.prev_link').hide();    
+
+    $('.prev_link').hide();
     $('.next_link').hide();
     url = url + '&rem=' + rem;
     var div_name = 'resultset'+sno;
@@ -232,28 +233,28 @@ if(displayed>=tot)
     $('.next_link').hide();
 }
 });
-}   
+}
 
 function get_prev(url, sno, cap)
 {
 <?php
         if(isset($_REQUEST['labsec']))
-        { 
+        {
 ?>
-url= "../ajax/result_data_page_new.php?a=<?php echo $_REQUEST['a'];?>&t=<?php echo $_REQUEST['t'];?>&l=<?php echo $_REQUEST['labsec']?>&result_cap=<?php echo $rcap;?>&result_counter="+sno+"&c=<?php echo $_REQUEST['c'];?>"; 
+url= "../ajax/result_data_page_new.php?a=<?php echo $_REQUEST['a'];?>&t=<?php echo $_REQUEST['t'];?>&l=<?php echo $_REQUEST['labsec']?>&result_cap=<?php echo $rcap;?>&result_counter="+sno+"&c=<?php echo $_REQUEST['c'];?>";
 <?php
         }
         else
         {
 ?>
-url= "../ajax/result_data_page_new.php?a=<?php echo $_REQUEST['a'];?>&t=<?php echo $_REQUEST['t'];?>&result_cap=<?php echo $rcap;?>&result_counter="+sno+"&c=<?php echo $_REQUEST['c'];?>"; 
+url= "../ajax/result_data_page_new.php?a=<?php echo $_REQUEST['a'];?>&t=<?php echo $_REQUEST['t'];?>&result_cap=<?php echo $rcap;?>&result_counter="+sno+"&c=<?php echo $_REQUEST['c'];?>";
 <?php
         }
 ?>
-    var page = parseInt($('#page').html()); 
+    var page = parseInt($('#page').html());
     page = page - 1;
     $('#page').html(page);
-    var rem = parseInt($('#rem').html()); 
+    var rem = parseInt($('#rem').html());
     var tot = parseInt($('#tot').html());
     var cap = parseInt($('#rcap').html());
     var mpage = parseInt($('#mpage').html());
@@ -289,7 +290,7 @@ if($dynamic == 0)
     if($attrib_type == 5)
     {
             # Search by specimen aux ID
-            $query_string = 
+            $query_string =
                     "SELECT s.specimen_id FROM specimen s, test t, patient p ".
                     "WHERE p.patient_id=s.patient_id ".
                     "AND s.aux_id='$attrib_value'".
@@ -299,7 +300,7 @@ if($dynamic == 0)
     if($attrib_type == 0)
     {
             # Search by patient ID
-            $query_string = 
+            $query_string =
                     "SELECT s.specimen_id FROM specimen s, test t, patient p ".
                     "WHERE p.patient_id=s.patient_id ".
                     "AND p.surr_id='$attrib_value'".
@@ -311,10 +312,10 @@ if($dynamic == 0)
             # Search by patient name
 			if(empty($c))
 				$attrib_value.='%';
-			else	
+			else
 				$attrib_value=str_replace('[pq]',$attrib_value,$c);
-		
-            $query_string = 
+
+            $query_string =
                     "SELECT COUNT(*) AS val FROM patient WHERE name LIKE '$attrib_value'";
             $record = query_associative_one($query_string);
             if($record['val'] == 0)
@@ -326,7 +327,7 @@ if($dynamic == 0)
                     <?php
                     return;
             }
-            $query_string = 
+            $query_string =
                     "SELECT s.specimen_id FROM specimen s, test t, patient p ".
                     "WHERE s.specimen_id=t.specimen_id ".
                     "AND t.result = '' ".
@@ -336,7 +337,7 @@ if($dynamic == 0)
     else if($attrib_type == 3)
     {
             # Search by patient daily number
-            $query_string = 
+            $query_string =
                     "SELECT specimen_id FROM specimen ".
                     "WHERE daily_num LIKE '%-$attrib_value' ".
                     "AND ( status_code_id=".Specimen::$STATUS_PENDING." ".
@@ -348,10 +349,10 @@ else
 {
     if($attrib_type == 5)
     {
-    	
+
             # Search by specimen aux ID
     	if($lab_section == 0) {
-    		$query_string = 
+    		$query_string =
                     "SELECT s.specimen_id FROM specimen s, test t, patient p ".
                     "WHERE p.patient_id=s.patient_id ".
                     "AND s.aux_id='$attrib_value'".
@@ -371,7 +372,7 @@ else
     {
             # Search by patient ID
     	if($lab_section == 0) {
-    		$query_string = 
+    		$query_string =
                     "SELECT s.specimen_id FROM specimen s, test t, patient p ".
                     "WHERE p.patient_id=s.patient_id ".
                     "AND p.surr_id='$attrib_value'".
@@ -392,10 +393,10 @@ else
             # Search by patient name
 			if(empty($c))
 				$attrib_value.='%';
-			else	
+			else
 				$attrib_value=str_replace('[pq]',$attrib_value,$c);
-				
-            $query_string = 
+
+            $query_string =
                     "SELECT COUNT(*) AS val FROM patient WHERE name LIKE '$attrib_value'";
             $record = query_associative_one($query_string);
             if($record['val'] == 0)
@@ -407,9 +408,9 @@ else
                     <?php
                     return;
             }
-            
+
             if($lab_section == 0) {
-            $query_string = 
+            $query_string =
                     "SELECT s.specimen_id FROM specimen s, test t, patient p ".
                     "WHERE s.specimen_id=t.specimen_id ".
                     "AND t.result = '' ".
@@ -429,7 +430,7 @@ else
     {
             # Search by patient daily number
     	if($lab_section == 0) {
-    		$query_string = 
+    		$query_string =
                     "SELECT specimen_id FROM specimen ".
                     "WHERE daily_num LIKE '%-$attrib_value' ".
                     "AND ( status_code_id=".Specimen::$STATUS_PENDING." ".
@@ -443,16 +444,16 @@ else
 					"OR status_code_id=".Specimen::$STATUS_REFERRED." ) AND t.test_type_id IN
 					(SELECT test_type_id FROM test_type WHERE test_category_id=$lab_section) AND s.specimen_id NOT IN (select r_id from removal_record where category='specimen' AND status=1) ".
 					"ORDER BY date_collected DESC LIMIT 0,$rcap";
-    		
+
     	}
-    } 
+    }
     else if($attrib_type == 9)
     {
             # Search by patient specimen id
                 $decoded = decodeSpecimenBarcode($attrib_value);
                 if($lab_section == 0) {
 
-				$query_string = 
+				$query_string =
                     "SELECT specimen_id FROM specimen ".
                     "WHERE specimen_id = $decoded[1] ".
                     "AND ( status_code_id=".Specimen::$STATUS_PENDING." ".
@@ -476,14 +477,14 @@ else
     # Search by patient specimen id
     	$decoded = decodePatientBarcode($attrib_value);
     	if($lab_section == 0) {
-    
-		$query_string = 
+
+		$query_string =
                     "SELECT s.specimen_id FROM specimen s, test t, patient p ".
                     "WHERE p.patient_id=s.patient_id ".
                     "AND p.surr_id='$decoded[1]'".
                     "AND s.specimen_id=t.specimen_id ".
                     "AND s.specimen_id NOT IN (select r_id from removal_record where category='specimen') ";
-		
+
             	} else {
             $query_string =
 				"SELECT s.specimen_id FROM specimen s, test t, patient p ".
@@ -504,7 +505,7 @@ if(count($resultset) == 0 || $resultset == null)
 {
 	?>
 	<div class='sidetip_nopos'>
-	<?php 
+	<?php
 	if($attrib_type == 0)
 		echo " ".LangUtil::$generalTerms['PATIENT_ID']." ";
 	else if($attrib_type == 1)
@@ -545,8 +546,8 @@ $specimen_id_list = array_values(array_unique($specimen_id_list));
 
 <br>
 
-                    
-<div id='data_table'>                    
+
+<div id='data_table'>
 <table class="hor-minimalist-c">
 	<thead>
 		<tr valign='top'>
@@ -600,7 +601,7 @@ $specimen_id_list = array_values(array_unique($specimen_id_list));
 			<th style='min-width:100px;max-width:100px;'><?php echo LangUtil::$generalTerms['SPECIMEN_TYPE']; ?></th>
 			<th style='min-width:100px;max-width:100px;'><?php echo LangUtil::$generalTerms['TESTS']; ?></th>
 			<th style='min-width:100px;max-width:100px;padding:0px'>Results</th>
-			
+
 		</tr>
 	</thead>
 </table>
@@ -697,7 +698,7 @@ $specimen_id_list = array_values(array_unique($specimen_id_list));
 				<?php echo "View Results"; ?></a>
 			<?php }?>
 			</td>
-			
+
 		</tbody>
 		</table>
 		<div class='result_form_pane' id='result_form_pane_<?php echo $specimen->specimenId; ?>'>
@@ -720,28 +721,28 @@ if($attrib_type == 3 && $count > 2)
 }
 
 ?>
-<?php 
+<?php
         if(isset($_REQUEST['labsec']))
-        { 
-            $next_link = "../ajax/result_data_page_new.php?a=".$_REQUEST['a']."&t=".$_REQUEST['t']."&l=".$_REQUEST['labsec']."&result_cap=".$result_cap."&result_counter=".($result_counter + 1)."&c=".$_REQUEST['c']; 
+        {
+            $next_link = "../ajax/result_data_page_new.php?a=".$_REQUEST['a']."&t=".$_REQUEST['t']."&l=".$_REQUEST['labsec']."&result_cap=".$result_cap."&result_counter=".($result_counter + 1)."&c=".$_REQUEST['c'];
         }
         else
         {
-            $next_link = "../ajax/result_data_page_new.php?a=".$_REQUEST['a']."&t=".$_REQUEST['t']."&result_cap=".$result_cap."&result_counter=".($result_counter + 1)."&c=".$_REQUEST['c'];             
+            $next_link = "../ajax/result_data_page_new.php?a=".$_REQUEST['a']."&t=".$_REQUEST['t']."&result_cap=".$result_cap."&result_counter=".($result_counter + 1)."&c=".$_REQUEST['c'];
         }
         if(isset($_REQUEST['labsec']))
-        { 
-            $prev_link = "../ajax/result_data_page_new.php?a=".$_REQUEST['a']."&t=".$_REQUEST['t']."&l=".$_REQUEST['labsec']."&result_cap=".$result_cap."&result_counter=".($result_counter - 1)."&c=".$_REQUEST['c']; 
+        {
+            $prev_link = "../ajax/result_data_page_new.php?a=".$_REQUEST['a']."&t=".$_REQUEST['t']."&l=".$_REQUEST['labsec']."&result_cap=".$result_cap."&result_counter=".($result_counter - 1)."&c=".$_REQUEST['c'];
         }
         else
         {
-            $prev_link = "../ajax/result_data_page_new.php?a=".$_REQUEST['a']."&t=".$_REQUEST['t']."&result_cap=".$result_cap."&result_counter=".($result_counter - 1)."&c=".$_REQUEST['c'];             
+            $prev_link = "../ajax/result_data_page_new.php?a=".$_REQUEST['a']."&t=".$_REQUEST['t']."&result_cap=".$result_cap."&result_counter=".($result_counter - 1)."&c=".$_REQUEST['c'];
         }
-    ?>        
-<div class="prev_link">                       
+    ?>
+<div class="prev_link">
      <small><a onclick="javascript:get_prev('<?php echo $prev_link; ?>', '<?php echo $result_counter - 1; ?>', '<?php echo $result_cap; ?>');">&lt;&nbsp;Previous&nbsp;</a></small>
 </div>
-<div class="next_link">                
+<div class="next_link">
      <small><a onclick="javascript:get_next('<?php echo $next_link; ?>', '<?php echo $result_counter + 1; ?>', '<?php echo $result_cap; ?>');">&nbsp;Next&nbsp&nbsp;&gt;</a></small>
 </div>
 </div>

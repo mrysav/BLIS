@@ -11,9 +11,9 @@
 		}
 	});
 	}
-        
-        
-        
+
+
+
 </script>
 
 <?php
@@ -23,6 +23,7 @@
 # displays footer so the users know the page is done loading.
 #
 include("db_close.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("footer");
 ?>
 
@@ -34,7 +35,7 @@ LangUtil::setPageId("footer");
 	<hr>
 	<div class='footer_message'>
 		<small>
-		
+
 		<?php
 			echo '<a href="https://c4g.github.io/BLIS/faq/">FAQ</a>';
 		?>
@@ -93,7 +94,7 @@ LangUtil::setPageId("footer");
 			$endtime = microtime();
 			$endarray = explode(" ", $endtime);
 			$endtime = $endarray[1] + $endarray[0];
-			$totaltime = $endtime - $starttime; 
+			$totaltime = $endtime - $starttime;
 			$totaltime = round($totaltime,5);
 			$page_name = $_SERVER['PHP_SELF'];
 			$page_name_parts = explode("/", $page_name);

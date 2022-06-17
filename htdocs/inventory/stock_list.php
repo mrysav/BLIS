@@ -6,6 +6,7 @@ include("redirect.php");
 include("includes/header.php");
 include("includes/stats_lib.php");
 include("lang/lang_xml2php.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("stocks");
 
 $script_elems->enableFlotBasic();
@@ -38,11 +39,11 @@ putUILog('stock_list', 'X', basename($_SERVER['REQUEST_URI'], ".php"), 'X', 'X',
                         <th> <?php echo LangUtil::$pageTerms['Date Received']; ?></th>
                         <th> <?php echo LangUtil::$pageTerms['Remarks']; ?></th>
                         <th><?php echo "Update"; ?></th>
-                       
+
 		</tr>
 	</thead>
 <?php
-    
+
     $r_id = $_REQUEST['id'];
     $lid = $_SESSION['$lab_config_id'];
     $stocks_list = Inventory::getStocksList($lid, $r_id);
@@ -50,26 +51,26 @@ putUILog('stock_list', 'X', basename($_SERVER['REQUEST_URI'], ".php"), 'X', 'X',
 ?>  <tbody>
 		<tr>
 			<td><?php echo $stock['lot'];?></td>
-			<td><?php 
-                        
+			<td><?php
+
                         ?></td>
-			<td><?php 
+			<td><?php
                         $uni = $reagent['unit'];
                             if($uni == '')
                                 echo "units";
-                            else 
+                            else
                                 echo $uni;
                             ?></td>
                         <?php if($view_use == 1){ ?>
-                        <td><?php 
+                        <td><?php
                             echo "<a href='use_stock.php?id=".$reagent['id']."'> Update Stock</a>";
-                           
+
                             ?></td>
                         <?php } ?>
-                        
+
 		</tr>
-<?php 
-	} 
+<?php
+	}
 ?>
 	</tbody>
 </table>

@@ -6,6 +6,7 @@
 include("../includes/SessionCheck.php");
 include("../includes/db_lib.php");
 
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("new_specimen");
 
 $specimen_type_id = $_REQUEST['stype'];
@@ -35,8 +36,8 @@ foreach($test_type_list as $test_type)
 	<table>
 	<tr valign='top'>
 		<td>
-			<input type='checkbox' name='t_type_list[]' class='t_type_list' 
-			 id='t_type_list_<?php echo $count; ?>' 
+			<input type='checkbox' name='t_type_list[]' class='t_type_list'
+			 id='t_type_list_<?php echo $count; ?>'
 			 value='<?php echo $test_type->testTypeId; ?>'
 			 <?php
 			 # If only one checkbox, select it

@@ -7,6 +7,7 @@ include("../includes/SessionCheck.php");
 include("../includes/db_lib.php");
 include("../includes/script_elems.php");
 include("../includes/page_elems.php");
+require_once(__DIR__."/../lang/lang_util.php");
 $script_elems = new ScriptElems();
 $page_elems = new PageElems();
 
@@ -84,7 +85,7 @@ if ($success_var){
 		</td>
 	</tr>
 </table>
-<?php 
+<?php
 }
 else
 	echo "User already exists";

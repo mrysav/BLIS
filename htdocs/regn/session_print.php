@@ -7,6 +7,7 @@ include("redirect.php");
 include("includes/db_lib.php");
 include("includes/script_elems.php");
 include("includes/page_elems.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("regn");
 
 $script_elems = new ScriptElems();
@@ -49,7 +50,7 @@ function print_content(div_id)
 <hr>
 <div id='export_content'>
 <h4><?php echo LangUtil::$generalTerms['DETAILS']; ?></h4>
-<?php echo LangUtil::$generalTerms['FACILITY']; ?>: <?php echo $lab_config->getSiteName(); ?> 
+<?php echo LangUtil::$generalTerms['FACILITY']; ?>: <?php echo $lab_config->getSiteName(); ?>
  | <?php echo LangUtil::$generalTerms['ACCESSION_NUM']; ?> <?php echo $session_num; ?>
  | <?php echo LangUtil::$generalTerms['PATIENT_DAILYNUM']; ?> <?php $parts = explode("-", $session_num); echo $parts[1]; ?>
 <br><br>

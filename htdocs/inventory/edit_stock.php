@@ -2,12 +2,12 @@
 #
 # (c) C4G, Santosh Vempala, Ruban Monu, Amol Shintre and Naomi Chopra
 # Admin Stock Management Page to add new stock
-# Sneds POST request to stock_details.php 
+# Sneds POST request to stock_details.php
 #
 
 include("../users/accesslist.php");
-/*if( !(isAdmin(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $adminPageList)) 
-     && !(isCountryDir(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $countryDirPageList)) 
+/*if( !(isAdmin(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $adminPageList))
+     && !(isCountryDir(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $countryDirPageList))
 	 && !(isSuperAdmin(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $superAdminPageList)) ) {
 		header( 'Location: home.php' );
 }*/
@@ -15,6 +15,7 @@ include("../users/accesslist.php");
 include("redirect.php");
 include("includes/header.php");
 include("includes/stats_lib.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("stocks");
 $script_elems->enableTableSorter();
 $script_elems->enableDatePicker();
@@ -23,22 +24,22 @@ $r_id = $_REQUEST['id'];
 $view_use = 1;
 putUILog('edit_stock', 'X', basename($_SERVER['REQUEST_URI'], ".php"), 'X', 'X', 'X');
 
-?> 
+?>
 <script type='text/javascript'>
 $(document).ready(function(){
-	
+
 	$('#reagent').keydown(function() {
 		prefetch_pname();
 	});
-        
+
         $('#reagent_error').hide();
         $('#reagent_u_error').hide();
-	
+
 });
-function add_specimenbox(){	
-	
+function add_specimenbox(){
+
 	var url_string = "inventory/add_reagent.php";
-	$.ajax({ 
+	$.ajax({
 		url: url_string
             });
 }
@@ -50,8 +51,8 @@ var oname = $('#o_reagent').attr("value");
         name = name.replace(" ", "%20");
          oname = oname.replace(" ", "%20");
         var url_string = "inventory/check_reagent.php?name="+name+"&lid="+"<?php echo $_SESSION['lab_config_id']; ?>";
-	$.ajax({ 
-		url: url_string, 
+	$.ajax({
+		url: url_string,
                 async : false,
 		success: function(check){
                      if(check == '1' && name != oname)
@@ -105,7 +106,7 @@ $reag = Inventory::getReagentById($lid, $r_id);
 			<table>
 				<tr>
 					<td>
-						&nbsp;<?php echo LangUtil::$pageTerms['Reagent']; ?><?php $page_elems->getAsterisk(); ?> 
+						&nbsp;<?php echo LangUtil::$pageTerms['Reagent']; ?><?php $page_elems->getAsterisk(); ?>
 					</td>
 					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 					<td>
@@ -116,29 +117,29 @@ $reag = Inventory::getReagentById($lid, $r_id);
                                                 <label class="error" for="reagent" id="reagent_u_error"><small><font color="red"><?php echo "Item already exists"; ?></font></small></label>
                                                 <label class="error" for="reagent" id="reagent_error"><small><font color="red"><?php echo LangUtil::getGeneralTerm("MSG_REQDFIELD"); ?></font></small></label>
 					</td>
-                                        
+
 				</tr>
 				<tr>
 					<td>
-						&nbsp;<?php echo "Unit"; ?> 
+						&nbsp;<?php echo "Unit"; ?>
 					</td>
 					<td></td>
 					<td>
 						<input type="text" name="unit" id="unit" class='uniform_width' value="<?php echo $reag['unit']; ?>"/>
 					</td>
-                                     
+
 				</tr>
 				<tr>
 					<td>
-						&nbsp;<?php echo "Remarks"; ?> 
-						
+						&nbsp;<?php echo "Remarks"; ?>
+
 					</td>
 					<td></td>
 					<td>
                                               <textarea name="remarks" id="remarks" rows="3" cols="22" ><?php echo $reag['remarks']; ?></textarea>
 					</td>
 				</tr>
-				
+
 			</table>
 		</div>
 	</div>
@@ -163,23 +164,23 @@ $reag = Inventory::getReagentById($lid, $r_id);
                         <th> <?php echo "Date of Reception"."&nbsp;&nbsp;&nbsp;&nbsp;"; ?></th>
                         <th> <?php echo LangUtil::$pageTerms['Remarks']."&nbsp;&nbsp;&nbsp;&nbsp;" ?></th>
                         <th><?php echo "Edit"."&nbsp;&nbsp;&nbsp;&nbsp;"; ?></th>
-                       
+
 		</tr>
 	</thead>
 <?php
-    
-   
+
+
     $stocks_list = Inventory::getStocksList($lid, $r_id);
     foreach($stocks_list as $stock) {
 ?>  <tbody>
 		<tr align='center'>
 			<td><?php echo $stock['lot']; ?></td>
 			<td><?php echo Inventory::getLotQuantity($lid, $r_id, $stock['lot']); ?></td>
-			<td><?php 
+			<td><?php
                         $uni = $reag['unit'];
                             if($uni == '')
                                 echo "units";
-                            else 
+                            else
                                 echo $uni;
                             ?>
                         </td>
@@ -194,21 +195,21 @@ $reag = Inventory::getReagentById($lid, $r_id);
                             echo $e_date; ?></td>
                         <td><?php echo $stock['remarks']; ?></td>
                         <?php if($view_use == 1){ ?>
-                        <td><?php 
+                        <td><?php
                             echo "<a href='edit_lot.php?id=".$reag['id']."&lot=".$stock['lot']."'> Edit</a>";
-                           
+
                             ?></td>
                         <?php } ?>
-                        
+
 		</tr>
-<?php 
-	} 
+<?php
+	}
 ?>
 	</tbody>
 </table>
 
 
 <div id='patient_prompt_div2'>
-	
+
 	</div>
 <?php include("includes/footer.php"); ?>

@@ -6,6 +6,7 @@
 include("../includes/SessionCheck.php");
 include("../includes/page_elems.php");
 include("../includes/script_elems.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("stocks");
 $script_elems= new ScriptElems();
 $script_elems->enableDatePicker();
@@ -36,7 +37,7 @@ $value_list1 = $today_array;
 	<table>
 		<tr>
 			<td>
-				&nbsp;<?php echo LangUtil::$pageTerms['Reagent']; ?><?php $page_elems->getAsterisk(); ?> 
+				&nbsp;<?php echo LangUtil::$pageTerms['Reagent']; ?><?php $page_elems->getAsterisk(); ?>
 			</td>
 			<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 			<td>
@@ -45,7 +46,7 @@ $value_list1 = $today_array;
 		</tr>
 		<tr>
 			<td>
-				&nbsp;<?php echo LangUtil::$pageTerms['Lot_Number']; ?><?php $page_elems->getAsterisk(); ?> 
+				&nbsp;<?php echo LangUtil::$pageTerms['Lot_Number']; ?><?php $page_elems->getAsterisk(); ?>
 			</td>
 			<td></td>
 			<td>
@@ -54,7 +55,7 @@ $value_list1 = $today_array;
 		</tr>
 		<tr>
 			<td>
-				&nbsp;<?php echo LangUtil::$pageTerms['Expiry_Date']; ?><?php $page_elems->getAsterisk(); ?> 
+				&nbsp;<?php echo LangUtil::$pageTerms['Expiry_Date']; ?><?php $page_elems->getAsterisk(); ?>
 			</td>
 			<td></td>
 			<td>
@@ -82,7 +83,7 @@ $value_list1 = $today_array;
 		</tr>
 		<tr>
 			<td>
-				&nbsp;<?php echo LangUtil::$pageTerms['Quantity_Supplied']; ?><?php $page_elems->getAsterisk(); ?> 
+				&nbsp;<?php echo LangUtil::$pageTerms['Quantity_Supplied']; ?><?php $page_elems->getAsterisk(); ?>
 			</td>
 			<td></td>
 			<td>
@@ -91,7 +92,7 @@ $value_list1 = $today_array;
 		</tr>
 		<tr>
 			<td>
-				&nbsp;<?php echo LangUtil::$pageTerms['Units']; ?><?php $page_elems->getAsterisk(); ?> 
+				&nbsp;<?php echo LangUtil::$pageTerms['Units']; ?><?php $page_elems->getAsterisk(); ?>
 			</td>
 			<td></td>
 			<td>

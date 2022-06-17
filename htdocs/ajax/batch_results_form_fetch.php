@@ -7,6 +7,7 @@
 include("../includes/db_lib.php");
 include("../includes/SessionCheck.php");
 include("../includes/page_elems.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("results_entry");
 
 $page_elems = new PageElems();
@@ -79,7 +80,7 @@ if(count($pending_tests) == 0 || $pending_tests == null)
 		}
 		if($worksheet_config->useGender == 1)
 		{
-			?>			
+			?>
 				<th><?php echo LangUtil::$generalTerms['GENDER']; ?></th>
 			<?php
 		}
@@ -87,23 +88,23 @@ if(count($pending_tests) == 0 || $pending_tests == null)
 		{
 			?>
 				<th><?php echo LangUtil::$generalTerms['DOB']; ?></th>
-			<?php 
+			<?php
 		}
 		if($worksheet_config->usePatientAddlId == 1)
 		{
 			?>
 				<th><?php echo LangUtil::$generalTerms['ADDL_ID']; ?></th>
-			<?php 
+			<?php
 		}
 		if($worksheet_config->usePatientRegistrationDate == 1)
 		{
 			?>
 				<th><?php echo "Registration Date"; ?></th>
-			<?php 
+			<?php
 		}
 		?>
-						
-		<?php 
+
+		<?php
 		# Patient Custom fields here
 		$custom_field_list = $lab_config->getPatientCustomFields();
 		if(count($custom_field_list) > 0 ) {
@@ -111,8 +112,8 @@ if(count($pending_tests) == 0 || $pending_tests == null)
 			{
 				if($worksheet_config) {
 					if(in_array($custom_field->id, $worksheet_config->patientCustomFields))
-					{	
-						$field_name = $custom_field->fieldName;				
+					{
+						$field_name = $custom_field->fieldName;
 						echo "<th>";
 						echo $field_name;
 						echo "</th>";
@@ -189,7 +190,7 @@ if(count($pending_tests) == 0 || $pending_tests == null)
 		if($worksheet_config->useSpecimenAddlId != 0)
 		{
 			echo "<td>";
-			$specimen->getAuxId(); 
+			$specimen->getAuxId();
 			echo "</td>";
 		}
 		if($worksheet_config->usePatientName != 0)
@@ -236,7 +237,7 @@ if(count($pending_tests) == 0 || $pending_tests == null)
 				if($worksheet_config) {
 					if(in_array($custom_field->id, $worksheet_config->patientCustomFields))
 					{
-						$field_name = $custom_field->fieldName;				
+						$field_name = $custom_field->fieldName;
 						$custom_data = get_custom_data_patient_bytype($patient->patientId, $custom_field->id);
 						echo "<td>";
 						if($custom_data == null)
@@ -250,7 +251,7 @@ if(count($pending_tests) == 0 || $pending_tests == null)
 								$field_value = "-";
 							echo $field_value;
 						}
-						echo "</td>";					
+						echo "</td>";
 					}
 				}
 			}
@@ -275,9 +276,9 @@ if(count($pending_tests) == 0 || $pending_tests == null)
 					else
 					{
 						$field_value = $custom_data->getFieldValueString($lab_config->id, 1);
-						if($field_value == "" or $field_value == null) 
+						if($field_value == "" or $field_value == null)
 							$field_value = "-";
-						echo $field_value; 
+						echo $field_value;
 					}
 					echo "</td>";
 				}
@@ -304,7 +305,7 @@ if(count($pending_tests) == 0 || $pending_tests == null)
 		foreach($measure_list as $measure)
 		{
 			if((strpos($measure->range, "/") != false) && (strpos($measure->range, "_") == false))
-			{	
+			{
 				# Discrete value range
 				$range_options = explode("/", $measure->range);
 				?>
@@ -324,7 +325,7 @@ if(count($pending_tests) == 0 || $pending_tests == null)
 				<?php
 			}
 			else if(strpos($measure->range, "_") != false)
-			{	
+			{
 				# Discrete value range
 				$range_options = explode("_", $measure->range);
 				?>
@@ -335,7 +336,7 @@ if(count($pending_tests) == 0 || $pending_tests == null)
 				{
 					$option=str_replace("@","_",$option1)
 				?>
-				
+
 					<option value='<?php echo $option; ?>'><?php echo $option; ?></option>
 				<?php
 				}
@@ -344,7 +345,7 @@ if(count($pending_tests) == 0 || $pending_tests == null)
 				</td>
 				<?php
 			}
-			else 
+			else
 				# Continuous value range
 				echo "<td><input type='text' name='measure_".$specimen->specimenId."_".$measure_count."[]' style='width:35px;'></input></td>";
 			$measure_count++;
@@ -363,12 +364,12 @@ if(count($pending_tests) == 0 || $pending_tests == null)
 		 </div></td>
 	</tr>  -->
 	<script type="text/javascript">
-	
+
 	</script>
 	<?php
 	}
 	?>
-	
+
 </tbody>
 </table>
 <script type='text/javascript'>

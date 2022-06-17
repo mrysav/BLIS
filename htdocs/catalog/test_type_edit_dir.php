@@ -6,6 +6,7 @@
 include("redirect.php");
 include("includes/header.php");
 include("includes/ajax_lib.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("catalog");
 
 $script_elems->enableJQueryForm();
@@ -76,7 +77,7 @@ function submitTestNames() {
 | <a href="country_catalog.php?show_t=1"><?php echo LangUtil::$generalTerms['CMD_CANCEL']; ?></a>
 <br>
 
-<?php 
+<?php
 $testTypeMapping = TestTypeMapping::getTestTypeById($_REQUEST['tid'], $_SESSION['user_id']);
 if($testTypeMapping == null)
 {
@@ -109,7 +110,7 @@ $mapping_list = get_test_mapping_list_by_string($testTypeMapping->labIdTestId);
             <label class="error" id="commonTestNameErrorLabel"><small><font color="red"><?php echo LangUtil::getGeneralTerm("MSG_REQDFIELD"); ?></font></small></label>
     </div></td>
        <td> <div id="commonTestNameEdit" class="editLink"> <a onclick="toggle_div('0')">Edit</a></div></td>
-    
+
     </tr>
     <tr><td></td></tr>
     <?php
@@ -124,7 +125,7 @@ $mapping_list = get_test_mapping_list_by_string($testTypeMapping->labIdTestId);
             $stcheck = $mapping_list[$lab_config->id];
             $tname = "Unassigned";
             echo "<td><div id='labTestName".$lab_config->id."' class='variableData' style='display:none;'><select id='testNameSelect$count'>";
-            
+
             foreach($testTypeList as $testType) {
                     if($testType->testTypeId == $stcheck)
                     {
@@ -147,13 +148,13 @@ $mapping_list = get_test_mapping_list_by_string($testTypeMapping->labIdTestId);
             echo "</tr>";
             $count++;
     }
-    
+
     //echo "<tr><td></td><td></td>";
     echo "</tr>";
         ?>
 
     <tr>
-    <td></td>		
+    <td></td>
     <?php if($_REQUEST['st'] == 'true') { ?>
     <td><input type="button" id="submit" type="submit" onclick="submitTestNames();" value="<?php echo LangUtil::$generalTerms['CMD_UPDATE']; ?>" size="20" /> <div id="success_message"><b><font color="green"> Update Successful </font></b></div></td>
     <?php }
@@ -163,5 +164,5 @@ $mapping_list = get_test_mapping_list_by_string($testTypeMapping->labIdTestId);
     <?php } ?>
 </table>
     <input type="hidden" id="country_test_id" name="country_test_id" value="<?php echo $_REQUEST['tid'] ?>" />
-</form>    
+</form>
 </div>

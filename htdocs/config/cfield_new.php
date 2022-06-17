@@ -5,8 +5,8 @@
 #
 
 include("../users/accesslist.php");
-if( !(isAdmin(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $adminPageList)) 
-     && !(isCountryDir(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $countryDirPageList)) 
+if( !(isAdmin(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $adminPageList))
+     && !(isCountryDir(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $countryDirPageList))
 	 && !(isSuperAdmin(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $superAdminPageList)) ) {
 		displayForbiddenMessage();
 }
@@ -15,6 +15,7 @@ include("redirect.php");
 ?>
 <?php include("includes/header.php"); ?>
 <?php
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("lab_config_home");
 $script_elems->enableJQueryForm();
 
@@ -125,7 +126,7 @@ function checkandsubmit()
 		(
 			(range_lower.trim() == "" || range_upper.trim() == "") ||
 			(isNaN(range_lower) || isNaN(range_upper))
-		)	
+		)
 		{
 			var err_string = "<?php echo LangUtil::$generalTerms['ERROR']; ?>: <?php echo LangUtil::$generalTerms['RANGE']; ?>";
 			$('#err_msg').html(err_string);
@@ -145,7 +146,7 @@ function checkandsubmit()
 		*/
 	}
 	$('#cfield_progress_spinner').show();
-	$('#cfield_new_form').ajaxSubmit({success:function(){ 
+	$('#cfield_new_form').ajaxSubmit({success:function(){
 			$('#cfield_progress_spinner').hide();
 			window.location="lab_config_home.php?id=<?php echo $lab_config_id; ?>&show_f=1&fadd=1";
 		}

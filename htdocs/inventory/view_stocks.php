@@ -11,6 +11,7 @@ include("includes/stats_lib.php");
 include("lang/lang_xml2php.php");
 include("users/accesslist.php");
 
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("stocks");
 $script_elems = new ScriptElems();
 $page_elems = new PageElems();
@@ -28,7 +29,7 @@ if(is_admin(get_user_by_id($_SESSION['user_id']))) {
 $script_elems->enableFlotBasic();
 $script_elems->enableFlipV();
 $script_elems->enableTableSorter();
-   
+
     $lid = $_SESSION['lab_config_id'];
 ?>
 
@@ -47,21 +48,21 @@ $script_elems->enableTableSorter();
 			<th> <?php echo LangUtil::$pageTerms['Quantity']; ?></th>
                         <th><?php echo "Unit"; ?></th>
                         <?php if($view_update == 1){ ?>
-                        <th><?php 
+                        <th><?php
                             echo "Update";
                             ?></th>
                         <?php } ?>
                         <?php if($view_add == 1){ ?>
-                        <th><?php 
+                        <th><?php
                             echo "Add";
                             ?></th>
                         <?php } ?>
                         <?php if($view_edit == 1){ ?>
-                        <th><?php 
+                        <th><?php
                             echo "Edit";
                             ?></th>
                         <?php } ?>
-                       
+
 		</tr>
 	</thead>
     <tbody>
@@ -72,40 +73,40 @@ $script_elems->enableTableSorter();
 ?>
 		<tr align='center'>
 			<td><?php echo $reagent['name'];?></td>
-			<td><?php 
-                        
+			<td><?php
+
                             $quant = Inventory::getQuantity($lid, $reagent['id']);
                             if($quant == '')
                                 echo "0";
-                            else 
+                            else
                                 echo $quant;
                         ?></td>
-			<td><?php 
+			<td><?php
                         $uni = $reagent['unit'];
                             if($uni == '')
                                 echo "units";
-                            else 
+                            else
                                 echo $uni;
                             ?></td>
                         <?php if($view_update == 1){ ?>
-                        <td><?php 
+                        <td><?php
                             echo "<a href='stock_lots.php?id=".$reagent['id']."'> Log Stock Usage</a>";
                             ?></td>
                         <?php } ?>
                         <?php if($view_add == 1){ ?>
-                        <td><?php 
+                        <td><?php
                             echo "<a href='inv_new_stock.php?id=".$reagent['id']."'> Add Stock</a>";
                             ?></td>
                         <?php } ?>
                         <?php if($view_edit == 1){ ?>
-                        <td><?php 
+                        <td><?php
                             echo "<a href='edit_stock.php?id=".$reagent['id']."'> Edit Details</a>";
                             ?></td>
                         <?php } ?>
-                        
+
 		</tr>
-<?php 
-	} 
+<?php
+	}
 ?>
 	</tbody>
 </table>

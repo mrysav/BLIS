@@ -9,6 +9,7 @@ include("lang/lang_xml2php.php");
 include("../users/accesslist.php");
 include("../AntiXSS.php");
 
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("stocks");
 
 $view_update = 1;
@@ -32,19 +33,19 @@ $script_elems->enableLatencyRecord();
 ?>
 <style>
     #barcodeSearch
-    {       
+    {
         border:1px solid #a1a1a1;
-        padding:10px 10px; 
+        padding:10px 10px;
         width:600px;
         border-radius:10px;
     }
- 
+
     #barcode_search_result
     {
         font-size: 13px;
         padding:10px 40px
     }
-    
+
 </style>
 <script type='text/javascript'>
 	$(document).ready(function(){
@@ -74,7 +75,7 @@ function getBarcodeSearchResults()
 <p style="text-align: right;"><a rel='facebox' href='#view_stocks_help'>Page Help</a></p>
 <div id="barcodeSearch" >
 Barcode Scan Search: <input type="text" id="barcode_search_field" name="barcode_search_field" />
-<input type="button" id="barcode_search_button" name="barcode_search_button" value="Search" onclick='getBarcodeSearchResults()' /> <div id="error_empty" style="display: none;"><small>&nbsp;Cannot be empty</small></div>    
+<input type="button" id="barcode_search_button" name="barcode_search_button" value="Search" onclick='getBarcodeSearchResults()' /> <div id="error_empty" style="display: none;"><small>&nbsp;Cannot be empty</small></div>
 <div id="barcode_search_result">
 
 </div>
@@ -89,21 +90,21 @@ Barcode Scan Search: <input type="text" id="barcode_search_field" name="barcode_
 			<th> <?php echo LangUtil::$pageTerms['Quantity']; ?></th>
                         <th><?php echo "Unit"; ?></th>
                         <?php if($view_update == 1){ ?>
-                        <th><?php 
+                        <th><?php
                             echo "Update";
                             ?></th>
                         <?php } ?>
                         <?php if($view_add == 1){ ?>
-                        <th><?php 
+                        <th><?php
                             echo "Add";
                             ?></th>
                         <?php } ?>
                         <?php if($view_edit == 1){ ?>
-                        <th><?php 
+                        <th><?php
                             echo "Edit";
                             ?></th>
                         <?php } ?>
-                       
+
 		</tr>
 	</thead>
     <tbody>
@@ -116,49 +117,49 @@ if(count($reagents_list)!=0)
 ?>
 		<tr align='center'>
 			<td><?php echo htmlspecialchars($reagent['name'], ENT_QUOTES, 'UTF-8');?></td>
-			<td><?php 
-                        
+			<td><?php
+
                             $quant = Inventory::getQuantity($lid, htmlspecialchars($reagent['id'], ENT_QUOTES, 'UTF-8'));
                             if($quant == '')
                                 echo "0";
-                            else 
+                            else
                                 echo $quant;
                         ?></td>
-			<td><?php 
+			<td><?php
                         $uni = $reagent['unit'];
                             if($uni == '')
                                 echo "units";
-                            else 
+                            else
                                 echo htmlspecialchars($uni, ENT_QUOTES, 'UTF-8');;
                             ?></td>
                         <?php if($view_update == 1){ ?>
-                        <td><?php 
+                        <td><?php
                         //performing output encoding to prevent XSS
                         $safe_id = htmlspecialchars($reagent['id'], ENT_QUOTES, 'UTF-8');
                             echo "<a href='stock_lots.php?id=".$safe_id."'> Log Stock Usage</a>";
                             ?></td>
                         <?php } ?>
                         <?php if($view_add == 1){ ?>
-                        <td><?php 
+                        <td><?php
                             echo "<a href='inv_new_stock.php?id=".$safe_id."'> Add Stock</a>";
                             ?></td>
                         <?php } ?>
                         <?php if($view_edit == 1){ ?>
-                        <td><?php 
+                        <td><?php
                             echo "<a href='edit_stock.php?id=".$safe_id."'> Edit Details</a>";
                             ?></td>
                         <?php } ?>
-                        
+
 		</tr>
-<?php 
+<?php
 }
-	} 
+	}
 ?>
 	</tbody>
 </table>
 
 <div id='view_stocks_help' class='right_pane' style='display:none;margin-left:10px;'>
-<ul>	
+<ul>
         <?php
 
                 echo "<li>";

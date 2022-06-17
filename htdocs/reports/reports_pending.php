@@ -4,6 +4,7 @@
 #
 include("redirect.php");
 include("includes/header.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("reports");
 
 $script_elems->enableTableSorter();
@@ -49,11 +50,11 @@ else
 	?>
 	<script type='text/javascript'>
 	$(document).ready(function(){
-		$('#pending_list').tablesorter({sortList: [[4,0]]});	
+		$('#pending_list').tablesorter({sortList: [[4,0]]});
 	});
 	</script>
-	
-	<table id='pending_list' class='tablesorter'><?php #class="hor-minimalist-c" style='width:600px;' ?> 
+
+	<table id='pending_list' class='tablesorter'><?php #class="hor-minimalist-c" style='width:600px;' ?>
 		<thead>
 			<tr>
 				<th><?php echo LangUtil::$generalTerms['SPECIMEN_ID']; ?></th>
@@ -77,8 +78,8 @@ else
 				</td>
 				<td><?php echo get_specimen_name_by_id($specimen->specimenTypeId); ?></td>
 				<td>
-				<?php 
-					echo $specimen->patientId; 
+				<?php
+					echo $specimen->patientId;
 					$patient = get_patient_by_id($specimen->patientId);
 					if($patient != null && trim($patient->addlId) != "")
 					{

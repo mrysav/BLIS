@@ -5,6 +5,7 @@
 # Redirects back after update is complete
 #
 include("../includes/header.php");
+require_once(__DIR__."/../lang/lang_util.php");
 $siteList = get_site_list($_SESSION['user_id']);
 ?>
 <script type="text/javascript">
@@ -41,7 +42,7 @@ $siteList = get_site_list($_SESSION['user_id']);
 <?php echo LangUtil::$generalTerms['FROM_DATE']; ?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </td>
 <td>
-<?php 
+<?php
 	$name_list = array("yearFrom", "monthFrom", "dayFrom");
 	$id_list = $name_list;
 	$weekago_date = date("Y-m-d", strtotime('-1 week'));
@@ -54,7 +55,7 @@ $siteList = get_site_list($_SESSION['user_id']);
 <td>
 <?php echo LangUtil::$generalTerms['TO_DATE']; ?>
 <span>
-<?php 
+<?php
 	$today = date("Y-m-d");
 	$value_list = explode("-", $today);
 	$name_list = array("yearTo", "monthTo", "dayTo");

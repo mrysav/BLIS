@@ -7,6 +7,7 @@
 
 include("redirect.php");
 include("includes/db_lib.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("results_entry");
 
 include("includes/script_elems.php");
@@ -24,14 +25,14 @@ $lab_config = LabConfig::getById($_SESSION['lab_config_id']);
 
 if($lab_config == null)
 {
-	echo LangUtil::$generalTerms['MSG_NOTFOUND']; 
+	echo LangUtil::$generalTerms['MSG_NOTFOUND'];
 	SessionUtil::restore($saved_session);
 	return;
 }
 $worksheet = CustomWorksheet::getById($worksheet_id, $lab_config);
 if($worksheet == null)
 {
-	echo LangUtil::$generalTerms['MSG_NOTFOUND']; 
+	echo LangUtil::$generalTerms['MSG_NOTFOUND'];
 	SessionUtil::restore($saved_session);
 	return;
 }
@@ -41,7 +42,7 @@ if(!isset($_REQUEST['bn']) || is_nan($_REQUEST['bn']))
 	$num_rows = 10;
 else
 	$num_rows = intval($_REQUEST['bn']);
-	
+
 $margin_list = $worksheet->margins;
 for($i = 0; $i < count($margin_list); $i++)
 {
@@ -97,7 +98,7 @@ if($worksheet->landscape == true) echo " checked ";
 <?php
 
 ?>
-<h3><?php echo $worksheet->headerText; ?> | 
+<h3><?php echo $worksheet->headerText; ?> |
 	<?php echo LangUtil::$generalTerms['G_DATE']; ?>: <?php echo date($_SESSION['dformat']); ?>
 </h3>
 <h3><?php echo $worksheet->titleText; ?></h3>
@@ -137,7 +138,7 @@ $test_id_list = $worksheet->testTypes;
 			$width_val_px = intval($SCREEN_WIDTH * $width_val_percent /100);
 			echo "<th style='width:$width_val_px;'>".$test_type->getName()."</th>";
 		}
-		
+
 	}
 	# Extra blank column
 	echo "<th style='width:100px;'></th>";

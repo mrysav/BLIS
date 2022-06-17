@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("../includes/page_elems.php");
+require_once(__DIR__."/../lang/lang_util.php");
 $page_elems = new PageElems();
 ?>
 <html>
@@ -133,7 +134,7 @@ else
 </form>
 </div>
 </body>
-<?php	
+<?php
 }
 ?>
 </html>

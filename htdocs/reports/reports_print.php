@@ -6,6 +6,7 @@ include("redirect.php");
 include("includes/db_lib.php");
 include("includes/stats_lib.php");
 include("includes/page_elems.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("reports");
 
 # Utility function
@@ -74,7 +75,7 @@ function get_cumul_stats($lab_config_id, $test_type_id, $date_from, $date_to)
 			{
 				echo "<th ></th>";
 			}
-			
+
 			if($site_settings->groupByAge == 1)
 			{
 				foreach($age_group_list as $age_slot)
@@ -135,7 +136,7 @@ function get_cumul_stats($lab_config_id, $test_type_id, $date_from, $date_to)
 		<tr valign='top'>
 			<td><?php echo $measure->getName(); ?></td>
 			<td>
-			<?php 
+			<?php
 			foreach($range_values as $range_value)
 			{
 				if($is_range_options)
@@ -279,7 +280,7 @@ function get_cumul_stats($lab_config_id, $test_type_id, $date_from, $date_to)
 					$cross_gender_total[$range_value_count] += $curr_cross_gender_total;
 				}
 			}
-				
+
 			if($site_settings->groupByGender == 1)
 			{
 				echo "<td>";
@@ -292,7 +293,7 @@ function get_cumul_stats($lab_config_id, $test_type_id, $date_from, $date_to)
 				}
 				echo "</td>";
 			}
-			
+
 			echo "<td>";
 			for($i = 1; $i <= count($range_values); $i++)
 			{
@@ -305,7 +306,7 @@ function get_cumul_stats($lab_config_id, $test_type_id, $date_from, $date_to)
 				{
 					echo $cross_gender_total[$i];
 					echo "<br>";
-				}				
+				}
 			}
 			echo "</td>";
 			# Grand total:
@@ -325,11 +326,11 @@ function get_cumul_stats($lab_config_id, $test_type_id, $date_from, $date_to)
 			?>
 			</tr>
 			<?php
-	}	
+	}
 	?>
 	</tbody>
 	</table>
-	<?php	
+	<?php
 }
 
 include("includes/script_elems.php");
@@ -457,7 +458,7 @@ if(count($record_list) == 0)
 		}
 		if($report_config->useGender == 1)
 		{
-		?>			
+		?>
 			<th><?php echo LangUtil::$generalTerms['GENDER']; ?></th>
 		<?php
 		}
@@ -465,15 +466,15 @@ if(count($record_list) == 0)
 		{
 		?>
 			<th><?php echo LangUtil::$generalTerms['DOB']; ?></th>
-		<?php 
+		<?php
 		}
 		# Patient Custom fields here
 		$custom_field_list = $lab_config->getPatientCustomFields();
 		foreach($custom_field_list as $custom_field)
 		{
 			if(in_array($custom_field->id, $report_config->patientCustomFields))
-			{	
-				$field_name = $custom_field->fieldName;				
+			{
+				$field_name = $custom_field->fieldName;
 				echo "<th>";
 				echo $field_name;
 				echo "</th>";
@@ -589,7 +590,7 @@ foreach($record_list as $record_set)
 		}
 		if($report_config->useGender == 1)
 		{
-		?>			
+		?>
 			<td><?php echo $patient->sex; ?></td>
 		<?php
 		}
@@ -597,15 +598,15 @@ foreach($record_list as $record_set)
 		{
 		?>
 			<td><?php echo $patient->getDob(); ?></td>
-		<?php 
+		<?php
 		}
 		# Patient Custom fields here
 		$custom_field_list = $lab_config->getPatientCustomFields();
 		foreach($custom_field_list as $custom_field)
 		{
 			if(in_array($custom_field->id, $report_config->patientCustomFields))
-			{	
-				$field_name = $custom_field->fieldName;				
+			{
+				$field_name = $custom_field->fieldName;
 				$custom_data = get_custom_data_patient_bytype($patient->patientId, $custom_field->id);
 				echo "<td>";
 				if($custom_data == null)
@@ -619,7 +620,7 @@ foreach($record_list as $record_set)
 						$field_value = "-";
 					echo $field_value;
 				}
-				echo "</td>";					
+				echo "</td>";
 			}
 		}
 		if($report_config->useSpecimenAddlId == 1)
@@ -655,9 +656,9 @@ foreach($record_list as $record_set)
 				else
 				{
 					$field_value = $custom_data->getFieldValueString($lab_config->id, 1);
-					if($field_value == "" or $field_value == null) 
+					if($field_value == "" or $field_value == null)
 						$field_value = "-";
-					echo $field_value; 
+					echo $field_value;
 				}
 				echo "</td>";
 			}

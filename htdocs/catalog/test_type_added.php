@@ -3,7 +3,8 @@
 # Shows confirmation for new test type addition
 #
 include("redirect.php");
-include("includes/header.php"); 
+include("includes/header.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("catalog");
 ?>
 <br>

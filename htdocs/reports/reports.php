@@ -1,6 +1,7 @@
 <?php
 include("redirect.php");
 include("includes/header.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("reports");
 
 putUILog('reports', 'X', basename($_SERVER['REQUEST_URI'], ".php"), 'X', 'X', 'X');

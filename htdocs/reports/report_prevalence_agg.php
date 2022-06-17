@@ -6,6 +6,7 @@
 include("redirect.php");
 include("includes/header.php");
 include("includes/stats_lib.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("reports");
 
 $script_elems->enableFlotBasic();
@@ -23,7 +24,7 @@ $(window).load(function(){
 });
 
 function toggle_stat_table()
-{ 
+{
 	if( $('#showtablelink').text() == <?php echo '"'.LangUtil::$pageTerms['MSG_HIDEGRAPH'].'"'; ?> ) {
 		$('#showtablelink').text(<?php echo '"'.LangUtil::$pageTerms['MSG_SHOWGRAPH'].'"'; ?>);
 		$('#trendsDiv').hide();
@@ -36,7 +37,7 @@ function toggle_stat_table()
 
 /*
 function toggle_stat_graph()
-{ 
+{
 	var linktext = $('#showgraphlink').text();
 	if(linktext.indexOf("Show Graph") != -1) {
 		$('#showgraphlink').text("Hide Graph");
@@ -60,8 +61,8 @@ function view_prevalance1()
 	else if(tat_type == 'w')
 		view_testwise_weekly();
 	else if(tat_type == 'd')
-		view_testwise_daily();	
-	
+		view_testwise_daily();
+
 
 }
 
@@ -71,10 +72,10 @@ function view_prevalance()
 var tat_type = $('#tattype').attr("value");
 var date_from = $('#yf').attr("value")+"-"+$('#mf').attr("value")+"-"+$('#df').attr("value");
 var date_to = $('#yt').attr("value")+"-"+$('#mt').attr("value")+"-"+$('#dt').attr("value");
-	
+
 	if(checkDate($('#yf').attr("value"), $('#mf').attr("value"), $('#df').attr("value")) == false)
 	{
-	
+
 		alert("<?php echo LangUtil::$generalTerms['TIPS_DATEINVALID']; ?>");
 		return;
 	}
@@ -83,29 +84,29 @@ var date_to = $('#yt').attr("value")+"-"+$('#mt').attr("value")+"-"+$('#dt').att
 		alert("<?php echo LangUtil::$generalTerms['TIPS_DATEINVALID']; ?>");
 		return;
 	}
-	
+
 	   $('#progress_spinner').show();
-	
+
 	var ttype = $('#ttype').attr("value");
-	
+
 	var type=$("input[name='gender']:checked").attr("value");
-	
-		
+
+
 	 if(type=="S")
 	{
-	
+
 	var url_string ="ajax/gender_prevalance.php?tt="+ttype+"&df="+date_from+"&dt="+date_to+"&type="+tat_type+"&l=<?php echo $lab_config_id; ?>";
 
 	}
 	else if(type=="A")
 	{
-     
+
 	var url_string = "ajax/age_prevalance.php?tt="+ttype+"&df="+date_from+"&dt="+date_to+"&type="+tat_type+"&l=<?php echo $lab_config_id; ?>";
-	
+
 	}
 	else if(type=="G")
 	{
-	
+
 	var url_string="ajax/general_prevalance.php?tt="+ttype+"&df="+date_from+"&dt="+date_to+"&type="+tat_type+"&l=<?php echo $lab_config_id; ?>";
 
 	}
@@ -124,7 +125,7 @@ function view_prevalance_bar()
 	if(linktext.indexOf("Show Graph") != -1)
 		{
 		$('#showbarGraph').text("Hide Graph");
-				
+
 			}
 	else
 		{
@@ -137,7 +138,7 @@ function view_testwise_monthly()
 	var date_to = $('#yt').attr("value")+"-"+$('#mt').attr("value")+"-"+$('#dt').attr("value");
 	if(checkDate($('#yf').attr("value"), $('#mf').attr("value"), $('#df').attr("value")) == false)
 	{
-	
+
 		alert("<?php echo LangUtil::$generalTerms['TIPS_DATEINVALID']; ?>");
 		return;
 	}
@@ -146,9 +147,9 @@ function view_testwise_monthly()
 		alert("<?php echo LangUtil::$generalTerms['TIPS_DATEINVALID']; ?>");
 		return;
 	}
-	
+
 	$('#progress_spinner').show();
-	
+
 	var ttype = $('#ttype').attr("value");
 	var age_s=$('#age_s').attr("value");
 	var age_e=$('#age_e').attr("value");
@@ -159,19 +160,19 @@ function view_testwise_monthly()
 	//var url_string = "ajax/monthly_prevalance.php?tt="+ttype+"&df="+date_from+"&dt="+date_to+"&l=<?php echo $lab_config_id; ?>";
 	$('#prevalance_graph').load(url_string, function() {
 		$('#prevalance_graph').show();
-		
+
 		$('#progress_spinner').hide();
 	});
 }
 function view_testwise_weekly()
 {
 	var date_from = $('#yf').attr("value")+"-"+$('#mf').attr("value")+"-"+$('#df').attr("value");
-	
+
 	var date_to = $('#yt').attr("value")+"-"+$('#mt').attr("value")+"-"+$('#dt').attr("value");
-	
+
 	if(checkDate($('#yf').attr("value"), $('#mf').attr("value"), $('#df').attr("value")) == false)
 	{
-	
+
 		alert("<?php echo LangUtil::$generalTerms['TIPS_DATEINVALID']; ?>");
 		return;
 	}
@@ -180,9 +181,9 @@ function view_testwise_weekly()
 		alert("<?php echo LangUtil::$generalTerms['TIPS_DATEINVALID']; ?>");
 		return;
 	}
-	
+
 	$('#progress_spinner').show();
-	
+
 	var ttype = $('#ttype').attr("value");
 	var ttype = $('#ttype').attr("value");
 	var age_s=$('#age_s').attr("value");
@@ -200,12 +201,12 @@ function view_testwise_weekly()
 function view_testwise_daily()
 {
 	var date_from = $('#yf').attr("value")+"-"+$('#mf').attr("value")+"-"+$('#df').attr("value");
-	
+
 	var date_to = $('#yt').attr("value")+"-"+$('#mt').attr("value")+"-"+$('#dt').attr("value");
-	
+
 	if(checkDate($('#yf').attr("value"), $('#mf').attr("value"), $('#df').attr("value")) == false)
 	{
-	
+
 		alert("<?php echo LangUtil::$generalTerms['TIPS_DATEINVALID']; ?>");
 		return;
 	}
@@ -214,9 +215,9 @@ function view_testwise_daily()
 		alert("<?php echo LangUtil::$generalTerms['TIPS_DATEINVALID']; ?>");
 		return;
 	}
-	
+
 	$('#progress_spinner').show();
-	
+
 	var ttype = $('#ttype').attr("value");
 	var ttype = $('#ttype').attr("value");
 	var age_s=$('#age_s').attr("value");
@@ -225,7 +226,7 @@ function view_testwise_daily()
 	var url_string = "ajax/daily_prevalance.php?tt="+ttype+"&df="+date_from+"&dt="+date_to+"&age_s="+age_s+"&age_e="+age_e+"&gender="+gender+"&l=<?php echo $lab_config_id; ?>";
 	$('#prevalance_graph').load(url_string, function() {
 		$('#prevalance_graph').show();
-		
+
 		$('#progress_spinner').hide();
 	});
 }
@@ -291,7 +292,7 @@ if(count($stat_list) == 0)
 	<?php echo LangUtil::$pageTerms['TIPS_NODISCRETE']; ?>
 	</div>
 	<?php
-	include("includes/footer.php"); 
+	include("includes/footer.php");
 	return;
 }
 ?>
@@ -301,7 +302,7 @@ if($date_from == $date_to)
 	echo LangUtil::$generalTerms['DATE'].": ".DateLib::mysqlToString($date_from);
 }
 else
-{	
+{
 	echo LangUtil::$generalTerms['FROM_DATE'].": ".DateLib::mysqlToString($date_from);
 	echo " | ";
 	echo LangUtil::$generalTerms['TO_DATE'].": ".DateLib::mysqlToString($date_to);
@@ -309,11 +310,11 @@ else
 function processWeeklyTrends( $lab_config_id, $test_type_id, $date_from, $date_to, $test_name = null) {
 	global $namesArray;
 	global $stat_list;
-	
+
 	# All Tests & All Labs */
-	if( $test_type_id == 0 && $lab_config_id == 0 ) { 
+	if( $test_type_id == 0 && $lab_config_id == 0 ) {
 		$site_list = get_site_list($_SESSION['user_id']);
-		
+
 		$userId = $_SESSION['user_id'];
 		$saved_db = DbUtil::switchToGlobal();
 		$query = "SELECT * FROM test_mapping WHERE user_id = $userId";
@@ -329,18 +330,18 @@ function processWeeklyTrends( $lab_config_id, $test_type_id, $date_from, $date_t
 				}
 		}
 		DbUtil::switchRestore($saved_db);
-			
+
 		foreach( $site_list as $key => $value) {
-				
+
 			$lab_config = LabConfig::getById($key);
 			$test_type_list = array();
 			$test_type_list = $test_type_list_all[$key];
 			$testNames = $test_type_names[$key];
 			$saved_db = DbUtil::switchToLabConfig($lab_config->id);
 			$testCount = -1;
-			
+
 			foreach($test_type_list as $test_type_id) {
-				$query_string = 
+				$query_string =
 						"SELECT COUNT(*) AS count_val FROM test t, specimen s ".
 						"WHERE t.test_type_id=$test_type_id ".
 						"AND t.specimen_id=s.specimen_id ".
@@ -351,7 +352,7 @@ function processWeeklyTrends( $lab_config_id, $test_type_id, $date_from, $date_t
 				$testCount++;
 				if($count_all == 0)
 						continue;
-				
+
 				$namesArray[] = $lab_config->name." - ".$testNames[$testCount];
 				getWeeklyStats($lab_config, $test_type_id, $date_from, $date_to);
 			}
@@ -383,7 +384,7 @@ function processWeeklyTrends( $lab_config_id, $test_type_id, $date_from, $date_t
 				}
 		}
 		DbUtil::switchRestore($saved_db);
-			
+
 		foreach( $lab_config_id as $key) {
 			$lab_config = LabConfig::getById($key);
 			$test_type_list = array();
@@ -391,9 +392,9 @@ function processWeeklyTrends( $lab_config_id, $test_type_id, $date_from, $date_t
 			$testNames = $test_type_names[$key];
 			$saved_db = DbUtil::switchToLabConfig($lab_config->id);
 			$testCount = -1;
-			
+
 			foreach($test_type_list as $test_type_id) {
-				$query_string = 
+				$query_string =
 						"SELECT COUNT(*) AS count_val FROM test t, specimen s ".
 						"WHERE t.test_type_id=$test_type_id ".
 						"AND t.specimen_id=s.specimen_id ".
@@ -404,7 +405,7 @@ function processWeeklyTrends( $lab_config_id, $test_type_id, $date_from, $date_t
 				$testCount++;
 				if($count_all == 0)
 						continue;
-				
+
 				$namesArray[] = $lab_config->name." - ".$testNames[$testCount];
 				getWeeklyStats($lab_config, $test_type_id, $date_from, $date_to);
 			}
@@ -423,7 +424,7 @@ function processWeeklyTrends( $lab_config_id, $test_type_id, $date_from, $date_t
 		# Particular Test & All Labs
 		if ( $test_type_id != 0 && $lab_config_id == 0 ) {
 			$site_list = get_site_list($_SESSION['user_id']);
-		
+
 			foreach( $site_list as $key => $value) {
 				$lab_config = LabConfig::getById($key);
 				$test_type_id = $testIds[$lab_config->id];
@@ -436,9 +437,9 @@ function processWeeklyTrends( $lab_config_id, $test_type_id, $date_from, $date_t
 			$lab_config = LabConfig::getById($lab_config_id[0]);
 			$test_type_id = $testIds[$lab_config->id];
 			$namesArray[] = $lab_config->name;
-			getWeeklyStats($lab_config, $test_type_id, $date_from, $date_to);	
+			getWeeklyStats($lab_config, $test_type_id, $date_from, $date_to);
 		}
-		# Particular Test & Multiple Labs	
+		# Particular Test & Multiple Labs
 		else if ( $lab_config_id != 0 && $test_type_id != 0 ) {
 				foreach( $lab_config_id as $key) {
 					$lab_config = LabConfig::getById($key);
@@ -452,7 +453,7 @@ function processWeeklyTrends( $lab_config_id, $test_type_id, $date_from, $date_t
 	$lab_config = LabConfig::getById($lab_config_id[0]);
 	if($lab_config) {
 		//$test_type_list = get_discrete_value_test_types($lab_config);
-			
+
 		foreach($test_type_list as $test_type_id) {
 			$namesArray[] = get_test_name_by_id($test_type_id, $lab_config_id[0]);
 			getWeeklyStats($lab_config, $test_type_id, $date_from, $date_to);
@@ -464,13 +465,13 @@ function processWeeklyTrends( $lab_config_id, $test_type_id, $date_from, $date_t
 function getWeeklyStats( $lab_config, $test_type_id, $date_from, $date_to, $test_name = null ) {
 			global $xAxisGraph;
 			global $progressTrendsData;
-			
+
 			$stats = StatsLib::getDiscreteInfectionStatsWeekly($lab_config, $test_type_id, $date_from, $date_to);
 			foreach($stats as $key => $value) {
 				$formattedDate = bcmul($key,1000);
 				if( $value[0] != 0) {
 					$progressData[] = array($formattedDate,100-round(($value[1]/$value[0])*100,2));
-				}	
+				}
 				else {
 					$progressData[] = array($formattedDate,0);
 				}
@@ -534,8 +535,8 @@ foreach($stat_chunks as $stat_chunk)
 	</tr>
 	</tbody>
 	</table>
-	
-	<script id="source" language="javascript" type="text/javascript"> 
+
+	<script id="source" language="javascript" type="text/javascript">
 	$(function () {
 		<?php
 		$x_val = 0;
@@ -571,7 +572,7 @@ foreach($stat_chunks as $stat_chunk)
 				}
 				<?php
 				$count++;
-				$index_count += 2;				
+				$index_count += 2;
 				if($count < count($stat_chunk) + 1)
 				{
 					echo ",";
@@ -589,11 +590,11 @@ foreach($stat_chunks as $stat_chunk)
 	# End of loop
 	$i++;
 } */
-?> 
+?>
 </div>
 
 <?php
-function createTrends() { 
+function createTrends() {
 	global $namesArray;
 	global $progressTrendsData;
 ?>
@@ -603,7 +604,7 @@ function createTrends() {
 			var progressData = new Array();
 			var namesArray = <?php echo json_encode($namesArray); ?>;
 			var progressTrendsDataTemp = <?php echo json_encode($progressTrendsData); ?>;
-			
+
 			var values, value1, value2;
 			/* Convert the string timestamps to floatvalue timestamps */
 			for(var j=0;j<progressTrendsDataTemp.length;j++) {
@@ -619,7 +620,7 @@ function createTrends() {
 					}
 				}
 			}
-			
+
 			//$('#stat_graph').hide();
 			//$('#stat_graph_bar').hide();
 			//$('#viewGraphSpan').show();
@@ -628,7 +629,7 @@ function createTrends() {
 			//$('#hideTrendSpan').show();
 			createChart(namesArray, progressData);
 		}
-	
+
 		function createChart(namesArray, progressData) {
 			var chart;
 			var options = {
@@ -659,13 +660,13 @@ function createTrends() {
 				 }
 			  },
 			  series: [{
-				name : ' ', 
+				name : ' ',
 				tickInterval: 7 * 24 * 3600 * 1000, // one week
 				pointStart: Date.UTC(2011, 0, 1),
 				data: [ ]
 			  }]
 		   };
-	   
+
 			for(var i=0;i<namesArray.length;i++) {
 				options.series.push({
 					name: namesArray[i],
@@ -674,16 +675,16 @@ function createTrends() {
 			}
 		   chart = new Highcharts.Chart(options);
 		}
-		
+
 	</script>
 <?php
 }
 ?>
 <div id='prevalance' style='display:none;'>
-<table> 
+<table>
 	<tr> <td width="1%"><?php echo LangUtil::$generalTerms['FROM_DATE']; ?> </td>
 		<td>
-			<?php 
+			<?php
 			$name_list = array("yf","mf","df");
 			$id_list = $name_list;
 			$df_parts = explode("-", $date_from);
@@ -705,7 +706,7 @@ function createTrends() {
 		<tr>
 		<td align="right"><?php echo LangUtil::$generalTerms['TO_DATE']; ?></td>
 		<td><span>
-			<?php 
+			<?php
 			$name_list = array("yt", "mt", "dt");
 			$id_list = $name_list;
 			$dt_parts = explode("-", $date_to);

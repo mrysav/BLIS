@@ -5,6 +5,7 @@
 #
 include("redirect.php");
 include("includes/header.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("patient_profile");
 
 $pid = $_REQUEST['pid'];
@@ -60,7 +61,7 @@ function update_profile()
 				return;
 			}
 			$('#pd_ym').attr("value", "1");
-			
+
 		}
 		else if(yyyy.trim() != "" && mm.trim() == "" && dd.trim() == "")
 		{
@@ -94,8 +95,8 @@ function update_profile()
 	{
 		alert("<?php echo LangUtil::$generalTerms['ERROR'].": ".LangUtil::$generalTerms['AGE']." ".LangUtil::$generalTerms['INVALID']; ?>");
 		return;
-	}	
-	
+	}
+
 	$('#update_profile_progress').show();
 	var params = $('#profile_update_form').formSerialize();
 	$.ajax({
@@ -106,7 +107,7 @@ function update_profile()
 			$('#update_profile_progress').hide();
 			window.location.reload();
 		}
-	});	
+	});
 }
 
 function get_select_tests(pid)

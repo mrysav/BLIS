@@ -1,6 +1,7 @@
 <?php
 include("../includes/SessionCheck.php");
 include("../includes/db_lib.php");
+require_once(__DIR__."/../lang/lang_util.php");
 $attrib_value = $_REQUEST['q'];
 $attrib_type = $_REQUEST['a'];
 $c = $_REQUEST['c'];
@@ -15,7 +16,7 @@ if($dynamic == 0)
     if($attrib_type == 5)
     {
             # Search by specimen aux ID
-            $query_string = 
+            $query_string =
                     "SELECT distinct s.specimen_id FROM specimen s, test t, patient p ".
                     "WHERE p.patient_id=s.patient_id ".
                     "AND s.aux_id='$attrib_value'".
@@ -25,7 +26,7 @@ if($dynamic == 0)
     if($attrib_type == 0)
     {
             # Search by patient ID
-            $query_string = 
+            $query_string =
                     "SELECT distinct s.specimen_id FROM specimen s, test t, patient p ".
                     "WHERE p.patient_id=s.patient_id ".
                     "AND p.surr_id='$attrib_value'".
@@ -37,10 +38,10 @@ if($dynamic == 0)
             # Search by patient name
 			if(empty($c))
 				$attrib_value.='%';
-			else	
+			else
 				$attrib_value=str_replace('[pq]',$attrib_value,$c);
-				
-            $query_string = 
+
+            $query_string =
                     "SELECT COUNT(*) AS val FROM patient WHERE name LIKE '$attrib_value'";
             $record = query_associative_one($query_string);
             if($record['val'] == 0)
@@ -52,7 +53,7 @@ if($dynamic == 0)
                     <?php
                     return;
             }
-            $query_string = 
+            $query_string =
                     "SELECT distinct s.specimen_id FROM specimen s, test t, patient p ".
                     "WHERE s.specimen_id=t.specimen_id ".
                     "AND t.result = '' ".
@@ -62,7 +63,7 @@ if($dynamic == 0)
     else if($attrib_type == 3)
     {
             # Search by patient daily number
-            $query_string = 
+            $query_string =
                     "SELECT distinct specimen_id FROM specimen ".
                     "WHERE daily_num LIKE '%-$attrib_value' ".
                     "AND ( status_code_id=".Specimen::$STATUS_PENDING." ".
@@ -74,10 +75,10 @@ else
 {
     if($attrib_type == 5)
     {
-    	
+
             # Search by specimen aux ID
     	if($lab_section == 0) {
-    		$query_string = 
+    		$query_string =
                     "SELECT distinct s.specimen_id FROM specimen s, test t, patient p ".
                     "WHERE p.patient_id=s.patient_id ".
                     "AND s.aux_id='$attrib_value'".
@@ -96,7 +97,7 @@ else
     {
             # Search by patient ID
     	if($lab_section == 0) {
-    		$query_string = 
+    		$query_string =
                     "SELECT distinct s.specimen_id FROM specimen s, test t, patient p ".
                     "WHERE p.patient_id=s.patient_id ".
                     "AND p.surr_id='$attrib_value'".
@@ -116,10 +117,10 @@ else
             # Search by patient name
 			if(empty($c))
 				$attrib_value.='%';
-			else	
+			else
 				$attrib_value=str_replace('[pq]',$attrib_value,$c);
-				
-            $query_string = 
+
+            $query_string =
                     "SELECT COUNT(*) AS val FROM patient WHERE name LIKE '$attrib_value'";
             $record = query_associative_one($query_string);
             if($record['val'] == 0)
@@ -131,9 +132,9 @@ else
                     <?php
                     return;
             }
-            
+
             if($lab_section == 0) {
-            $query_string = 
+            $query_string =
                     "SELECT distinct s.specimen_id FROM specimen s, test t, patient p ".
                     "WHERE s.specimen_id=t.specimen_id ".
                     "AND t.result = '' ".
@@ -153,7 +154,7 @@ else
     {
             # Search by patient daily number
     	if($lab_section == 0) {
-    		$query_string = 
+    		$query_string =
                     "SELECT distinct specimen_id FROM specimen ".
                     "WHERE daily_num LIKE '%-$attrib_value' ".
                     "AND ( status_code_id=".Specimen::$STATUS_PENDING." ".
@@ -167,16 +168,16 @@ else
 					"OR status_code_id=".Specimen::$STATUS_REFERRED." ) AND t.test_type_id IN
 					(SELECT test_type_id FROM test_type WHERE test_category_id=$lab_section)".
 					"ORDER BY date_collected DESC";
-    		
+
     	}
-    } 
+    }
     else if($attrib_type == 9)
     {
             # Search by patient specimen id
                 $decoded = decodeSpecimenBarcode($attrib_value);
                 if($lab_section == 0) {
 
-				$query_string = 
+				$query_string =
                     "SELECT distinct specimen_id FROM specimen ".
                     "WHERE specimen_id = $decoded[1] ".
                     "AND ( status_code_id=".Specimen::$STATUS_PENDING." ".
@@ -190,7 +191,7 @@ else
 						"OR status_code_id=".Specimen::$STATUS_REFERRED." ) ".
 						"ORDER BY date_collected DESC";
 				}
-    } 
+    }
 	}
 $resultset = query_associative_all($query_string);
 $specimen_id_list = array();

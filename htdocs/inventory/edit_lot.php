@@ -2,12 +2,12 @@
 #
 # (c) C4G, Santosh Vempala, Ruban Monu, Amol Shintre and Naomi Chopra
 # Admin Stock Management Page to add new stock
-# Sneds POST request to stock_details.php 
+# Sneds POST request to stock_details.php
 #
 
 include("../users/accesslist.php");
-/*if( !(isAdmin(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $adminPageList)) 
-     && !(isCountryDir(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $countryDirPageList)) 
+/*if( !(isAdmin(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $adminPageList))
+     && !(isCountryDir(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $countryDirPageList))
 	 && !(isSuperAdmin(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVER['PHP_SELF']), $superAdminPageList)) ) {
 		header( 'Location: home.php' );
 }*/
@@ -15,6 +15,7 @@ include("../users/accesslist.php");
 include("redirect.php");
 include("includes/header.php");
 include("includes/stats_lib.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("stocks");
 $script_elems->enableTableSorter();
 $script_elems->enableDatePicker();
@@ -23,22 +24,22 @@ $r_id = $_REQUEST['id'];
 $lot = $_REQUEST['lot'];
 putUILog('edit_lot', 'X', basename($_SERVER['REQUEST_URI'], ".php"), 'X', 'X', 'X');
 
-?> 
+?>
 <script type='text/javascript'>
 $(document).ready(function(){
-	
+
 	$('#reagent').keydown(function() {
 		prefetch_pname();
 	});
-        
+
         $('#n_lot_error').hide();
         $('#lot_u_error').hide();
-	
+
 });
-function add_specimenbox(){	
-	
+function add_specimenbox(){
+
 	var url_string = "inventory/add_reagent.php";
-	$.ajax({ 
+	$.ajax({
 		url: url_string
             });
 }
@@ -52,8 +53,8 @@ function validateForm() {
         vall = $('select').val();
 		//disable duplicate lot check
        /* var url_string = "inventory/check_lot.php?lot="+name+"&lid="+"<?php echo $_SESSION['lab_config_id']; ?>"+"&id="+"<?php echo $r_id; ?>";
-	$.ajax({ 
-		url: url_string, 
+	$.ajax({
+		url: url_string,
                 async : false,
 		success: function(check){
                      if(check == '1' && name != oname)
@@ -67,7 +68,7 @@ function validateForm() {
                         }
                }
 	});*/
-        
+
         if($('#n_lot').attr("value") == "")
 	{
 		$('#n_lot_error').show();
@@ -76,14 +77,14 @@ function validateForm() {
 	else
 	{
 		$('#n_lot_error').hide();
-	} 
+	}
         if(gcheck == 1)
 	$('#new_test_form').submit();
 }
 
 function validateForm2() {
 
-             
+
 	$('#new_test_form2').submit();
 }
 function prefetch_pname()
@@ -113,24 +114,24 @@ $lott = Inventory::getLot($lid, $r_id, $lot);
 <form name='new_test_form' id='new_test_form' action='inventory/update_stock.php'  method='post'>
     <div class="pretty_box" style="width:500px;">
 			<table>
-                                               
-                                        
+
+
 				<tr>
 					<td>
-                                             
-						&nbsp;<?php echo LangUtil::$pageTerms['Reagent']; ?> 
+
+						&nbsp;<?php echo LangUtil::$pageTerms['Reagent']; ?>
 					</td>
 					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 					<td>
                                             <?php
-                                            
+
                                             echo $reag['name'];
                                             ?>
 					</td>
 				</tr>
                                 <tr>
 					<td>
-						&nbsp;<?php echo LangUtil::$pageTerms['Units']; ?> 
+						&nbsp;<?php echo LangUtil::$pageTerms['Units']; ?>
 					</td>
 					<td></td>
 					<td>
@@ -143,7 +144,7 @@ $lott = Inventory::getLot($lid, $r_id, $lot);
                                             <input type="hidden" name="lid" id="lid" value="<?php echo $lid; ?>"/>
                                             <input type="hidden" name="lot" id="lot" value="<?php echo $lot; ?>"/>
 
-						&nbsp;<?php echo LangUtil::$pageTerms['Lot_Number']; ?><?php $page_elems->getAsterisk(); ?> 
+						&nbsp;<?php echo LangUtil::$pageTerms['Lot_Number']; ?><?php $page_elems->getAsterisk(); ?>
 					</td>
 					<td></td>
 					<td>
@@ -154,8 +155,8 @@ $lott = Inventory::getLot($lid, $r_id, $lot);
 				</tr>
 				<tr>
 					<td>
-						&nbsp;<?php echo LangUtil::$pageTerms['Expiry_Date']; ?><?php $page_elems->getAsterisk(); ?> 
-						
+						&nbsp;<?php echo LangUtil::$pageTerms['Expiry_Date']; ?><?php $page_elems->getAsterisk(); ?>
+
 					</td>
 					<td></td>
 					<td>
@@ -185,8 +186,8 @@ $lott = Inventory::getLot($lid, $r_id, $lot);
 						<input type="text" name="sup" id="txtRow15" class='uniform_width' value="<?php echo $lott['supplier']; ?>" />
 					</td>
 				</tr>
-				
-				
+
+
 				<tr>
 					<td>
 						&nbsp;<?php echo LangUtil::$pageTerms['Cost_per_Unit']; ?>
@@ -213,15 +214,15 @@ $lott = Inventory::getLot($lid, $r_id, $lot);
 				</tr>
                                 <tr>
 					<td>
-						&nbsp;<?php echo "Remarks"; ?> 
-						
+						&nbsp;<?php echo "Remarks"; ?>
+
 					</td>
 					<td></td>
 					<td>
                                               <textarea name="remarks" id="remarks" rows="3" cols="22"><?php echo $lott['remarks']; ?></textarea>
 					</td>
 				</tr>
-				
+
 			</table>
 		</div>
 	</div>
@@ -234,6 +235,6 @@ $lott = Inventory::getLot($lid, $r_id, $lot);
 </form>
 
 <div id='patient_prompt_div2'>
-	
+
 	</div>
 <?php include("includes/footer.php"); ?>

@@ -6,12 +6,13 @@ include("redirect.php");
 include("includes/db_lib.php");
 include("includes/script_elems.php");
 include("includes/page_elems.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("reports");
 
 # Helper function to fetch test record
 function get_test_record($specimen_id, $test_type_id)
 {
-	$query_string = 
+	$query_string =
 		"SELECT * FROM test ".
 		"WHERE specimen_id=$specimen_id AND test_type_id=$test_type_id ";
 	$record = query_associative_one($query_string);
@@ -48,10 +49,10 @@ function list_results($test_entry, $not_bold_measure_name)
 			<td></td>
 			<td></td>
 			<td>
-			<?php 
+			<?php
 			if($print_range_label)
 				echo LangUtil::$pageTerms['RANGE_NORMAL'];
-			?>		
+			?>
 			</td>
 			<td>
 				<?php echo LangUtil::$generalTerms['RESULT_COMMENTS']; ?>
@@ -212,8 +213,8 @@ $patient = get_patient_by_id($specimen->patientId);
 	}
 	if($report_config->useGender == 1)
 	{
-	?>			
-	<tr valign='top'>	
+	?>
+	<tr valign='top'>
 		<td><?php echo LangUtil::$generalTerms['GENDER']; ?>:</td>
 		<td><?php echo $patient->sex; ?></td>
 	</tr>
@@ -226,15 +227,15 @@ $patient = get_patient_by_id($specimen->patientId);
 		<td><?php echo LangUtil::$generalTerms['DOB']; ?>:</td>
 		<td><?php echo $patient->getDob(); ?></td>
 	</tr>
-	<?php 
+	<?php
 	}
 	# Patient Custom fields here
 	$custom_field_list = $lab_config->getPatientCustomFields();
 	foreach($custom_field_list as $custom_field)
 	{
 		if(in_array($custom_field->id, $report_config->patientCustomFields))
-		{	
-			$field_name = $custom_field->fieldName;				
+		{
+			$field_name = $custom_field->fieldName;
 			?>
 			<tr valign='top'>
 			<?php
@@ -254,7 +255,7 @@ $patient = get_patient_by_id($specimen->patientId);
 					$field_value = "-";
 				echo $field_value;
 			}
-			echo "</td>";					
+			echo "</td>";
 			?>
 			</tr>
 			<?php
@@ -328,7 +329,7 @@ $patient = get_patient_by_id($specimen->patientId);
 							$field_value = "-";
 						echo $field_value;
 					}
-					echo "</td>";					
+					echo "</td>";
 					echo "</tr>";
 				}
 			}
@@ -352,7 +353,7 @@ foreach($test_list as $test_entry)
 	{
 		echo "<b>$test_name</b>";
 		echo "<br>";
-	}		
+	}
 	if($test_entry == null)
 	{
 		echo "ERROR: Test type $test_name was not registered for Sample ID $specimen_id<br>";

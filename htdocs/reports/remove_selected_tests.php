@@ -6,6 +6,7 @@ include("includes/script_elems.php");
 include("includes/page_elems.php");
 include("includes/header.php");
 
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("reports");
 
 
@@ -32,8 +33,8 @@ putUILog('remove_selected_tests', 'X', basename($_SERVER['REQUEST_URI'], ".php")
 		$(document).ready(function(){
 			//$('#test_history_table').tablesorter();
 		});
-		
-		
+
+
 		</script>
                 <form name="del" id="del" action='reports/rem_tests.php'  method='post'>
 		<input type='hidden' name='category' value='specimen' />
@@ -61,7 +62,7 @@ putUILog('remove_selected_tests', 'X', basename($_SERVER['REQUEST_URI'], ".php")
                             if(!in_array($specimen->specimenId, $specimen_del))
                                     continue;
                             ?>
-		
+
                         <tr valign='top'>
                                 <?php
                                 if($_SESSION['s_addl'] != 0)
@@ -83,7 +84,7 @@ putUILog('remove_selected_tests', 'X', basename($_SERVER['REQUEST_URI'], ".php")
                                         <?php echo $specimen->getStatus(); ?>
                                 </td>
                                 <td>
-                                    <?php 
+                                    <?php
                                     $sid=$specimen->specimenId;
                                     $ch = check_removal_record($lid, $sid, "specimen");
                                         if($ch == 1)
@@ -93,12 +94,12 @@ putUILog('remove_selected_tests', 'X', basename($_SERVER['REQUEST_URI'], ".php")
                                         else
                                         {
                                             ?>
-                                    
+
                                     <textarea name="remarks[]" id="remarks" rows="3" cols="22"></textarea>
                                     <?php }
                                     $cn++; ?>
                                 </td>
-                                <?php 
+                                <?php
                                     $sid=$specimen->specimenId;
                                     $ch = check_removal_record($lid, $sid);
                                         if($ch == 1)
@@ -107,12 +108,12 @@ putUILog('remove_selected_tests', 'X', basename($_SERVER['REQUEST_URI'], ".php")
                                         else
                                         {
                                             ?>
-                                    
+
                                 <input type="hidden" name="sp[]" value="<?php echo $sid ?>" />
                                     <?php }
                                      ?>
                         </tr>
-                        
+
 			<?php
                         }
 			?>

@@ -7,6 +7,7 @@ include("../includes/db_lib.php");
 require_once("../includes/perms_check.php");
 include("../includes/page_elems.php");
 include("../includes/script_elems.php");
+require_once(__DIR__."/../lang/lang_util.php");
 
 putUILog('export_config', 'X', basename($_SERVER['REQUEST_URI'], ".php"), 'X', 'X', 'X');
 
@@ -56,7 +57,7 @@ function print_content(div_id)
 
 <div id='export_content'>
 <link rel='stylesheet' type='text/css' href='css/table_print.css' />
-<?php 
+<?php
 # Site name and location
 echo "<b>";
 echo LangUtil::$generalTerms['FACILITY'].": ".$lab_config->getSiteName();
@@ -114,7 +115,7 @@ echo "<br><br>";
 $custom_field_list = $lab_config->getPatientCustomFields();
 foreach($custom_field_list as $custom_field)
 {
-	$field_name = $custom_field->fieldName;				
+	$field_name = $custom_field->fieldName;
 	echo $field_name;
 	echo "<br>";
 }
@@ -124,7 +125,7 @@ echo "<br><br>";
 $custom_field_list = $lab_config->getSpecimenCustomFields();
 foreach($custom_field_list as $custom_field)
 {
-	$field_name = $custom_field->fieldName;				
+	$field_name = $custom_field->fieldName;
 	echo $field_name;
 	echo "<br>";
 }

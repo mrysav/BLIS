@@ -22,6 +22,7 @@ if(trim($worksheet_id) != "")
 
 include("redirect.php");
 include("includes/db_lib.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("results_entry");
 
 include("includes/script_elems.php");
@@ -99,10 +100,10 @@ if($report_config->landscape == true) echo " checked ";
 &nbsp;&nbsp;&nbsp;&nbsp;
 <input type='button' onclick="javascript:window.close();" value='<?php echo LangUtil::$generalTerms['CMD_CLOSEPAGE']; ?>'></input>
 &nbsp;&nbsp;&nbsp;&nbsp;
-<?php 
+<?php
 LangUtil::setPageId("reports");
 $page_elems->getTableSortTip();
-LangUtil::setPageId("results_entry"); 
+LangUtil::setPageId("results_entry");
 ?>
 <hr>
 <div id='export_content'>
@@ -112,16 +113,16 @@ LangUtil::setPageId("results_entry");
 </style>
 <div id='report_config_content'>
 <h3>
-	<?php echo $report_config->headerText; ?> | 
+	<?php echo $report_config->headerText; ?> |
 	<?php echo LangUtil::$generalTerms['G_DATE']; ?>: <?php echo date($_SESSION['dformat']); ?>
 </h3>
 <h3><?php echo $report_config->titleText; ?></h3>
 <br>
 <?php echo LangUtil::$generalTerms['TECHNICIAN']; ?>: <?php echo get_username_by_id($_SESSION['user_id']); ?>
-<?php 
+<?php
 if($cat_code != 0)
 {
-	echo " | ".LangUtil::$generalTerms['LAB_SECTION'].": ".get_test_category_name_by_id($cat_code); 
+	echo " | ".LangUtil::$generalTerms['LAB_SECTION'].": ".get_test_category_name_by_id($cat_code);
 }
 ?>
 <br><br>
@@ -201,7 +202,7 @@ if(count($test_list) == 0 && $is_blank === false)
 			}
 			if($report_config->useGender == 1)
 			{
-			?>			
+			?>
 				<th><?php echo LangUtil::$generalTerms['GENDER']; ?></th>
 			<?php
 			}
@@ -209,15 +210,15 @@ if(count($test_list) == 0 && $is_blank === false)
 			{
 			?>
 				<th><?php echo LangUtil::$generalTerms['DOB']; ?></th>
-			<?php 
+			<?php
 			}
 			# Patient Custom fields here
 			$custom_field_list = $lab_config->getPatientCustomFields();
 			foreach($custom_field_list as $custom_field)
 			{
 				if(in_array($custom_field->id, $report_config->patientCustomFields))
-				{	
-					$field_name = $custom_field->fieldName;				
+				{
+					$field_name = $custom_field->fieldName;
 					echo "<th>";
 					echo $field_name;
 					echo "</th>";
@@ -274,16 +275,16 @@ if(count($test_list) == 0 && $is_blank === false)
 						/*
 						foreach($range_parts as $option_value)
 						{
-							
+
 							if($count == 0)
 							{
 								echo $measure->name;
 								$count++;
 							}
 							echo "</th>";
-						}*/						
+						}*/
 					}
-					$count++;					
+					$count++;
 				}
 			}
 			if($report_config->useEntryDate == 1)
@@ -311,7 +312,7 @@ if(count($test_list) == 0 && $is_blank === false)
 		<?php
 		if($report_config->useTestName == 1 || $report_config->useResults == 1)
 		{
-			# Row for showing ranges/measure options 
+			# Row for showing ranges/measure options
 		?>
 		<tr valign='top'>
 			<?php
@@ -353,7 +354,7 @@ if(count($test_list) == 0 && $is_blank === false)
 			}
 			if($report_config->useGender == 1)
 			{
-			?>			
+			?>
 				<th></th>
 			<?php
 			}
@@ -361,14 +362,14 @@ if(count($test_list) == 0 && $is_blank === false)
 			{
 			?>
 				<th></th>
-			<?php 
+			<?php
 			}
 			# Patient Custom fields here
 			$custom_field_list = $lab_config->getPatientCustomFields();
 			foreach($custom_field_list as $custom_field)
 			{
 				if(in_array($custom_field->id, $report_config->patientCustomFields))
-				{	
+				{
 					echo "<th>";
 					echo "</th>";
 				}
@@ -498,8 +499,8 @@ if(count($test_list) == 0 && $is_blank === false)
 			foreach($custom_field_list as $custom_field)
 			{
 				if(in_array($custom_field->id, $report_config->patientCustomFields))
-				{	
-					$field_name = $custom_field->fieldName;				
+				{
+					$field_name = $custom_field->fieldName;
 					$custom_data = get_custom_data_patient_bytype($patient->patientId, $custom_field->id);
 					echo "<td><br><br></td>";
 				}
@@ -550,9 +551,9 @@ if(count($test_list) == 0 && $is_blank === false)
 						$range_parts = explode("/", $range);
 						foreach($range_parts as $option_value)
 						{
-							echo "<td>";	
+							echo "<td>";
 							echo "</td>";
-						}*/						
+						}*/
 					}
 				}
 			}
@@ -581,7 +582,7 @@ if(count($test_list) == 0 && $is_blank === false)
 		</tr>
 		<?php
 		}
-		
+
 	}
 	else
 	{
@@ -636,7 +637,7 @@ if(count($test_list) == 0 && $is_blank === false)
 			}
 			if($report_config->useGender == 1)
 			{
-			?>			
+			?>
 				<td><?php echo $patient->sex; ?></td>
 			<?php
 			}
@@ -644,7 +645,7 @@ if(count($test_list) == 0 && $is_blank === false)
 			{
 			?>
 				<td><?php echo $patient->getDob(); ?></td>
-			<?php 
+			<?php
 			}
 			# Patient Custom fields here
 			$custom_field_list = $lab_config->getPatientCustomFields();
@@ -652,7 +653,7 @@ if(count($test_list) == 0 && $is_blank === false)
 			{
 				if(in_array($custom_field->id, $report_config->patientCustomFields))
 				{
-					$field_name = $custom_field->fieldName;				
+					$field_name = $custom_field->fieldName;
 					$custom_data = get_custom_data_patient_bytype($patient->patientId, $custom_field->id);
 					echo "<td>";
 					if($custom_data == null)
@@ -666,7 +667,7 @@ if(count($test_list) == 0 && $is_blank === false)
 							$field_value = "-";
 						echo $field_value;
 					}
-					echo "</td>";					
+					echo "</td>";
 				}
 			}
 			if($report_config->useDateRecvd == 1)
@@ -688,9 +689,9 @@ if(count($test_list) == 0 && $is_blank === false)
 					else
 					{
 						$field_value = $custom_data->getFieldValueString($lab_config->id, 1);
-						if($field_value == "" or $field_value == null) 
+						if($field_value == "" or $field_value == null)
 							$field_value = "-";
-						echo $field_value; 
+						echo $field_value;
 					}
 					echo "</td>";
 				}
@@ -725,15 +726,15 @@ if(count($test_list) == 0 && $is_blank === false)
 					else if(strpos($range, "/") !== false)
 					{
 						$range_parts = explode("/", $range);
-						echo "<td>";	
+						echo "<td>";
 						echo "</td>";
 						/*
 						foreach($range_parts as $option_value)
 						{
-							echo "<td>";	
+							echo "<td>";
 							echo "</td>";
 						}
-						*/						
+						*/
 					}
 				}
 			}

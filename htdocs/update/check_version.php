@@ -4,6 +4,7 @@ include("redirect.php");
 include("../includes/db_lib.php");
 require_once("../includes/user_lib.php");
 
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("update");
 global $VERSION;
 $vers = $VERSION;

@@ -6,6 +6,7 @@
 include("../includes/SessionCheck.php");
 include("../includes/db_lib.php");
 
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("test_list_by_site");
 ?>
 <style type="text/css">
@@ -71,7 +72,7 @@ foreach($test_type_list as $test_type)
 	<td>
 	<table>
 	<tr valign='top'>
-		
+
 		<td>
                     <?php
                         echo "<input type='checkbox' name='itest[".$site_id."][".$test_type->testTypeId."]' id='$elem_id' value='Yes'>";

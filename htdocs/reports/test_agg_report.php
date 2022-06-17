@@ -13,6 +13,7 @@ include('../includes/script_elems.php');
 include('../includes/page_elems.php');
 include('../users/accesslist.php');
 
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId('reports');
 
 if(!(isLoggedIn(get_user_by_id($_SESSION['user_id']))))

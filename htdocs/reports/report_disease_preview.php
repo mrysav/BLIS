@@ -10,6 +10,7 @@ include("redirect.php");
 include("includes/db_lib.php");
 include("includes/stats_lib.php");
 include("includes/script_elems.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("reports");
 
 $script_elems = new ScriptElems();
@@ -51,8 +52,8 @@ if($_REQUEST['rage'] == 'y')
 	{
 		if
 		(
-			trim($age_lower_list[$i]) === "" || 
-			trim($age_upper_list[$i]) === "" || 
+			trim($age_lower_list[$i]) === "" ||
+			trim($age_upper_list[$i]) === "" ||
 			is_nan($age_lower_list[$i]) ||
 			(trim($age_upper_list[$i]) != "+" && is_nan($age_upper_list[$i]))
 		)
@@ -68,7 +69,7 @@ if($_REQUEST['rage'] == 'y')
 	}
 	$disease_report->ageGroups = $age_slot_string;
 }
-else 
+else
 {
 	# Group by age slots not selected
 	$disease_report->groupByAge = 0;
@@ -227,7 +228,7 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
 			{
 				echo "<td ></td>";
 			}
-			
+
 			if($site_settings->groupByAge == 1)
 			{
 				foreach($age_group_list as $age_slot)
@@ -295,7 +296,7 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
 			<tr valign='top'>
 				<td><?php echo $measure->getName(); ?></td>
 				<td>
-				<?php 
+				<?php
 				foreach($range_values as $range_value)
 				{
 					if($is_range_options)
@@ -439,7 +440,7 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
 							$cross_gender_total[$range_value_count] += $curr_cross_gender_total;
 						}
 				}
-				
+
 				if($site_settings->groupByGender == 1)
 				{
 					echo "<td>";
@@ -452,7 +453,7 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
 					}
 					echo "</td>";
 				}
-				
+
 				echo "<td>";
 				for($i = 1; $i <= count($range_values); $i++)
 				{
@@ -465,7 +466,7 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
 					{
 						echo $cross_gender_total[$i];
 						echo "<br>";
-					}				
+					}
 				}
 				echo "</td>";
 				# Grand total:

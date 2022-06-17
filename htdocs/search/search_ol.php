@@ -4,6 +4,7 @@
 #
 include("redirect.php");
 include("includes/header.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("search");
 
 $tips_string = LangUtil::$pageTerms['TIPS_SEARCH'];
@@ -40,8 +41,8 @@ function specimen_search()
 	}
 	$('#specimen_search_spinner').show();
 	var url = 'ajax/search_s.php';
-	$("#specimen_search_results").load(url, 
-		{q: specimen_id, a: search_attrib }, 
+	$("#specimen_search_results").load(url,
+		{q: specimen_id, a: search_attrib },
 		function()
 		{
 			$('#specimen_search_spinner').hide();
@@ -65,8 +66,8 @@ function patient_search()
 	}
 	$('#patient_search_spinner').show();
 	var url = 'ajax/search_p.php';
-	$("#patient_search_results").load(url, 
-		{q: patient_id, a: search_attrib }, 
+	$("#patient_search_results").load(url,
+		{q: patient_id, a: search_attrib },
 		function()
 		{
 			$('#patient_search_spinner').hide();
@@ -79,7 +80,7 @@ function patient_search()
 <b><?php echo LangUtil::getTitle(); ?></b>
 <br><br>
 <table>
-		
+
 	<tr class="card_num_row" id="card_num_row">
 	<td><?php echo LangUtil::$generalTerms['PATIENT']; ?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 		<td>
@@ -89,7 +90,7 @@ function patient_search()
 		&nbsp;&nbsp;
 	</td>
 	<td><input type="text" name="patient_id" id="patient_id" value="" size="30" />&nbsp;&nbsp;<span class='error_string' id='patient_search_error'><?php echo LangUtil::$generalTerms['MSG_REQDFIELD']; ?></span></td>
-	
+
 	<td><input type='button' id='patient_search_button' value='<?php echo LangUtil::$generalTerms['CMD_SEARCH']; ?>' onclick='javascript:patient_search();' /></td>
 	<td><span id='patient_search_spinner' style='display:none'><?php echo $page_elems->getProgressSpinner(LangUtil::$generalTerms['CMD_SEARCHING']);?></span></td>
 	</tr>
@@ -118,7 +119,7 @@ if($_SESSION['s_addl'] == 0)
 				<?php
 				 # Search by accession num hidden from the user
 				 /*
-				<option value='2'><?php echo LangUtil::$generalTerms['ACCESSION_NUM']; ?></option> 
+				<option value='2'><?php echo LangUtil::$generalTerms['ACCESSION_NUM']; ?></option>
 				*/
 				}
 				?>

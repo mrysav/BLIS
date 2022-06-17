@@ -2,6 +2,7 @@
 
 include("../includes/db_lib.php");
 include("../includes/script_elems.php");
+require_once(__DIR__."/../lang/lang_util.php");
 
 $patientId = $_REQUEST['pid'];
 $type = $_REQUEST['type'];
@@ -33,8 +34,8 @@ if($type == 'national') {
 				<tr>
 					<td><u><?php echo LangUtil::$generalTerms['AGE']; ?></u></td>
 					<td>
-						<?php 
-							echo $patient->getAge(); 
+						<?php
+							echo $patient->getAge();
 						?>
 					</td>
 				</tr>
@@ -44,16 +45,16 @@ if($type == 'national') {
 				?>
 				<tr>
 					<td><u><?php echo LangUtil::$generalTerms['DOB']; ?></u></td>
-					<td><?php 
+					<td><?php
 							echo $patient->getDob();
 						?>
 					</td>
 				</tr>
-				<?php 
+				<?php
 				}
 				?>
 				</tbody>
 		</table>
-<?php	
+<?php
 }
 ?>

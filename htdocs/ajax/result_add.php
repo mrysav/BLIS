@@ -5,6 +5,7 @@
 #
 include("../includes/SessionCheck.php");
 include("../includes/db_lib.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("results_entry");
 
 $test_id = $_REQUEST['test_id'];
@@ -42,20 +43,20 @@ $measure_list = $test_type->getMeasures();
 $submeasure_list = array();
                 $comb_measure_list = array();
                // print_r($measure_list);
-                
+
                 foreach($measure_list as $measure)
                 {
-                    
+
                     $submeasure_list = $measure->getSubmeasuresAsObj();
                     //echo "<br>".count($submeasure_list);
                     //print_r($submeasure_list);
                     $submeasure_count = count($submeasure_list);
-                    
+
                     if($measure->checkIfSubmeasure() == 1)
                     {
                         continue;
                     }
-                        
+
                     if($submeasure_count == 0)
                     {
                         array_push($comb_measure_list, $measure);
@@ -64,7 +65,7 @@ $submeasure_list = array();
                     {
                         array_push($comb_measure_list, $measure);
                         foreach($submeasure_list as $submeasure)
-                           array_push($comb_measure_list, $submeasure); 
+                           array_push($comb_measure_list, $submeasure);
                     }
                 }
                 $measure_list = $comb_measure_list;
@@ -199,7 +200,7 @@ else
 			if(strpos($_SERVER["HTTP_REFERER"], "related_tests_results_entry.php") == false)
 			{
 	?>
-	<a href='javascript:hide_result_confirmation(<?php echo $specimen_id; ?>);'><?php echo LangUtil::$generalTerms['CMD_HIDE']; ?></a>	
+	<a href='javascript:hide_result_confirmation(<?php echo $specimen_id; ?>);'><?php echo LangUtil::$generalTerms['CMD_HIDE']; ?></a>
 	<?php }
 }
 ?>

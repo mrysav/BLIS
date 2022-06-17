@@ -1,7 +1,7 @@
 <?php
 #
 # (c) C4G, Santosh Vempala, Ruban Monu and Amol Shintre
-# Lists currently accessible lab configurations with options to modify/add 
+# Lists currently accessible lab configurations with options to modify/add
 # Check whether to redirect to lab configuration page
 # Called when the lab admin has only one lab under him/her
 #
@@ -10,6 +10,7 @@ include("../users/accesslist.php");
 include("redirect.php");
 require_once("includes/user_lib.php");
 include("includes/header.php");
+require_once(__DIR__."/../lang/lang_util.php");
 
 
 
@@ -42,7 +43,7 @@ include("includes/header.php");
     border: 2px solid #C8CDD1;
      padding: 10px;
      width: 500px;
-     
+
 }
 #confirm{
     background: none repeat scroll 0 0 #C8CDD1;
@@ -51,7 +52,7 @@ include("includes/header.php");
 }
 
 #nothing{
-    
+
     border: 1px solid;
     width: 300px;
     margin: 10px 0px;
@@ -66,7 +67,7 @@ include("includes/header.php");
 
 
 .emsg{
-    
+
     border: 1px solid;
     width: 300px;
     margin: 10px 0px;
@@ -87,7 +88,7 @@ include("includes/header.php");
 }
 
 .smsg {
-    
+
     border: 1px solid;
     width: 350px;
     margin: 10px 0px;
@@ -158,12 +159,12 @@ function stopUpload(success){
            '<span class="smsg">The file was imported successfully!</span><br/>';
       }
       else {
-         document.getElementById('result').innerHTML = 
+         document.getElementById('result').innerHTML =
            '<span class="emsg">There was an error during file import!</span><br/>';
       }
       document.getElementById('f1_upload_process').style.visibility = 'hidden';
       enableFields();
-      return true;   
+      return true;
 }
 </script>
   <div id='importt_help'>
@@ -182,13 +183,13 @@ echo '<b>Import Lab Data</b>';
 echo "<br>";
 echo "<br>";
 ?>
-<div class='left_al' id="boxx"> 
-    
+<div class='left_al' id="boxx">
+
 <form id='SQLimportForm' name='SQLimportForm' action='export/import_data_director.php' method='post' enctype="multipart/form-data" target="upload_target">
 Select backup zip file
 <input type="file" id="sqlFile" name="sqlFile" size="40" /></td>
 <br>
-<!--Please copy and paste langdata folder path present in backup folder 
+<!--Please copy and paste langdata folder path present in backup folder
 <input type="text" name="lang_data_folder_path" id="lang_data_folder_path" value=" ">
 <br>-->
 <p>
@@ -200,22 +201,22 @@ Select backup zip file
 </form>
 <br>
  <p id="f1_upload_process">Importing...<br/><img src="export/loader.gif" /></p>
-<p id="result"></p><iframe id="upload_target" name="upload_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>                 
+<p id="result"></p><iframe id="upload_target" name="upload_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>
 
 </div>
     <div class='left_al' id="file_info" style="display:none;">
-        
-        
+
+
     </div>
     <div class='left_al'  id="confirm" style="display:none;">
         Are you sure you want to import the data?
         <input type="button" id="Yup" value="Yes" onclick="javascript:submitSQLForm();" />
         <input type="button" id="Nope" value="No" onclick="javascript:notSubmitSQLForm();" />
-        
+
     </div>
     <div class='left_al' id="nothing" style="display:none;">
         Please select a file to import
-        
+
     </div>
 </body>
 <br><br><br><br>

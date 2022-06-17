@@ -4,10 +4,10 @@
 # Main page for registering new specimen(s) in a single session/accession
 #
 /*
-$load_time = microtime(); 
-$load_time = explode(' ',$load_time); 
-$load_time = $load_time[1] + $load_time[0]; 
-$page_start = $load_time; 
+$load_time = microtime();
+$load_time = explode(' ',$load_time);
+$load_time = $load_time[1] + $load_time[0];
+$page_start = $load_time;
 */
 
 include("redirect.php");
@@ -20,6 +20,7 @@ include_once("includes/field_order_update.php");
 
 
 
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("new_specimen");
 
 $script_elems->enableDatePicker();
@@ -37,18 +38,18 @@ if(isset($_REQUEST['session_num']))
 	$session_num = $_REQUEST['session_num'];
 else
 	$session_num = get_session_number();
-	
-/* check discrepancy between dnum and session number and correct 
+
+/* check discrepancy between dnum and session number and correct
 if ( substr($session_num,strpos($session_num, "-")+1 ) )
 	$session_num = substr($session_num,0,strpos($session_num, "-"))."-".$dnum;
 */
-	
+
 $doc_array= getDoctorList();
 $ref_array= getRefToList();
 $php_array= addslashes(implode("%", $doc_array));
 
 $refTo_array= addslashes(implode("%", $ref_array));
-	
+
 $uiinfo = "pid=".$_REQUEST['pid']."&dnum=".$_REQUEST['dnum'];
 putUILog('new_specimen', $uiinfo, basename($_SERVER['REQUEST_URI'], ".php"), 'X', 'X', 'X');
 ?>
@@ -61,7 +62,7 @@ putUILog('new_specimen', $uiinfo, basename($_SERVER['REQUEST_URI'], ".php"), 'X'
 <script>
 $(document).ready(function(){
     var refTo_string="<?php echo $refTo_array;?>";
-    var refTodata=refTo_string.split("%"); 
+    var refTodata=refTo_string.split("%");
 });
 </script>
 <script>
@@ -89,10 +90,10 @@ function get_patient_info()
 		return;
 	}
 	$('#specimen_patient').load(
-		"ajax/patient_info.php", 
+		"ajax/patient_info.php",
 		{
 			pid: patient_id
-		}, 
+		},
 		function(){
 			var return_html = $('#specimen_patient').html();
 			if(return_html.indexOf("<?php echo LangUtil::$generalTerms['PATIENT']." ".LangUtil::$generalTerms['MSG_NOTFOUND']; ?>") == -1)
@@ -107,7 +108,7 @@ function check_specimen_id(specimen_div_id, err_div_id)
 {
 	var specimen_id = $('#'+specimen_div_id).attr("value");
 	if(specimen_id == "")
-	{	
+	{
 		$('#'+err_div_id).html("");
 		return;
 	}
@@ -118,8 +119,8 @@ function check_specimen_id(specimen_div_id, err_div_id)
 		return;
 	}
 	$('#'+err_div_id).load(
-		"ajax/specimen_check_id.php", 
-		{ 
+		"ajax/specimen_check_id.php",
+		{
 			sid: specimen_id
 		}
 	);
@@ -139,7 +140,7 @@ function set_compatible_tests()
 	var specimen_type_id = $("#s_type").attr("value");
 	if(specimen_type_id == "")
 	$('#test_type_box').load(
-		"ajax/test_type_options.php", 
+		"ajax/test_type_options.php",
 		{
 			stype: specimen_type_id
 		}
@@ -153,10 +154,10 @@ function add_specimens()
 		// Validate each form
 		var form_id = 'specimenform_'+j;
 		var form_elem = $('#'+form_id);
-		if(	form_elem == undefined || 
+		if(	form_elem == undefined ||
 			form_elem == null )
 			continue;
-		if(	$("#"+form_id+" [name='stype']").attr("value") == null || 
+		if(	$("#"+form_id+" [name='stype']").attr("value") == null ||
 			$("#"+form_id+" [name='stype']").attr("value") == undefined )
 			continue;
 		var stype = $("#"+form_id+" [name='stype']").attr("value");
@@ -199,9 +200,9 @@ function add_specimens()
 		//alert(referred_out+" -- "+referred_to+" -- "+referred_from);
 
 		if(referred_out == 'Y'){
-						
+
 			if(referred_to != referred_from){
-				continue;		
+				continue;
 			} else{
 				alert("Enter either 'Referred To' or 'Referred From' ");
 				return;
@@ -253,12 +254,12 @@ function add_specimens()
 	}
 	console.log("Reached all ok");
 	$('#progress_spinner').show();
-	
+
 	for(var j = 1; j <= specimen_count; j++)
 	{
 		// Submit each form
 		var form_id = 'specimenform_'+j;
-		
+
 		$('#'+form_id).ajaxSubmit({async: false});
 		//$('#'+form_id).submit();
 	}
@@ -284,8 +285,8 @@ function add_specimens()
 	/*
 	var dnum_string= "<?php echo $today; ?>";
 	var url_string = "ajax/daily_num_update.php?dnum="+dnum_string+"&dval="+dnum_val;
-	$.ajax({ url: url_string, async: false, success: function() {}}); 
-	
+	$.ajax({ url: url_string, async: false, success: function() {}});
+
 	var url_string = "ajax/session_num_update.php?snum=<?php echo date("Ymd"); ?>";
 	$.ajax({ url: url_string, async: false, success: function() {
 		$('#progress_spinner').hide();
@@ -305,8 +306,8 @@ function add_specimenbox()
 	dnum = dnumInit.toString();
 	var url_string = "ajax/specimenbox_add.php?num="+specimen_count+"&pid=<?php echo $pid; ?>"+"&dnum="+dnum+"&doc="+doc+"&title="+title+"&refTo="+refTo+"&session_num=<?php echo $session_num; ?>";
 	$('#sbox_progress_spinner').show();
-	$.ajax({ 
-		url: url_string, 
+	$.ajax({
+		url: url_string,
 		success: function(msg){
 			$('#specimenboxes').append(msg);
 			$('#sbox_progress_spinner').hide();
@@ -325,7 +326,7 @@ function get_testbox(testbox_id, stype_id)
 	}
 	$('#'+testbox_id).html("<?php $page_elems->getProgressSpinner(LangUtil::$generalTerms['CMD_FETCHING']); ?>");
 	$('#'+testbox_id).load(
-		"ajax/test_type_options.php", 
+		"ajax/test_type_options.php",
 		{
 			stype: stype_val
 		}
@@ -370,7 +371,7 @@ function checkandtoggle(select_elem, div_id)
 	{
 		$('#'+div_id).show();
 	}
-	
+
 }
 
 function checkandtoggle_ref(ref_check_id, ref_row_id, ref_from_row_id)
@@ -462,29 +463,29 @@ if($patient == null)
 			echo "<li>";
 			echo LangUtil::$pageTerms['TIPS_REGISTRATION_SPECIMEN'];
 			echo "</li>";
-		}	
+		}
 		if(LangUtil::$pageTerms['TIPS_REGISTRATION_SPECIMEN_1']!="-") {
 			echo "<li>";
 			echo LangUtil::$pageTerms['TIPS_REGISTRATION_SPECIMEN_1'];
 			echo "</li>";
-		}	
+		}
 		?>
 	</ul>
 </div>
 <span id='progress_spinner' style='display:none;'>
-	
+
 	<?php $page_elems->getProgressSpinner(LangUtil::$generalTerms['CMD_SUBMITTING']); ?>
 </span>
 <br>
-<?php 
+<?php
 /*
-$load_time = microtime(); 
-$load_time = explode(' ',$load_time); 
-$load_time = $load_time[1] + $load_time[0]; 
-$page_end = $load_time; 
-$final_time = ($page_end - $page_start); 
-$page_load_time = number_format($final_time, 4, '.', ''); 
-echo("Page generated in " . $page_load_time . " seconds"); 
+$load_time = microtime();
+$load_time = explode(' ',$load_time);
+$load_time = $load_time[1] + $load_time[0];
+$page_end = $load_time;
+$final_time = ($page_end - $page_start);
+$page_load_time = number_format($final_time, 4, '.', '');
+echo("Page generated in " . $page_load_time . " seconds");
 */
-include("includes/footer.php"); 
+include("includes/footer.php");
 ?>

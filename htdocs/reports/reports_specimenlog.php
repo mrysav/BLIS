@@ -5,6 +5,7 @@
 #
 include("redirect.php");
 include("includes/db_lib.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("reports");
 
 $lab_config_id = $_REQUEST['location'];

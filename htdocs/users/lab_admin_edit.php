@@ -3,7 +3,8 @@
 # Main page for editting lad admin account
 #
 include("redirect.php");
-include("includes/header.php"); 
+include("includes/header.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("lab_admins");
 
 $saved_session = SessionUtil::save();
@@ -69,7 +70,7 @@ if($user == null)
 				<input type='hidden' name='username' id='username' value="<?php echo $user->username; ?>" class='uniform_width'></input>
 			</td>
 		</tr>
-		
+
 		<tr>
 			<td><?php echo LangUtil::$generalTerms['NAME']; ?></td>
 			<td><input type="text" name="fullname" id="fullname" value="<?php echo $user->actualName; ?>" class='uniform_width' /><br></td>
@@ -122,7 +123,7 @@ if($user == null)
 		</tr>
 	</table>
 </form>
-<?php 
+<?php
 SessionUtil::restore($saved_session);
-include("includes/footer.php"); 
+include("includes/footer.php");
 ?>

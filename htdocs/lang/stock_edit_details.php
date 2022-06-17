@@ -3,6 +3,7 @@ include("redirect.php");
 include("includes/header.php");
 include("lang/lang_xml2php.php");
 include("includes/stats_lib.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("stocks");
 $script_elems->enableTableSorter();
 
@@ -26,7 +27,7 @@ function stock_edit()
 		<table>
 			<tr>
 				<td>
-					&nbsp;<?php echo LangUtil::$pageTerms['Reagent']; ?><?php $page_elems->getAsterisk(); ?> 
+					&nbsp;<?php echo LangUtil::$pageTerms['Reagent']; ?><?php $page_elems->getAsterisk(); ?>
 				</td>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>
@@ -35,7 +36,7 @@ function stock_edit()
 			</tr>
 			<tr>
 				<td>
-					&nbsp;<?php echo LangUtil::$pageTerms['Lot_Number']; ?><?php $page_elems->getAsterisk(); ?> 
+					&nbsp;<?php echo LangUtil::$pageTerms['Lot_Number']; ?><?php $page_elems->getAsterisk(); ?>
 				</td>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>
@@ -66,7 +67,7 @@ function stock_edit()
 				</td>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>
-					
+
 					<input class='uniform_width' type="text" name="txtRow15" id="txtRow15" value=<?php echo $retval[4];?>></input>
 				</td>
 			</tr>
@@ -81,7 +82,7 @@ function stock_edit()
 			</tr>
 			<tr>
 				<td>
-					&nbsp;<?php echo LangUtil::$pageTerms['Units']; ?><?php $page_elems->getAsterisk(); ?> 
+					&nbsp;<?php echo LangUtil::$pageTerms['Units']; ?><?php $page_elems->getAsterisk(); ?>
 				</td>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>
@@ -90,7 +91,7 @@ function stock_edit()
 			</tr>
 			<tr>
 				<td>
-					&nbsp;<?php echo LangUtil::$pageTerms['Cost_per_Unit']; ?><?php $page_elems->getAsterisk(); ?> 
+					&nbsp;<?php echo LangUtil::$pageTerms['Cost_per_Unit']; ?><?php $page_elems->getAsterisk(); ?>
 				</td>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>
@@ -104,7 +105,7 @@ function stock_edit()
 	<br><br>
 	<input name='stock_manage' id='stock_manage' type='button' onclick='javascript:stock_edit();' value='<?php echo LangUtil::$generalTerms['CMD_SUBMIT']; ?>' />
 		&nbsp;&nbsp;&nbsp;&nbsp;
-	<a href='stock_edit.php'><?php echo LangUtil::$generalTerms['CMD_CANCEL']; ?></a>		
+	<a href='stock_edit.php'><?php echo LangUtil::$generalTerms['CMD_CANCEL']; ?></a>
 </form>
 
 <?php

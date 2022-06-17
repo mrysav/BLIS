@@ -10,6 +10,7 @@ if( !(isAdmin(get_user_by_id($_SESSION['user_id'])) && in_array(basename($_SERVE
 
 include("redirect.php");
 include("includes/header.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("catalog");
 
 putUILog('catalog', 'X', basename($_SERVER['REQUEST_URI'], ".php"), 'X', 'X', 'X');
@@ -80,7 +81,7 @@ function delete_catalog_data()
 	$('#remove_data_progress').show();
 	var url_string = "ajax/catalog_deletedata.php";
 	$.ajax({
-		url: url_string, 
+		url: url_string,
 		success: function () {
 			$('#remove_data_progress').hide();
 			window.location='catalog.php?rm';
@@ -139,7 +140,7 @@ if(is_super_admin($user) || is_country_dir($user))
 		</div>
 		<?php $page_elems->getSpecimenTypeTable($_SESSION['lab_config_id']); ?>
 	</div>
-	
+
 	<div id='TestType_tc' class='right_pane' style='display:none;margin-left:10px;'>
 		<ul>
 			<li><?php echo LangUtil::$pageTerms['TIPS_TC_TESTTYPE_1']; ?></li>
@@ -147,7 +148,7 @@ if(is_super_admin($user) || is_country_dir($user))
 			<li><?php echo LangUtil::$pageTerms['TIPS_TC_TESTTYPE_3']; ?></li>
 		</ul>
 	</div>
-		
+
 	<div id='SpecimenType_tc' class='right_pane' style='display:none;margin-left:10px;'>
 		<ul>
 			<li><?php echo LangUtil::$pageTerms['TIPS_TC_SPECIMENTYPE_1']; ?></li>
@@ -155,7 +156,7 @@ if(is_super_admin($user) || is_country_dir($user))
 			<li><?php echo LangUtil::$pageTerms['TIPS_TC_SPECIMENTYPE_3']; ?></li>
 		</ul>
 	</div>
-	
+
 	<?php
 	if(is_super_admin($user) || is_country_dir($user))
 	{

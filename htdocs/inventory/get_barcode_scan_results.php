@@ -4,6 +4,7 @@ include("includes/db_lib.php");
 include("includes/stats_lib.php");
 include("../lang/lang_xml2php.php");
 include("barcode/barcode_lib.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("stocks");
 
 $code = explode("$", $_REQUEST['code']);
@@ -31,11 +32,11 @@ if($stock != -1)
                         <td> <?php echo LangUtil::$pageTerms['Quantity']."&nbsp;&nbsp;&nbsp;&nbsp;"; ?></td><td><?php echo Inventory::getLotQuantity($lid, $r_id, $stock['lot']); ?></td>
                 </tr>
                 <tr>
-                        <td><?php echo "Unit"."&nbsp;&nbsp;&nbsp;&nbsp;"; ?></td><td><?php 
+                        <td><?php echo "Unit"."&nbsp;&nbsp;&nbsp;&nbsp;"; ?></td><td><?php
                                                                                         $uni = $reag['unit'];
                                                                                             if($uni == '')
                                                                                                 echo "units";
-                                                                                            else 
+                                                                                            else
                                                                                                 echo $uni;
                                                                                             ?></td>
                 </tr>
@@ -63,7 +64,7 @@ if($stock != -1)
                         <td><?php echo "Update"."&nbsp;&nbsp;&nbsp;&nbsp;"; ?></td><td><?php echo "<a href='use_stock.php?id=".$reag['id']."&lot=".$stock['lot']."'> Update Stock</a>";
                                                                                             ?></td>
                 </tr>
-                
+
 	</tbody>
 </table>
 <?php

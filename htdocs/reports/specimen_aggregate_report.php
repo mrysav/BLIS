@@ -8,6 +8,7 @@ include("includes/db_lib.php");
 //include("includes/header.php");
 include("includes/stats_lib.php");
 include("includes/script_elems.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("reports");
 
 include("../users/accesslist.php");
@@ -53,28 +54,28 @@ function print_content(div_id)
 
 <div id='report_content'>
 <link rel='stylesheet' type='text/css' href='css/table_print.css' />
-<b><font size="5"><?php echo "Specimen Aggregate Report"; 
- 
+<b><font size="5"><?php echo "Specimen Aggregate Report";
+
 ?></b>
 <br><br>
-<font size="4"><?php 
+<font size="4"><?php
     $date_from = $_REQUEST['yyyy_from']."-".$_REQUEST['mm_from']."-".$_REQUEST['dd_from'];
     $date_to = $_REQUEST['yyyy_to']."-".$_REQUEST['mm_to']."-".$_REQUEST['dd_to'];
     $uiinfo = "from=".$date_from."&to=".$date_to;
     putUILog('specimen_aggregate_report', $uiinfo, basename($_SERVER['REQUEST_URI'], ".php"), 'X', 'X', 'X');
-    echo LangUtil::$pageTerms['REPORT_PERIOD'].": "; 
+    echo LangUtil::$pageTerms['REPORT_PERIOD'].": ";
 
     if($date_from == $date_to)
     {
         echo DateLib::mysqlToString($date_from);
     }
     else
-    {   
+    {
         echo DateLib::mysqlToString($date_from)." to ".DateLib::mysqlToString($date_to);
     }
 ?>
 <br>
-<?php 
+<?php
 if($_REQUEST["locationAgg"] == null)
 {
     echo "Location not found. Please choose a facility (import and choose if doesn't exist) on previous page.";
@@ -88,9 +89,9 @@ $byAge = $configArray['group_by_age'];
 $age_group_list = decodeAgeGroups($configArray['age_groups']);
 $byGender = $configArray['group_by_gender'];
 $bySection = $configArray['measure_id'];
-$combo = $configArray['test_type_id']; // 1 - registered, 2 - completed, 3 - completed / pending 
+$combo = $configArray['test_type_id']; // 1 - registered, 2 - completed, 3 - completed / pending
 #$combo = 1;
-$age_unit = $configArray['age_unit']; 
+$age_unit = $configArray['age_unit'];
 if($byAge == 1 && $age_unit_flag == 0)
 {
 
@@ -108,7 +109,7 @@ foreach($_REQUEST["locationAgg"] as $value)
 {
     //echo "value: ". $value;
     $location = explode(":", $value); //location array is of the format [<Facility_id>, <Facility_name>, <Facility_location>]
-    
+
         ?>
         <br>
 
@@ -120,7 +121,7 @@ foreach($_REQUEST["locationAgg"] as $value)
                 <td><b><font size="4"><?php echo LangUtil::$generalTerms['FACILITY']; ?></b></td>
                 <td><font size="4"><?php echo ":&nbsp;"?></td>
                 <td><font size="4"><?php echo $location[1]." - ".$location[2]; ?></td>
-            </tr>    
+            </tr>
         </tbody>
     </table>
 <?php
@@ -154,14 +155,14 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
                 echo "<th >".LangUtil::$pageTerms['TOTAL_MF']."</th>";
             }
             ?>
-            
-                        
+
+
             <?php if($byAge == 1 || $byGender == 1)
             {
                 echo "<th>".LangUtil::$pageTerms['TOTAL_TESTS']."</th>";
             }
             ?>
-                        
+
         </tr>
         <tr>
             <th ></th>
@@ -170,7 +171,7 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
             {
                 echo "<th ></th>";
             }
-            
+
             if($byAge == 1)
             {
                 foreach($age_group_list as $age_slot)
@@ -191,7 +192,7 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
             {
                 echo "<th ></th>";
             }
-                        
+
             if($byAge == 1 || $byGender == 1)
                 echo "<th ></th>";
             ?>
@@ -214,7 +215,7 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
                         echo "<td>";
                             echo $test_name;
                         echo "</td>";
-                        
+
                         if($byGender == 1)
                         {
                             echo "<td>";
@@ -223,7 +224,7 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
                                 echo "F";
                             echo "</td>";
                         }
-                
+
                     # Group by age set to true: Fetch age slots from DB
                     if($byAge == 1)
                     {
@@ -236,16 +237,16 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
                         $count_female_p_total = 0;
                         foreach($age_slot_list as $age_slot)
                         {
-                            
+
                             $age_from = intval(trim($age_slot[0]));
                             if(trim($age_slot[1]) == "+")
                                 $age_to = 100;
                             else
                                 $age_to = intval(trim($age_slot[1]));
-                            
+
                             if($byGender == 1)
                             {
-                                
+
                                 if($combo == 1)
                                 {
                                     $gender = 'M';
@@ -253,13 +254,13 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
                                     $gender = 'F';
                                     $count_female_t = get_specimen_count_grouped_country_dir($test_type_id, $date_from, $date_to, $gender, $age_from, $age_to, $age_unit);
                                     $count_male_t_total += $count_male_t;
-                                    $count_female_t_total += $count_female_t;                                    
+                                    $count_female_t_total += $count_female_t;
                                     echo "<td>";
                                     echo $count_male_t;
                                     echo "<br>";
                                     echo $count_female_t;
                                     echo "</td>";
-                                    
+
                                 }
                                 else if ($combo == 2)
                                 {
@@ -285,19 +286,19 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
                                     $count_female_c = get_specimen_count_grouped_country_dir($test_type_id, $date_from, $date_to, $gender, $age_from, $age_to, $age_unit, 1);
                                     $count_male_p = $count_male_t - $count_male_c;
                                     $count_female_p = $count_female_t - $count_female_c;
-                                    
+
                                     $count_male_c_total += $count_male_c;
                                     $count_female_c_total += $count_female_c;
                                     $count_male_p_total += $count_male_p;
                                     $count_female_p_total += $count_female_p;
-                                    
+
                                     echo "<td>";
                                     echo $count_male_c." / ".$count_male_p;
                                     echo "<br>";
                                     echo $count_female_c." / ".$count_female_p;
                                     echo "</td>";
                                 }
-                                    
+
                             }
                             else
                             {
@@ -428,7 +429,7 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
                                     $count_male_c = get_specimen_count_grouped2($test_type_id, $date_from, $date_to, $gender, 1);
                                     $gender = 'F';
                                     $count_female_c = get_specimen_count_grouped2($test_type_id, $date_from, $date_to, $gender, 1);
-                                    
+
                                     echo "<td>";
                                     echo $count_male_c;
                                     echo "<br>";
@@ -457,7 +458,7 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
                                     echo ($count_male_c + $count_female_c)." / ".($count_male_p + $count_female_p);
                                     echo "</td>";
                                 }
-                                    
+
                             }
                             else
                             {
@@ -498,10 +499,10 @@ $table_css = "style='padding: .3em; border: 1px black solid; font-size:14px;'";
                             }
                     }
                     echo "</tr>";
-                } 
+                }
         ?>
  <!-- ********************************************************************** -->
-    
+
     </tbody>
 </table>
 

@@ -5,6 +5,7 @@
 #
 include("../includes/SessionCheck.php");
 include("../includes/db_lib.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("results_entry");
 
 $attrib_value = $_REQUEST['labSectionId'];
@@ -12,7 +13,7 @@ $attrib_value = $_REQUEST['labSectionId'];
 $dynamic = 1;
 $search_settings = get_lab_config_settings_search();
 $rcap = $search_settings['results_per_page'];
-//echo "Max results per page : ".$rcap; 
+//echo "Max results per page : ".$rcap;
 $lab_config = LabConfig::getById($_SESSION['lab_config_id']);
 $uiinfo = "labSectionId=".$_REQUEST['labSectionId'];
 putUILog('result_entry_patient_lab_section', $uiinfo, basename($_SERVER['REQUEST_URI'], ".php"), 'X', 'X', 'X');
@@ -34,13 +35,13 @@ width:100%;
 border-collapse:collapse;
 table-layout:inherit
 }
-.customers td, .customers th 
+.customers td, .customers th
 {
 font-size:1em;
 border:1px solid #98bf21;
 padding:3px 7px 2px 7px;
 }
-.customers th 
+.customers th
 {
 font-size:1.1em;
 text-align:left;
@@ -49,7 +50,7 @@ padding-bottom:4px;
 background-color:#A7C942;
 color:#ffffff;
 }
-.customers tr.alt td 
+.customers tr.alt td
 {
 color:#000000;
 background-color:#EAF2D3;
@@ -80,8 +81,8 @@ background-color:#EAF2D3;
         var cap = parseInt($('#rcap').html());
         $('.prev_link').hide();
 
-        $.ajax({ 
-		url: url_string, 
+        $.ajax({
+		url: url_string,
         async : false,
 		success: function(count){
                     var icount = parseInt(count);
@@ -122,37 +123,37 @@ background-color:#EAF2D3;
 
 function get_next(url, sno, cap)
 {
-    var page = parseInt($('#page').html()); 
+    var page = parseInt($('#page').html());
     page = page + 1;
     $('#page').html(page);
-    var rem = parseInt($('#rem').html()); 
+    var rem = parseInt($('#rem').html());
     var tot = parseInt($('#tot').html());
     var cap = parseInt($('#rcap').html());
      rem = rem - cap;
     $('#rem').html(rem);
     var mpage = parseInt($('#mpage').html());
-    
+
     var displayed = tot - rem;
-    
+
     if(displayed > tot)
         displayed = tot;
     $('#page_counts').html(page + '/' + mpage + ' Page');
-    
-    $('.prev_link').hide();    
+
+    $('.prev_link').hide();
     $('.next_link').hide();
     url = url + '&rem=' + rem;
     var div_name = 'resultset'+sno;
     var html_content = "<div id='"+div_name+"'</div>";
     //$('#data_table').html(html_content);
     $('#data_table').load(url);
-}   
+}
 
 function get_prev(url, sno, cap)
 {
-    var page = parseInt($('#page').html()); 
+    var page = parseInt($('#page').html());
     page = page - 1;
     $('#page').html(page);
-    var rem = parseInt($('#rem').html()); 
+    var rem = parseInt($('#rem').html());
     var tot = parseInt($('#tot').html());
     var cap = parseInt($('#rcap').html());
     var mpage = parseInt($('#mpage').html());
@@ -188,11 +189,11 @@ else
 
     // EDITING
     # Search by Lab Section Id
-    $query_string = 
+    $query_string =
 				"SELECT specimen_id FROM test WHERE result='' ".
 				"AND test_type_id IN (SELECT test_type_id FROM test_type WHERE test_category_id=$attrib_value) ".
     			"LIMIT 0,$rcap";
-    
+
     //$saved_db = DbUtil::switchToLabConfig(127);
     //$retval = array();
 
@@ -205,9 +206,9 @@ if(count($resultset) == 0 || $resultset == null)
 {
 	?>
 	<div class='sidetip_nopos'>
-	<?php 
-	
-	
+	<?php
+
+
 	echo "In the above Lab Section - ".LangUtil::$pageTerms['MSG_PENDINGNOTFOUND'];
     ?>
 	</div>
@@ -246,8 +247,8 @@ foreach ($specimen_id_list_all as $specimen1){
 
 <br>
 
-                    
-<div id='data_table'>                    
+
+<div id='data_table'>
 <table class="hor-minimalist-c">
 	<thead>
 		<tr valign='top'>
@@ -400,28 +401,28 @@ foreach ($specimen_id_list_all as $specimen1){
 	?>
 
 
-<?php 
+<?php
         if(isset($_REQUEST['l']))
-        { 
-            $next_link = "../ajax/result_data_page_labsection.php?a=".$_REQUEST['labSectionId']."&l=".$_REQUEST['l']."&result_cap=".$result_cap."&result_counter=".($result_counter+1); 
+        {
+            $next_link = "../ajax/result_data_page_labsection.php?a=".$_REQUEST['labSectionId']."&l=".$_REQUEST['l']."&result_cap=".$result_cap."&result_counter=".($result_counter+1);
         }
         else
         {
-            $next_link = "../ajax/result_data_page_labsection.php?a=".$_REQUEST['labSectionId']."&result_cap=".$result_cap."&result_counter=".($result_counter+1);             
+            $next_link = "../ajax/result_data_page_labsection.php?a=".$_REQUEST['labSectionId']."&result_cap=".$result_cap."&result_counter=".($result_counter+1);
         }
         if(isset($_REQUEST['l']))
-        { 
-            $prev_link = "../ajax/result_data_page.php_labsection?a=".$_REQUEST['labSectionId']."&l=".$_REQUEST['l']."&result_cap=".$result_cap."&result_counter=".($result_counter - 1); 
+        {
+            $prev_link = "../ajax/result_data_page.php_labsection?a=".$_REQUEST['labSectionId']."&l=".$_REQUEST['l']."&result_cap=".$result_cap."&result_counter=".($result_counter - 1);
         }
         else
         {
-            $prev_link = "../ajax/result_data_page.php_labsection?a=".$_REQUEST['labSectionId']."&result_cap=".$result_cap."&result_counter=".($result_counter - 1);             
+            $prev_link = "../ajax/result_data_page.php_labsection?a=".$_REQUEST['labSectionId']."&result_cap=".$result_cap."&result_counter=".($result_counter - 1);
         }
-    ?>        
-<div class="prev_link">                       
+    ?>
+<div class="prev_link">
      <small><a href="javascript:get_prev('<?php echo $prev_link; ?>', '<?php echo $result_counter - 1; ?>', '<?php echo $result_cap; ?>');">&lt;&nbsp;Previous&nbsp;</a></small>
 </div>
-<div class="next_link">                
+<div class="next_link">
      <small><a href="javascript:get_next('<?php echo $next_link; ?>', '<?php echo $result_counter + 1; ?>', '<?php echo $result_cap; ?>');">&nbsp;Next&nbsp&nbsp;&gt;</a></small>
 </div>
 </div>

@@ -4,6 +4,7 @@
 #
 include("redirect.php");
 include("includes/header.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("results_entry");
 
 $script_elems->enableDatePicker();
@@ -13,7 +14,7 @@ $script_elems->enablePageloadIndicator();
 function get_unverified_tests($test_type_id)
 {
 	# Fetches all unverified test results
-	$query_string = 
+	$query_string =
 		"SELECT * FROM test ".
 		"WHERE verified_by=0 ".
 		"AND result <> '' ".
@@ -94,7 +95,7 @@ function submit_forms(specimen_id)
 			continue;
 		}
 		var params = $('#'+form_id_list[i]).formSerialize();
-		
+
 		 $.ajax({
 			type: "POST",
 			url: "ajax/result_add.php",
@@ -102,7 +103,7 @@ function submit_forms(specimen_id)
 			success: function(msg) {
 				$("#"+target_div_id).html(msg);
 			}
-		}); 
+		});
 	}
 	$('.result_progress_spinner').hide();
 }
@@ -116,9 +117,9 @@ var pg=2;
 	//alert("in doc ready");
 	var specimen_id = <?php echo $specimen_id;?>;
 	var target_div = "result_form_pane_"+<?php echo $specimen_id;?>;
-	$("#"+target_div).load(url, 
-		{sid: specimen_id , page_id:pg, test_id:<?php echo $test_id;?>}, 
-		function() 
+	$("#"+target_div).load(url,
+		{sid: specimen_id , page_id:pg, test_id:<?php echo $test_id;?>},
+		function()
 		{
 			//alert("Fetched specimen with id "+<?php echo $specimen_id;?>);
 			//$('#fetch_progress_bar').hide();
@@ -133,7 +134,7 @@ var pg=2;
  <a href='results_entry.php' id='cancel_link'><?php echo LangUtil::$generalTerms['CMD_CANCEL']; ?></a>
 <br><br>
 <!-- copied from result_add.php -->
- 
-<div id="result_form_pane_<?php echo $specimen_id;?>" class="result_form_pane_<?php echo $specimen_id;?>"></div> 
- 
+
+<div id="result_form_pane_<?php echo $specimen_id;?>" class="result_form_pane_<?php echo $specimen_id;?>"></div>
+
 <?php include("includes/footer.php"); ?>

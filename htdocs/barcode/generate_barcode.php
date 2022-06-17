@@ -2,6 +2,7 @@
 include("redirect.php");
 include("includes/header.php");
 include("barcode_lib.php");
+require_once(__DIR__."/../lang/lang_util.php");
 
 $barcodeSettings = get_lab_config_settings_barcode();
 //  print_r($barcodeSettings);
@@ -18,7 +19,7 @@ putUILog('generate_barcode', '-', basename($_SERVER['REQUEST_URI'], ".php"), 'X'
 }
 
 .barcodes {
-    
+
 }
 
 </style>
@@ -33,9 +34,9 @@ function getBarcode()
              alert('cannot be empty');
                 return;
         }
-    var count = parseInt($('#count').html()); 
+    var count = parseInt($('#count').html());
     count = count + 1;
-    $('#count').html(count);  
+    $('#count').html(count);
     var div = "bar"+count;
         generateRemoveLink(div);
 
@@ -104,7 +105,7 @@ function export_as_pdf2(div_id)
         Popup($(elem).html());
     }
 
-    function Popup(data) 
+    function Popup(data)
     {
         var mywindow = window.open('', 'my div', 'height=400,width=600');
         mywindow.document.write('<html><head><title>Barcodes</title>');
@@ -122,7 +123,7 @@ function export_as_pdf2(div_id)
 
 function get_next(url, sno, cap)
 {
-    var count = parseInt($('#count').html()); 
+    var count = parseInt($('#count').html());
     count = count + 1;
     $('#rem').html(rem);
     var displayed = tot - rem;
@@ -135,7 +136,7 @@ function get_next(url, sno, cap)
     var html_content = "<div id='"+div_name+"'</div>";
     $('#data_table').append(html_content);
     $('#'+div_name).load(url);
-}   
+}
 
 function hide_div(div)
 {
@@ -159,7 +160,7 @@ function export_to_pdf(div_id)
 <div id="count" style="display: none;">0</div>
 
 Code: <input type="text" id="code" name="code"></input>
-<input type="button" onclick='getBarcode();' value="Generate">  
+<input type="button" onclick='getBarcode();' value="Generate">
 <input type="button" value="Print" onclick="PrintElem('#barcodeList')" />
 <!--
 <input type='button' onclick="javascript:export_as_word('barcodeList');" value='<?php echo LangUtil::$generalTerms['CMD_EXPORTWORD']; ?>'></input>
@@ -185,7 +186,7 @@ Code: <input type="text" id="code" name="code"></input>
 </div>
 
 <div id='generate_barcode_help' class='right_pane' style='display:none;margin-left:10px;'>
-<ul>	
+<ul>
         <?php
                 echo "<li>";
                 echo " Generate barcodes by typing text in the govin field";

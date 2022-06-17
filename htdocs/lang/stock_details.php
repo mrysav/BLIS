@@ -6,6 +6,7 @@ include("redirect.php");
 include("includes/header.php");
 include("includes/stats_lib.php");
 include("lang/lang_xml2php.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("stocks");
 
 $script_elems->enableFlotBasic();
@@ -58,7 +59,7 @@ $file=$_REQUEST['file'];
 		$dd_to_request="dd_to".$i;
 		$mm_to_request="mm_to".$i;
 		$yyyy_to_request="yyyy_to".$i;
-		
+
 		$name[$i-1]=$_REQUEST[$name_request];
 		$lot_number[$i-1]=$_REQUEST[$lot_number_request];
 		$expiry_date[$i-1]=$_REQUEST[$mm_ex_request]."/".$_REQUEST[$dd_ex_request]."/".$_REQUEST[$yyyy_ex_request];
@@ -74,7 +75,7 @@ $file=$_REQUEST['file'];
 	}
 	if($name[0]!="" && $file=='1')
 		add_new_stock($name,$lot_number,$expiry_date,$manufacture,$supplier,$quantity_supplied,$unit,$cost_per_unit,$ts);
-	
+
         $_REQUEST['file'] = '0';
         echo $_REQUEST['file'];
 	$retval=array();
@@ -108,8 +109,8 @@ $file=$_REQUEST['file'];
                         <td><?php echo $value[6]; ?></td>
 			<td><?php echo $value[8];?></td>
 		</tr>
-<?php 
-	} 
+<?php
+	}
 ?>
 	</tbody>
 </table>

@@ -15,6 +15,7 @@ require_once(dirname(__FILE__).'/../includes/composer.php');
 
 include_once("includes/field_order_update.php");
 
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("lab_config_home");
 
 putUILog('lab_config_home', 'X', basename($_SERVER['REQUEST_URI'], ".php"), 'X', 'X', 'X');

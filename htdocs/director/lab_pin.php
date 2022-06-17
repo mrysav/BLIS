@@ -1,6 +1,7 @@
 <?php
 include("redirect.php");
 include("includes/header.php");
+require_once(__DIR__."/../lang/lang_util.php");
 
 // Load all laboratories that will be seen for this particular page.
 $director_id = $_SESSION['user_id'];

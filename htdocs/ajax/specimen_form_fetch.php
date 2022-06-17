@@ -7,15 +7,16 @@ include("../includes/SessionCheck.php");
 include("../includes/db_lib.php");
 include("../includes/page_elems.php");
 include("../includes/ajax_lib.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("results_entry");
 $page_elems = new PageElems();
 
 function get_result_form($test_type, $test_id, $num_tests, $patient)
 {
 	# Returns HTML form elements for given test type results
-	
+
 	global $form_id_list, $specimen_id, $page_elems;
-	
+
 	$curr_form_id = 'test_'.$test_type->testTypeId;
 	$form_id_list[] = $curr_form_id;
 	?>
@@ -24,13 +25,13 @@ function get_result_form($test_type, $test_id, $num_tests, $patient)
 		$(".enable_check").each(function() {
 			toggle_form('<?php echo $curr_form_id; ?>', this);
 		});
-		
+
 	});
 	function update_remarks1()
 	{
 		var result_elems = $("input[name='result[]']").attr("value");
 				if(isNaN(result_elems))
-		{	
+		{
 			alert("Value expected for result is numeric.");
 			return;
 		}
@@ -43,24 +44,24 @@ function get_result_form($test_type, $test_id, $num_tests, $patient)
 	<?php
 	# Fetch all measures for this test
 	$measure_list = $test_type->getMeasures();
-        
+
         $submeasure_list = array();
                 $comb_measure_list = array();
                // print_r($measure_list);
-                
+
                 foreach($measure_list as $measure)
                 {
-                    
+
                     $submeasure_list = $measure->getSubmeasuresAsObj();
                     //echo "<br>".count($submeasure_list);
                     //print_r($submeasure_list);
                     $submeasure_count = count($submeasure_list);
-                    
+
                     if($measure->checkIfSubmeasure() == 1)
                     {
                         continue;
                     }
-                        
+
                     if($submeasure_count == 0)
                     {
                         array_push($comb_measure_list, $measure);
@@ -69,7 +70,7 @@ function get_result_form($test_type, $test_id, $num_tests, $patient)
                     {
                         array_push($comb_measure_list, $measure);
                         foreach($submeasure_list as $submeasure)
-                           array_push($comb_measure_list, $submeasure); 
+                           array_push($comb_measure_list, $submeasure);
                     }
                 }
                 $measure_list = $comb_measure_list;
@@ -89,7 +90,7 @@ function get_result_form($test_type, $test_id, $num_tests, $patient)
 					$decName = $measure->getName().":";
                                     }
 		?>
-        
+
 		<label for='<?php echo $input_id; ?>'><?php echo $decName; echo "\n"; ?></label>
 		<?php
 		$range = $measure->range;
@@ -119,10 +120,10 @@ function get_result_form($test_type, $test_id, $num_tests, $patient)
 			?>
 			<input class='uniform_width' type='text' name='result[]' id='<?php echo $input_id; ?>' onchange="javascript:update_remarks1();"></input>
 			<span id='<?php echo $input_id; ?>_range'>
-			&nbsp;(<?php 
+			&nbsp;(<?php
 			$unit=$measure->unit;
 			if(stripos($unit,",")!=false)
-		{	
+		{
 			$units=explode(",",$unit);
 			$lower_parts=explode(".",$range_values[0]);
 			$upper_parts=explode(".",$range_values[1]);
@@ -150,10 +151,10 @@ function get_result_form($test_type, $test_id, $num_tests, $patient)
 ?>)<?php
 		}else
 		{	if(stripos($unit,":")!=false)
-				{		
+				{
 			$units=explode(":",$unit);
 			echo $range_values[0]; ?><sup><?php echo $units[0] ?></sup>-<?php echo $range_values[1];?><sup><?php echo $units[0] ?></sup>)
-		<?php 
+		<?php
 	}
 		else
 		{
@@ -171,7 +172,7 @@ function get_result_form($test_type, $test_id, $num_tests, $patient)
 			echo "<div>";
 			$page_elems->getTokenList($count, $input_id, "result[]", $url_string, $hint_text,"");
 			echo "</div>";
-			
+
 		}
                 else if($range_type == Measure::$RANGE_FREETEXT)
 		{
@@ -179,7 +180,7 @@ function get_result_form($test_type, $test_id, $num_tests, $patient)
                     echo "<div>";
                         echo "<textarea name='result[]' id='$input_id' class='uniform_width results_entry'></textarea>";
                     echo "</div>";
-                                	
+
 		}
 		if(stripos($measure->unit,":")!=false)
 		{
@@ -188,7 +189,7 @@ function get_result_form($test_type, $test_id, $num_tests, $patient)
 		}else
 		if(stripos($measure->unit,",")===false)
 		echo $measure->unit;
-		
+
 		if($num_tests > 0 && $count == 0)
 		{
 			# Checkbox to skip results for this test type
@@ -196,7 +197,7 @@ function get_result_form($test_type, $test_id, $num_tests, $patient)
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<small>
 			<input type='checkbox' id='<?php echo $curr_form_id; ?>_skip' class="enable_check" title='Tick this box if results are available and ready to enter' onclick="javascript:toggle_form('<?php echo $curr_form_id; ?>', this);">
-			<?php //echo LangUtil::$generalTerms['CMD_SKIP']; 
+			<?php //echo LangUtil::$generalTerms['CMD_SKIP'];
 			      echo "Enable Result Entry"; ?>
 			</input>
 			</small>
@@ -266,7 +267,7 @@ if($specimen->statusCodeId == Specimen::$STATUS_DONE)
 {
 	?>
 	<div class='sidetip_nopos' style='width:350px;'>
-	<?php 
+	<?php
 	echo LangUtil::$pageTerms['MSG_ALREADYENTERED']."- ";
 	if($_SESSION['sid'] != 0)
 	{
@@ -318,7 +319,7 @@ if($_SESSION['dnum'] != 0)
 //if($_SESSION['pnamehide'] == 0)
 if($_SESSION['user_level'] == $LIS_TECH_SHOWPNAME)
 {
-	echo LangUtil::$generalTerms['PATIENT_NAME']; ?>: <?php echo $patient->name; 
+	echo LangUtil::$generalTerms['PATIENT_NAME']; ?>: <?php echo $patient->name;
 }
 else
 {
@@ -341,9 +342,9 @@ foreach($test_list as $test)
 	?>
 	<tr valign='top'>
 		<td>
-			<?php 
+			<?php
 			$test_type = get_test_type_by_id($test->testTypeId);
-			echo $test_type->getName(); 
+			echo $test_type->getName();
 			?>
 		</td>
 		<td>
@@ -360,7 +361,7 @@ foreach($test_list as $test)
 			?>
 		</td>
 	</tr>
-	<?php 
+	<?php
 		$related_test_count++;
 	}
 	}
@@ -368,9 +369,9 @@ foreach($test_list as $test)
 	?>
 	<tr valign='top'>
 		<td>
-			<?php 
+			<?php
 			$test_type = get_test_type_by_id($test->testTypeId);
-			echo $test_type->getName(); 
+			echo $test_type->getName();
 			?>
 		</td>
 		<td>
@@ -387,7 +388,7 @@ foreach($test_list as $test)
 			?>
 		</td>
 	</tr>
-	
+
 	<?php }
 	?>
 	<?php

@@ -7,6 +7,7 @@ include("../includes/SessionCheck.php");
 include("../includes/db_lib.php");
 include("../includes/stats_lib.php");
 include("../includes/page_elems.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("reports");
 
 $page_elems = new PageElems();
@@ -33,10 +34,10 @@ $legend_id = "legend_".$test_type_id;
 ?>
 
 
-<script id="source" language="javascript" type="text/javascript"> 
+<script id="source" language="javascript" type="text/javascript">
 $(function () {
 <?php
-		
+
 		$count = 0;
 		echo "var d = [];";
 		foreach($stat_list as $key=>$value)
@@ -47,12 +48,12 @@ $(function () {
 			$infection_rate = 0;
 			if($count_all != 0)
 				$infection_rate = round((($count_all-$count_negative)/$count_all)*100, 2);
-			
+
 			echo "d.push([$x_val*1000, $infection_rate]);";
 			$count++;
 			//$x_val += 2;
 		}
-	
+
 	?>
 	});
  </script>
@@ -61,7 +62,7 @@ $(function () {
 		{ ?>
 	<center>
 <?php
-	echo get_test_name_by_id($test_type_id); 
+	echo get_test_name_by_id($test_type_id);
 ?> - <?php echo LangUtil::$pageTerms['PROGRESSION_M']; ?>
 </center>
 <table>
@@ -72,15 +73,15 @@ $(function () {
 		</td>
 		<td>
 			<div id="<?php echo $div_id; ?>" style="width:800px;height:300px;"></div>
-		</td>	
+		</td>
 		<td>
 			<div id="<?php echo $legend_id; ?>" style="width:200px;height:300px;"></div>
 		</td>
 	</tr>
 	</tbody>
 </table>
-	<script id="source" language="javascript" type="text/javascript"> 
-	
+	<script id="source" language="javascript" type="text/javascript">
+
 	 $(function (){
 	 <?php
 		echo "var d = [];";
@@ -92,20 +93,20 @@ $(function () {
 			$infection_rate = 0;
 			if($count_all != 0)
 				$infection_rate = round((($count_all-$count_negative)/$count_all)*100, 2);
-			
+
 			echo "d.push([$x_val*1000, $infection_rate]);";
 			//$x_val += 2;
 		}
 	?>
-		
+
 $.plot($("#<?php echo $div_id; ?>"), [
 		{
 			data: d,
-			<?php 
-			if($count==1) 
+			<?php
+			if($count==1)
 			{
 			?>
-				points: { show: true, radius:5 }, 
+				points: { show: true, radius:5 },
 			<?php
 			}
 			else
@@ -117,9 +118,9 @@ $.plot($("#<?php echo $div_id; ?>"), [
 			?>
 			label: "<?php echo LangUtil::$pageTerms['MENU_INFECTIONSUMMARY']; ?>"
 		}
-		
+
 		],
-		{ 
+		{
 			xaxis: {
 				mode: "time",
 				minTickSize: [1, "month"],
@@ -130,13 +131,13 @@ $.plot($("#<?php echo $div_id; ?>"), [
 			legend: {
 				container: "#<?php echo $legend_id; ?>"
 			}
-		} 
+		}
 	);
 	$('#<?php echo $ylabel_id; ?>').flipv_up();
-		
+
 });
 <?php
 	}
-	
+
 	?>
 </script>

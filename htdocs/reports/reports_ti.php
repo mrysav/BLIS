@@ -1,6 +1,7 @@
-<?php 
+<?php
 include("redirect.php");
 include("includes/header.php");
+require_once(__DIR__."/../lang/lang_util.php");
 LangUtil::setPageId("reports");
 
 $script_elems->enableDatePicker();
@@ -148,7 +149,7 @@ $(document).ready(function(){
 		show_selection("prevalance_aggregate");
 		<?php
 	}
-	else if (isset($_REQUEST['show_t'])) 
+	else if (isset($_REQUEST['show_t']))
 	{
 		?>
 		show_tat_form();
@@ -166,7 +167,7 @@ $(document).ready(function(){
 		show_tat_aggregate_form();
 		<?php
 	}
-	else if (isset($_REQUEST['show_agg'])) 
+	else if (isset($_REQUEST['show_agg']))
 	{
 		?>
 		show_selection('country_aggregate');
@@ -188,7 +189,7 @@ function changeAvailableLocations(dropdown) {
 function handleChange(dropdown) {
 	if( dropdown.value != 0 ) {
 		get_test_types_bycat();
-		
+
 	}
 }
 
@@ -203,7 +204,7 @@ function get_test_types_bycat()
 	$('#ttype13').load('ajax/tests_selectbycat.php?c='+cat_code+'&l='+location_code);
 }
 
-function get_test_types(location_elem, t_type_elem) 
+function get_test_types(location_elem, t_type_elem)
 {
 	$.getJSON("ajax/tests_select.php",{site: $('#'+location_elem).val()}, function(j){
 		var options = '';
@@ -214,7 +215,7 @@ function get_test_types(location_elem, t_type_elem)
     })
 }
 
-function get_test_types_withall(location_elem, t_type_elem) 
+function get_test_types_withall(location_elem, t_type_elem)
 {
 	$.getJSON("ajax/tests_select.php",{site: $('#'+location_elem).val()}, function(j){
 		var options = '';
@@ -291,7 +292,7 @@ function show_print_form()
 	$('.reports_subdiv').hide();
 	$('.reports_subdiv_help').hide();
 	$('#print_div').show();
-	$('#print_div_help').show();	
+	$('#print_div_help').show();
 	$('.menu_option').removeClass('current_menu_option');
 	$('#print_menu').addClass('current_menu_option');
 }
@@ -404,14 +405,14 @@ function show_stock_form()
 	$('#stock_report_menu').addClass('current_menu_option');
 }
 
-function show_control_test_form() 
+function show_control_test_form()
 {
 	$('.reports_subdiv').hide();
 	$('.reports_subdiv_help').hide();
 	$('.menu_option').removeClass('current_menu_option');
 	$('#control_report_div').show();
 	$('#control_report_menu').addClass('current_menu_option');
-	
+
 }
 
 function show_selection(divName) {
@@ -492,7 +493,7 @@ function get_patient_reports()
 	else
 	{
 		if(
-		isNaN(yyyy_from) || 
+		isNaN(yyyy_from) ||
 		isNaN(yyyy_to) ||
 		isNaN(mm_from) ||
 		isNaN(mm_to) ||
@@ -544,7 +545,7 @@ function get_aggregate_report() {
 	else
 	{
 		if(
-		isNaN(yyyy_from) || 
+		isNaN(yyyy_from) ||
 		isNaN(yyyy_to) ||
 		isNaN(mm_from) ||
 		isNaN(mm_to) ||
@@ -618,7 +619,7 @@ function get_summary_fn(all_sites_flag)
 		return;
 	}
 	if(
-		isNaN(yyyy_from) || 
+		isNaN(yyyy_from) ||
 		isNaN(yyyy_to) ||
 		isNaN(mm_from) ||
 		isNaN(mm_to) ||
@@ -634,7 +635,7 @@ function get_summary_fn(all_sites_flag)
 		$("#yyyy_to2").val("");
 	}
 	$('#summary_progress_bar').show();
-	$("#get_summary").submit();	
+	$("#get_summary").submit();
 }
 
 function get_pending_report()
@@ -657,7 +658,7 @@ function get_pending_report()
 }
 
 function get_tests_done_report()
-{	
+{
 	var location = $("#location4").attr("value");
 	var yyyy_from = $("#yyyy_from4").attr("value");
 	var mm_from = $("#mm_from4").attr("value");
@@ -681,7 +682,7 @@ function get_tests_done_report()
 		return;
 	}
 	if(
-		isNaN(yyyy_from) || 
+		isNaN(yyyy_from) ||
 		isNaN(yyyy_to) ||
 		isNaN(mm_from) ||
 		isNaN(mm_to) ||
@@ -708,7 +709,7 @@ function get_doctor_stats()
 	var yyyy_to = $("#yyyy_to7").attr("value");
 	var mm_to = $("#mm_to7").attr("value");
 	var dd_to = $("#dd_to7").attr("value");
-	
+
 	$("#location8").attr("value", location);
 	$("#yyyy_from8").attr("value", yyyy_from);
 	$("#mm_from8").attr("value", mm_from);
@@ -716,7 +717,7 @@ function get_doctor_stats()
 	$("#yyyy_to8").attr("value", yyyy_to);
 	$("#mm_to8").attr("value", mm_to);
 	$("#dd_to8").attr("value", dd_to);
-	
+
 	if(location == "")
 	{
 		alert("<?php echo LangUtil::$generalTerms['TIPS_SELECTSITE']; ?>");
@@ -733,7 +734,7 @@ function get_doctor_stats()
 		return;
 	}
 	if(
-		isNaN(yyyy_from) || 
+		isNaN(yyyy_from) ||
 		isNaN(yyyy_to) ||
 		isNaN(mm_from) ||
 		isNaN(mm_to) ||
@@ -755,7 +756,7 @@ function get_doctor_stats()
 }
 function get_tests_done_report2()
 {
-	
+
 	var location = $("#location7").attr("value");
 	var yyyy_from = $("#yyyy_from7").attr("value");
 	var mm_from = $("#mm_from7").attr("value");
@@ -763,7 +764,7 @@ function get_tests_done_report2()
 	var yyyy_to = $("#yyyy_to7").attr("value");
 	var mm_to = $("#mm_to7").attr("value");
 	var dd_to = $("#dd_to7").attr("value");
-	
+
 		$("#location4").attr("value", location);
 	$("#yyyy_from4").attr("value", yyyy_from);
 	$("#mm_from4").attr("value", mm_from);
@@ -771,7 +772,7 @@ function get_tests_done_report2()
 	$("#yyyy_to4").attr("value", yyyy_to);
 	$("#mm_to4").attr("value", mm_to);
 	$("#dd_to4").attr("value", dd_to);
-	
+
 	if(location == "")
 	{
 		alert("<?php echo LangUtil::$generalTerms['TIPS_SELECTSITE']; ?>");
@@ -788,7 +789,7 @@ function get_tests_done_report2()
 		return;
 	}
 	if(
-		isNaN(yyyy_from) || 
+		isNaN(yyyy_from) ||
 		isNaN(yyyy_to) ||
 		isNaN(mm_from) ||
 		isNaN(mm_to) ||
@@ -832,7 +833,7 @@ function get_tat_report()
 		return;
 	}
 	if(
-		isNaN(yyyy_from) || 
+		isNaN(yyyy_from) ||
 		isNaN(yyyy_to) ||
 		isNaN(mm_from) ||
 		isNaN(mm_to) ||
@@ -875,7 +876,7 @@ function submit_tat_aggregate_form() {
 		return;
 	}
 	if(
-		isNaN(yyyy_from) || 
+		isNaN(yyyy_from) ||
 		isNaN(yyyy_to) ||
 		isNaN(mm_from) ||
 		isNaN(mm_to) ||
@@ -940,7 +941,7 @@ function get_count_report()
 	}
 	else if(count_type==3)
 	{
-	
+
 	get_doctor_stats();
 	}
 }
@@ -970,7 +971,7 @@ function get_specimen_count_report()
 		return;
 	}
 	if(
-		isNaN(yyyy_from) || 
+		isNaN(yyyy_from) ||
 		isNaN(yyyy_to) ||
 		isNaN(mm_from) ||
 		isNaN(mm_to) ||
@@ -1019,8 +1020,8 @@ function search_patient_history()
 	}
 	$('#test_history_progress_spinner').show();
 	var url = 'ajax/search_p.php';
-	$("#phistory_list").load(url, 
-		{q: pid, a: search_attrib, l: location }, 
+	$("#phistory_list").load(url,
+		{q: pid, a: search_attrib, l: location },
 		function()
 		{
 			$('#test_history_progress_spinner').hide();
@@ -1041,8 +1042,8 @@ function search_preport()
 	}
 	$('#preport_progress_spinner').show();
 	var url = 'ajax/preport_checkboxes.php';
-	$("#preport_list").load(url, 
-		{q: pid, a: search_attrib, l: location }, 
+	$("#preport_list").load(url,
+		{q: pid, a: search_attrib, l: location },
 		function() {
 			$('#preport_progress_spinner').hide();
 			$('#preport_list').show();
@@ -1063,7 +1064,7 @@ function submit_preport()
 		{
 			none_selected = false;
 			break;
-		}		
+		}
 	}
 	if(none_selected == true)
 	{
@@ -1185,7 +1186,7 @@ function print_daily_patients()
 	var yt = $("#daily_yyyy_to").attr("value");
 	var mt = $("#daily_mm_to").attr("value");
 	var dt = $("#daily_dd_to").attr("value");
-	
+
 	if(checkDate(yt, mt, dt) == false || checkDate(yf, mf, df) == false)
 	{
 		alert("<?php echo LangUtil::$generalTerms['TIPS_DATEINVALID']; ?>");
@@ -1204,7 +1205,7 @@ function print_daily_specimens()
 	var yt = $("#daily_yyyy_to").attr("value");
 	var mt = $("#daily_mm_to").attr("value");
 	var dt = $("#daily_dd_to").attr("value");
-	
+
 	if(checkDate(yt, mt, dt) == false || checkDate(yf, mf, df) == false)
 	{
 		alert("<?php echo LangUtil::$generalTerms['TIPS_DATEINVALID']; ?>");
@@ -1242,24 +1243,24 @@ function get_stock_report()
 	var m_to = $("#mm_to15").attr("value");
 	var d_to = $("#dd_to15").attr("value");
 	var cat_code = $("#cat_code15").attr("value");
-	
+
 	if(checkDate(y_from, m_from, d_from) == false)
 	{
 		alert("<?php echo LangUtil::$generalTerms['TIPS_DATEINVALID']; ?>");
 		return;
 	}
-	
+
 	if(checkDate(y_to, m_to, d_to) == false)
-	{ 
+	{
 		alert("<?php echo LangUtil::$generalTerms['TIPS_DATEINVALID']; ?>");
 		return;
 	}
 	// All okay
-	
+
 	$('#stock_report_form').submit();
 }
 
-function get_control_report() 
+function get_control_report()
 {
 	// Validate
 	var dateError = "From date cannot be beyond To date";
@@ -1271,28 +1272,28 @@ function get_control_report()
 	var m_to = $("#mm_to15").attr("value");
 	var d_to = $("#dd_to15").attr("value");
 	var cat_code = $("#cat_code15").attr("value");
-	
+
 	if(checkDate(y_from, m_from, d_from) == false)
 	{
 		alert("<?php echo LangUtil::$generalTerms['TIPS_DATEINVALID']; ?>");
 		return;
 	}
-	
+
 	if(checkDate(y_to, m_to, d_to) == false)
-	{ 
+	{
 		alert("<?php echo LangUtil::$generalTerms['TIPS_DATEINVALID']; ?>");
 		return;
 	}
-	
+
 	$('#control_testing_error').hide();
 	var test_type_id = $('#verify_test_type_control').attr("value");
 	if(test_type_id == "")
-	{	 
+	{
 		$('#control_testing_error').show();
 		return;
 	}
 	// All okay
-	
+
 	//$('#control_report_form').submit();
 }
 
@@ -1356,7 +1357,7 @@ function show_custom_report_form(report_id)
 		<td id='left_pane' width='200px'>
 		<?php
 			$site_list = get_site_list($_SESSION['user_id']);
-			if ( !is_country_dir( get_user_by_id($_SESSION['user_id'] ) ) ) { 
+			if ( !is_country_dir( get_user_by_id($_SESSION['user_id'] ) ) ) {
 				echo LangUtil::$pageTerms['MENU_DAILY']; ?>
 			<ul>
 				<!--
@@ -1380,7 +1381,7 @@ function show_custom_report_form(report_id)
 				?>>
 					<a href='javascript:show_print_form();'><?php echo LangUtil::$pageTerms['MENU_TESTRECORDS']; ?></a>
 				</li>
-				
+
 				<li class='menu_option' id='daily_report_menu'>
 					<a href='javascript:show_daily_report_form();'><?php echo LangUtil::$pageTerms['MENU_DAILYLOGS']; ?></a>
 				</li>
@@ -1390,12 +1391,12 @@ function show_custom_report_form(report_id)
 				?>>
 					<a href='javascript:show_pending_tests_form();'><?php echo LangUtil::$pageTerms['MENU_PENDINGTESTS']; ?></a>
 				</li>
-				
+
 				<?php
 				# Space for menu entries corresponding to a new daily report
 				# PLUG_DAILY_REPORT_ENTRY
 				?>
-				
+
 			</ul>
 			<?php } else { ?>
 				<?php echo "Report Settings"; ?>
@@ -1449,11 +1450,11 @@ function show_custom_report_form(report_id)
 				# Space for menu entries corresponding to a new aggregate report
 				# PLUG_AGGREGATE_REPORT_ENTRY
 				?>
-				
+
 			</ul>
 		</td>
 		<td></td>
-		
+
 	<td id="right_pane" class="right_pane" valign='top'>
 	<div id='reports_div' style='display:none;' class='reports_subdiv'>
 		<b>Patient Results Report</b>
@@ -1484,23 +1485,23 @@ function show_custom_report_form(report_id)
 						?>
 					</td>
 				</tr>
-			
+
 				<?php
 				$today = date("Y-m-d");
 				$today_array = explode("-", $today);
 				$monthago_date = date("Y-m-d", strtotime(date("Y-m-d", strtotime($today)) . " -270 days"));//getStartDate();
 				$monthago_array = explode("-", $monthago_date);
 				?>
-			
+
 				<tr class="type_row" id="type_row">
-					<td><?php echo LangUtil::$generalTerms['TEST_TYPE']; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td> 
+					<td><?php echo LangUtil::$generalTerms['TEST_TYPE']; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
 					<td>
 						<SELECT NAME="t_type" id="t_type" class='uniform_width'>
 							<OPTION VALUE='' selected='selected'>Select..</option>
 						</SELECT>
 					</td>
 				</tr>
-				
+
 				<tr class="sdate_row" id="sdate_row" valign='top'>
 					<td><?php echo LangUtil::$generalTerms['FROM_DATE']; ?> </td>
 					<td>
@@ -1508,11 +1509,11 @@ function show_custom_report_form(report_id)
 						$name_list = array("yyyy_from", "mm_from", "dd_from");
 						$id_list = $name_list;
 						$value_list = $monthago_array;
-						$page_elems->getDatePicker($name_list, $id_list, $value_list); 
+						$page_elems->getDatePicker($name_list, $id_list, $value_list);
 					?>
 					</td>
 				</tr>
-			
+
 				<tr class="edate_row" id="edate_row" valign='top'>
 					<td><?php echo LangUtil::$generalTerms['TO_DATE']; ?>&nbsp;&nbsp;&nbsp;</td>
 					<td>
@@ -1520,11 +1521,11 @@ function show_custom_report_form(report_id)
 						$name_list = array("yyyy_to", "mm_to", "dd_to");
 						$id_list = $name_list;
 						$value_list = $today_array;
-						$page_elems->getDatePicker($name_list, $id_list, $value_list); 
+						$page_elems->getDatePicker($name_list, $id_list, $value_list);
 					?>
 					</td>
 				</tr>
-				
+
 				<tr>
 					<td>
 					</td>
@@ -1540,7 +1541,7 @@ function show_custom_report_form(report_id)
 			</table>
 		</form>
 	</div>
-	
+
 	<div id='summary_div' style='display:none;' class='reports_subdiv'>
 			<b><?php echo LangUtil::$pageTerms['MENU_INFECTIONSUMMARY']; ?></b><?php echo getStartDate();?>
 		<br><br>
@@ -1557,7 +1558,7 @@ function show_custom_report_form(report_id)
 			{
 
 			?>
-			
+
 				<tr class="location_row" id="location_row">
 				<td><?php echo LangUtil::$generalTerms['FACILITY']; ?> </td>
 				<td>
@@ -1642,7 +1643,7 @@ function show_custom_report_form(report_id)
 			</table>
 		</form>
 	</div>
-	
+
 	<div id='pending_tests_div'  style='display:none;' class='reports_subdiv'>
 		<b><?php echo LangUtil::$pageTerms['MENU_PENDINGTESTS']; ?></b>
 		<?php
@@ -1703,7 +1704,7 @@ function show_custom_report_form(report_id)
 			</table>
 		</form>
 	</div>
-	
+
 	<div id='doctors_stats_div' style='display:none;' class='reports_subdiv'>
 		<b>Test Count Report</b>
 		<br><br>
@@ -1770,7 +1771,7 @@ function show_custom_report_form(report_id)
 			</table>
 		</form>
 	</div>
-	
+
 	<div id='tests_done_div' style='display:none;' class='reports_subdiv'>
 		<b>Test Count Report</b>
 		<br><br>
@@ -1836,7 +1837,7 @@ function show_custom_report_form(report_id)
 			</table>
 		</form>
 	</div>
-	
+
 	<div id='tat_div' style='display:none;' class='reports_subdiv'>
 		<b><?php echo LangUtil::$pageTerms['MENU_TAT']; ?></b>
 		<br><br>
@@ -1856,7 +1857,7 @@ function show_custom_report_form(report_id)
 					<td><?php echo LangUtil::$generalTerms['FACILITY']; ?> </td>
 					<td>
 						<select name='location' id='location5' class='uniform_width'>
-						<option value='0'><?php echo LangUtil::$generalTerms['ALL']; ?></option>	
+						<option value='0'><?php echo LangUtil::$generalTerms['ALL']; ?></option>
 						<?php
 							$page_elems->getSiteOptions();
 						?>
@@ -1895,7 +1896,7 @@ function show_custom_report_form(report_id)
 						<input type='radio' value='N' name='pending' checked><?php echo LangUtil::$generalTerms['NO']; ?></input>
 					</td>
 				</tr>
-	
+
 				<tr>
 					<td></td>
 					<td>
@@ -1910,7 +1911,7 @@ function show_custom_report_form(report_id)
 			</table>
 		</form>
 	</div>
-	
+
 	<div id='tat_aggregate_div' style='display:none;' class='reports_subdiv'>
 		<b><?php echo LangUtil::$pageTerms['MENU_TAT']; ?></b>
 		<br><br>
@@ -1989,7 +1990,7 @@ function show_custom_report_form(report_id)
 			</table>
 		</form>
 	</div>
-	
+
 	<div id='print_div' style='display:none;' class='reports_subdiv'>
 		<span id='test_report_title'><b><?php echo LangUtil::$pageTerms['MENU_TESTRECORDS']; ?></b></span> | <span id='view_pending_title'><a href='javascript:show_pending_tests_form()'><?php echo LangUtil::$pageTerms['MENU_PENDINGTESTS']; ?></a></span>
 		<br><br>
@@ -2019,16 +2020,16 @@ function show_custom_report_form(report_id)
 			<?php
 			}
 			?>
-				
+
 				<tr class="type_row" id="type_row">
-					<td><?php echo LangUtil::$generalTerms['TEST_TYPE']; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td> 
+					<td><?php echo LangUtil::$generalTerms['TEST_TYPE']; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
 					<td>
 						<SELECT NAME="t_type" id="t_type6" class='uniform_width'>
 							<OPTION VALUE='' selected='selected'><?php echo LangUtil::$generalTerms['CMD_SELECT']; ?>..</option>
 						</SELECT>
 					</td>
 				</tr>
-		
+
 				<tr class="sdate_row" id="sdate_row" valign='top'>
 					<td><?php echo LangUtil::$generalTerms['FROM_DATE']; ?> </td>
 					<td>
@@ -2040,7 +2041,7 @@ function show_custom_report_form(report_id)
 					?>
 					</td>
 				</tr>
-			
+
 				<tr class="edate_row" id="edate_row" valign='top'>
 					<td><?php echo LangUtil::$generalTerms['TO_DATE']; ?>&nbsp;&nbsp;&nbsp;</td>
 					<td>
@@ -2067,7 +2068,7 @@ function show_custom_report_form(report_id)
 			</table>
 		</form>
 	</div>
-	
+
 	<div id='specimen_count_div' style='display:none;' class='reports_subdiv'>
 		<b><?php echo LangUtil::$pageTerms['MENU_COUNTS']; ?></b>
 		<br><br>
@@ -2087,7 +2088,7 @@ function show_custom_report_form(report_id)
 					<td><?php echo LangUtil::$generalTerms['FACILITY']; ?> </td>
 					<td>
 						<select name='location' id='location7' class='uniform_width'>
-						<option value='0'><?php echo LangUtil::$generalTerms['ALL']; ?></option>	
+						<option value='0'><?php echo LangUtil::$generalTerms['ALL']; ?></option>
 						<?php
 							$page_elems->getSiteOptions();
 						?>
@@ -2119,7 +2120,7 @@ function show_custom_report_form(report_id)
 					?>
 					</td>
 				</tr>
-				
+
 				<tr valign='top'>
 					<td><?php echo LangUtil::$pageTerms['COUNT_TYPE']; ?></td>
 					<td>
@@ -2136,7 +2137,7 @@ function show_custom_report_form(report_id)
 						</input>
 					</td>
 				</tr>
-				
+
 				<tr>
 					<td></td>
 					<td>
@@ -2158,7 +2159,7 @@ function show_custom_report_form(report_id)
 			</table>
 		</form>
 	</div>
-	
+
 	<div id='test_history_div' class='reports_subdiv'  style='display:none'>
 		<b><?php echo LangUtil::$pageTerms['MENU_PATIENT']; ?></b>
 		<br><br>
@@ -2214,7 +2215,7 @@ function show_custom_report_form(report_id)
 			</div>
 		</form>
 	</div>
-	
+
 	<div id='test_report_div' class='reports_subdiv'  style='display:none'>
 		<b>Single Test Report</b>
 		<br><br>
@@ -2257,7 +2258,7 @@ function show_custom_report_form(report_id)
 							<OPTION VALUE='' selected='selected'>Select..</option>
 						</SELECT>
 					</td>
-				</tr>				
+				</tr>
 				<tr>
 					<td></td>
 					<td>
@@ -2271,7 +2272,7 @@ function show_custom_report_form(report_id)
 			</table>
 		</form>
 	</div>
-	
+
 	<div id='session_report_div' class='reports_subdiv' style='display:none'>
 		<b><?php echo LangUtil::$pageTerms['MENU_SPECIMEN']; ?></b>
 		<br><br>
@@ -2291,7 +2292,7 @@ function show_custom_report_form(report_id)
 					<td><?php echo LangUtil::$generalTerms['FACILITY']; ?> </td>
 					<td>
 						<select name='location' id='location11' class='uniform_width'>
-						<option value='0'><?php echo LangUtil::$generalTerms['ALL']; ?></option>	
+						<option value='0'><?php echo LangUtil::$generalTerms['ALL']; ?></option>
 						<?php
 							$page_elems->getSiteOptions();
 						?>
@@ -2329,7 +2330,7 @@ function show_custom_report_form(report_id)
 		<div id='specimens_fetched'>
 		</div>
 	</div>
-	
+
 	<div id='daily_report_div' class='reports_subdiv' style='display:none'>
 		<b><?php echo LangUtil::$pageTerms['MENU_DAILYLOGS']; ?></b>
 		<br><br>
@@ -2362,7 +2363,7 @@ function show_custom_report_form(report_id)
 				<tr>
 					<td><?php echo LangUtil::$generalTerms['FROM_DATE']; ?></td>
 					<td>
-					<?php		
+					<?php
 					$today = date("Y-m-d");
 					$value_list = explode("-", $today);
 					$name_list = array("daily_yyyy", "daily_mm", "daily_dd");
@@ -2371,18 +2372,18 @@ function show_custom_report_form(report_id)
 					?>
 					</td>
 				</tr>
-				
+
 				<tr>
 					<td><?php echo LangUtil::$generalTerms['TO_DATE']; ?></td>
 					<td>
-					<?php		
+					<?php
 					$name_list = array("daily_yyyy_to", "daily_mm_to", "daily_dd_to");
 					$id_list = $name_list;
 					$page_elems->getDatePicker($name_list, $id_list, $value_list, true);
 					?>
 					</td>
 				</tr>
-				
+
 				<tr valign='top'>
 					<td><?php echo LangUtil::$generalTerms['RECORDS']; ?> &nbsp;&nbsp;&nbsp;</td>
 					<td>
@@ -2418,7 +2419,7 @@ function show_custom_report_form(report_id)
 						</select>
 					</td>
 				</tr>
-				
+
 				<tr>
 					<td></td>
 					<td>
@@ -2428,7 +2429,7 @@ function show_custom_report_form(report_id)
 			</tbody>
 		</table>
 	</div>
-	
+
 	<div id='stock_report_div' class='reports_subdiv' style='display:none'>
 		<b>Inventory</b>
 		<br><br>
@@ -2471,9 +2472,9 @@ function show_custom_report_form(report_id)
 			foreach($retval1 as $value)
 						echo "<option  VALUE='$value'>$value</option>";
 			?>
-						</select>		
-		
-			
+						</select>
+
+
 			</td>
 			</tr>
 				<tr class="sdate_row" id="sdate_row" valign='top'>
@@ -2512,8 +2513,8 @@ function show_custom_report_form(report_id)
 			</tbody>
 		</table>
 		</form>
-	</div>	
-	
+	</div>
+
 	<div id='prevalance_aggregate_div' class='reports_subdiv' style='display:none'>
 		<b><?php echo LangUtil::$pageTerms['MENU_INFECTIONSUMMARY'];  ?></b>
 		<br><br>
@@ -2583,9 +2584,9 @@ function show_custom_report_form(report_id)
 					<td></td>
 					<td>
 						<br>
-						<input type='button' 
-							   style='color:white; background-color:#3B5998; border-style:none; font-weight:bold; font-size:14px; height:28px; width:65px; cursor:pointer;' 
-							   id='submit_button' 
+						<input type='button'
+							   style='color:white; background-color:#3B5998; border-style:none; font-weight:bold; font-size:14px; height:28px; width:65px; cursor:pointer;'
+							   id='submit_button'
 							   value='<?php echo LangUtil::$generalTerms['CMD_SUBMIT']; ?>'
 							   onclick='javascript:get_aggregate_report()'>
 						</input>
@@ -2600,7 +2601,7 @@ function show_custom_report_form(report_id)
 		</table>
 		</form>
 	</div>
-	
+
 	<div id='control_report_div' class='reports_subdiv' style='display:none'>
 		<b><?php echo LangUtil::$pageTerms['MENU_CONTROLREPORT']; ?></b>
 		<br><br>
@@ -2655,8 +2656,8 @@ function show_custom_report_form(report_id)
 			</tbody>
 		</table>
 		</form>
-	</div>	
-	
+	</div>
+
 	<div id='disease_report_div' class='reports_subdiv' style='display:none'>
 		<b><?php echo LangUtil::$pageTerms['MENU_INFECTIONREPORT']; ?></b>
 		<br><br>
@@ -2716,7 +2717,7 @@ function show_custom_report_form(report_id)
 						<option value='0'><?php echo LangUtil::$generalTerms['ALL']; ?></option>
 						<?php
 								$site_list = get_site_list($_SESSION['user_id']);
-								if(count($site_list) == 1) 
+								if(count($site_list) == 1)
 									$page_elems->getTestCategorySelect();
 								else {
 									$page_elems->getTestCategoryCountrySelect();
@@ -2765,7 +2766,7 @@ function show_custom_report_form(report_id)
 		<br><br>
 		<form id='infection_aggregate_form' action='infection_aggregate.php' method='post' target='_blank'>
 		<table>
-			<tbody>	
+			<tbody>
 				<tr class="sdate_row" id="sdate_row" valign='top'>
 					<td><?php echo LangUtil::$generalTerms['FROM_DATE']; ?> </td>
 					<td>
@@ -2820,8 +2821,8 @@ function show_custom_report_form(report_id)
 			</tbody>
 		</table>
 		</form>
-	</div>	
-	
+	</div>
+
 	<div id='patient_report_div' class='reports_subdiv' style='display:none'>
 		<b><?php echo LangUtil::$pageTerms['MENU_PATIENT']; ?></b>
 		<br><br>
@@ -2878,7 +2879,7 @@ function show_custom_report_form(report_id)
 			<div id='preport_list'>
 			</div>
 	</div>
-	
+
 	<div id='infection_report_settings_div' class='reports_subdiv'  style='display:none;'>
 		<p style="text-align: right;"><a rel='facebox' href='#IR_rc'>Page Help</a></p>
 		<b><?php echo "Infection Report Settings"; ?></b>
@@ -2891,25 +2892,25 @@ function show_custom_report_form(report_id)
 			<?php echo $page_elems->getInfectonReportSummary(); ?>
 		</div>
 		<div id='infection_report_settings_form_div' style='display:none;'>
-			<form id='infection_report_settings_preview_form' style='display:none;' name='infection_report_settings_preview_form' action='report_disease_preview.php' method='post' target='_blank'>					
+			<form id='infection_report_settings_preview_form' style='display:none;' name='infection_report_settings_preview_form' action='report_disease_preview.php' method='post' target='_blank'>
 				<?php # This form is cloned from agg_report_form in javascript:agg_preview() function ?>
 			</form>
 			<form id='infection_report_settings_form' name='infection_report_settings_form' action='ajax/infection_report_settings_update.php' method='get'>
 				<?php $page_elems->getInfectionReportConfigureForm(); ?>
-			</form>	
+			</form>
 		</div>
 	</div>
-				
-	
-	<?php 
+
+
+	<?php
 	# Space for additional report forms after this
 	# PLUG_FORM_DIV
 	?>
-	
+
 	</td>
 	</tr>
 </table>
-<?php 
+<?php
 $script_elems->bindEnterToClick("#patient_id8", "#submit_button8");
 $script_elems->bindEnterToClick("#session_num", "#submit_button11");
 $script_elems->bindEnterToClick("#specimen_id10", "#submit_button10");
