@@ -11,10 +11,31 @@ require_once("../includes/db_lib.php");
 require_once("../includes/db_util.php");
 require_once("../includes/user_lib.php");
 
-$current_user_id = $_SESSION['user_id'];
+// Get all of the lab IDs being requested together
+$lab_ids = array();
+foreach($_REQUEST['locationAgg'] as $idx => $location) {
+    $split = explode(":", $location);
+    $lab_ids[] = intval($split[0]);
+}
 
+$current_user_id = $_SESSION['user_id'];
 $current_user = get_user_by_id($current_user_id);
-if (!is_super_admin($current_user) && !is_country_dir($current_user)) {
+
+$unauthorized = true;
+
+if (is_super_admin($current_user) || is_country_dir($current_user)) {
+    $unauthorized = false;
+}
+
+if ($unauthorized) {
+    // If the user is not a super admin or country director, they should only
+    // be able to access data for their own lab, and only if they are an admin.
+    if (count($lab_ids) == 1 && $lab_ids[0] == $current_user->labConfigId && is_admin($current_user)) {
+        $unauthorized = false;
+    }
+}
+
+if ($unauthorized) {
     header('HTTP/1.1 401 Unauthorized', true, 401);
     echo "You do not have permission to view this page.";
     exit;
@@ -26,12 +47,6 @@ if (!is_super_admin($current_user) && !is_country_dir($current_user)) {
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 header('Content-Disposition: attachment;filename="report.xlsx"');
 header('Cache-Control: max-age=0');
-
-$lab_ids = array();
-foreach($_REQUEST['locationAgg'] as $idx => $location) {
-    $split = explode(":", $location);
-    $lab_ids[] = intval($split[0]);
-}
 
 DbUtil::switchToGlobal();
 
@@ -53,6 +68,8 @@ foreach($labs_with_db_names as $idx => $row) {
 $start_date = intval($_REQUEST['yyyy_from'])."-".intval($_REQUEST['mm_from'])."-".intval($_REQUEST['dd_from']);
 $end_date = intval($_REQUEST['yyyy_to'])."-".intval($_REQUEST['mm_to'])."-".intval($_REQUEST['dd_to']);
 
+$test_type_id = $_REQUEST['test_type'];
+
 // The headers for the spreadsheet must match the columns in the query below
 $headers = array("Patient Name", "Sex", "Date of Birth", "Specimen Type", "Date Collected", "Test Result");
 $query = <<<EOQ
@@ -64,7 +81,8 @@ $query = <<<EOQ
     INNER JOIN specimen_type AS st ON s.specimen_type_id = st.specimen_type_id
     INNER JOIN test AS t ON s.specimen_id = t.specimen_id
     INNER JOIN patient AS p ON s.patient_id = p.patient_id
-    WHERE s.date_collected BETWEEN '$start_date' AND '$end_date';
+    WHERE s.date_collected BETWEEN '$start_date' AND '$end_date'
+    AND t.test_type_id = '$test_type_id';
 EOQ;
 
 $objPHPExcel = new PHPExcel();

@@ -1668,7 +1668,7 @@ class Measure
 			$this->getRangeType() == Measure::$RANGE_OPTIONS ||
 			$this->getRangeType() == Measure::$RANGE_MULTI ||
 			$this->getRangeType() == Measure::$RANGE_AUTOCOMPLETE ||
-                        $this->getRangeType() == Measure::$RANGE_FREETEXT
+            $this->getRangeType() == Measure::$RANGE_FREETEXT
 		)
 		{
 			$range_parts = explode("/", $this->range);
@@ -2991,14 +2991,17 @@ class Test
 	public function getResultWithoutHash()
 	{
 	    global $PATIENT_HASH_LENGTH;
+        global $log;
 		if(trim($this->result) == "")
 			# Results not yet entered
 			return "";
 
         #$retval = substr($this->result, 0, -1*$PATIENT_HASH_LENGTH);
 
-        if ($retval == '')
+        if ($retval == '') {
+            $log->error("getResultWithoutHash: \$retval is empty string");
             $retval = substr($this->result, 0, -1);
+        }
         # nc44
         $testt = $retval;
         //$test2 = strstr($testt, $);
@@ -3008,6 +3011,9 @@ class Test
         $comma = ',';
         //$testtt = str_replace("[$]two[/$],", "", $testt);
         $del_count = substr_count($testt, $del_tag);
+        if ($del_count > 0) {
+            $log->error("getResultWithoutHash: \$del_count = $del_count");
+        }
         //echo $ft_count;
         $k = 0;
         //echo "-".$del_count."-";
@@ -3039,7 +3045,7 @@ class Test
 		return $retval;
 	}
 
-        public function getResultWithoutHash2()
+    public function getResultWithoutHash2()
 	{
 		global $PATIENT_HASH_LENGTH;
 		if(trim($this->result) == "")
@@ -3110,6 +3116,9 @@ class Test
 
 	public function decodeResult($show_range=false,$add_units=true) {
 
+        global $log;
+        $log->error("decodeResult : ".$this->result);
+
 		# Converts stored result value(s) for showing on front-end
 		# Get measure, unit pairs for this test
 		$test_type = TestType::getById($this->testTypeId);
@@ -3125,216 +3134,187 @@ class Test
             # print_r($submeasure_list);
             $submeasure_count = count($submeasure_list);
 
-            if($measure->checkIfSubmeasure() == 1)
-            {
+            if($measure->checkIfSubmeasure() == 1) {
                 continue;
             }
 
-            if($submeasure_count == 0)
-            {
+            if($submeasure_count == 0) {
                 array_push($comb_measure_list, $measure);
-            }
-            else
-            {
+            } else {
                 array_push($comb_measure_list, $measure);
-                foreach($submeasure_list as $submeasure)
-                   array_push($comb_measure_list, $submeasure);
+                foreach($submeasure_list as $submeasure) {
+                    array_push($comb_measure_list, $submeasure);
+                }
             }
         }
         $measure_list = $comb_measure_list;
 		$result_csv = $this->getResultWithoutHash();
-                //$result_csv = $this->getResultWithoutHash();
-                //echo "<br>";
-                //echo $result_csv;
-                //echo "<br>";
-                if(strpos($result_csv, "[$]") === false)
-                {
-                    $result_list = explode(",", $result_csv);
-                }
-                else
-                {
-                    //$testt = "one,[$]two[/$],[$]twotwo[/$],three";
-                    $testt = $result_csv;
-                    //$test2 = strstr($testt, $);
-                    $start_tag = "[$]";
-                    $end_tag = "[/$]";
-                    //$testtt = str_replace("[$]two[/$],", "", $testt);
-                    $freetext_results = array();
-                    $ft_count = substr_count($testt, $start_tag);
-                    //echo $ft_count;
-                    $k = 0;
-                    while($k < $ft_count)
-                    {
-                        $ft_beg = strpos($testt, $start_tag);
-                        $ft_end = strpos($testt, $end_tag);
-                        $ft_sub = substr($testt, $ft_beg + 3, $ft_end - $ft_beg - 3);
-                        $ft_left = substr($testt, 0, $ft_beg);
-                        $ft_right = substr($testt, $ft_end + 5);
-                        //echo "<br>".$ft_left."--".$ft_right."<br>";
-                        $testt = $ft_left.$ft_right;
-                        array_push($freetext_results, $ft_sub);
-                        $k++;
-                    }
-                    //echo $freetext_results."<br>".$testt;
-                    //$testtt = str_replace($subb, "", $testt, 1);
-                    //echo "$testto<br>$subb<br>";
-                    $result_csv = $testt;
-                    if(strpos($testt, ",") == 0)
-                            $result_csv = substr($testt, 1, strlen($testt));
-                    $result_list = explode(",", $result_csv);
-                    //echo "<br>";
-                    //print_r($result_list);
-                    //echo "<br>";
-                }
-                $retval = "";
-                //NC3065
-                //echo print_r($measure_list);
-                //echo "<br>";
-                //echo $result_csv;
-                //echo "<br>";
-                //echo print_r($result_list,true);
-                //echo "Num->".count($measure_list);
-		//-NC3065
-                $j = 0;
-                $i = 0;
-                $c = 0;
-                //for($i = 0; $i < count($measure_list); $i++) {
-                while($c < count($measure_list)) {
-			# Pretty print
-			$curr_measure = $measure_list[$c];
-			if($curr_measure->getRangeType() != Measure::$RANGE_FREETEXT)
-                        {
-                            if(isset($result_list[$i]))
-                            {
-                                //echo "Num->".$i;
-                                    # If matching result value exists (e.g. after a new measure was added to this test type)
-                                    if(count($measure_list) == 1)
-                                    {
-                                            # Only one measure: Do not print measure name
-                                            if($curr_measure->getRangeType() == Measure::$RANGE_AUTOCOMPLETE) {
-                                                    $result_string = "";
-                                                    $value_list = explode("_", $result_list[$i]);
-                                                    foreach($value_list as $value) {
-                                                            if(trim($value) == "")
-                                                                    continue;
-                                                            $result_string .= $value."<br>";
-                                                    }
-                                                    $result_string = substr($result_string, 0, -4);
-                                                    $retval .= "<br>".$result_string."&nbsp;";
-                                            }
-                                            else if($curr_measure->getRangeType() == Measure::$RANGE_OPTIONS)
-                                            {
-                                                    if($result_list[$i] != $curr_measure->unit)
-                                                            $retval .= "<br><b>".$result_list[$i]."</b> &nbsp;";
-                                                    else
-                                                            $retval .= "<br>".$result_list[$i]."&nbsp;";
-                                            }
-                                            else
-                                            {
-                                                    $retval .= "<br>".$result_list[$i]."&nbsp;";
-                                            }
-                                            if($add_units == true)
-                                                $retval.=$curr_measure->unit."&nbsp";
-                                    }
-                                    else
-                                    {
-                                            # Print measure name with each result value
-                                         if(strpos($curr_measure->name, "\$sub") !== false)
-                                                            {
-                                                                $decName = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$curr_measure->truncateSubmeasureTag();
-
-                                                            }
-                                                            else
-                                                            {
-                                                                $decName = $curr_measure->name;
-                                                            }
-                                            $retval .= "<br>".$decName.":"."&nbsp;";
-
-                                            if($curr_measure->getRangeType() == Measure::$RANGE_AUTOCOMPLETE)
-                                            {
-                                                    $result_string = "";
-                                                    $value_list = str_replace("_", ",", $result_list[$i]);
-                                                    $retval .= "<b>".$value_list."</b>";
-                                            }
-                                            else if($curr_measure->getRangeType() == Measure::$RANGE_OPTIONS)
-                                            {
-                                                    if($result_list[$i]!=$curr_measure->unit)
-                                                            $retval .= "<b>".$result_list[$i]."</b>"."&nbsp;";
-                                                    else
-                                                            $retval .= $result_list[$i]."&nbsp;";
-                                            }
-                                            else
-                                                    $retval .= "<b>".$result_list[$i]."</b>"."&nbsp;";
-                                        if($add_units == true)
-                                            $retval.=$curr_measure->unit."&nbsp";
-                                    }
-
-
-                                    if($show_range === true)
-                                    {
-                                            $retval .= $curr_measure->getRangeString();
-                                    }
-                                    if($i != count($measure_list) - 1)
-                                    {
-                                            $retval .= "<br>";
-                                    }
+        $log->error($result_csv);
+        //$result_csv = $this->getResultWithoutHash();
+        //echo "<br>";
+        //echo $result_csv;
+        //echo "<br>";
+        if(strpos($result_csv, "[$]") === false)
+        {
+            $result_list = explode(",", $result_csv);
+            $log->error(count($result_list));
+        }
+        else
+        {
+            //$testt = "one,[$]two[/$],[$]twotwo[/$],three";
+            $testt = $result_csv;
+            //$test2 = strstr($testt, $);
+            $start_tag = "[$]";
+            $end_tag = "[/$]";
+            //$testtt = str_replace("[$]two[/$],", "", $testt);
+            $freetext_results = array();
+            $ft_count = substr_count($testt, $start_tag);
+            //echo $ft_count;
+            $k = 0;
+            while($k < $ft_count)
+            {
+                $ft_beg = strpos($testt, $start_tag);
+                $ft_end = strpos($testt, $end_tag);
+                $ft_sub = substr($testt, $ft_beg + 3, $ft_end - $ft_beg - 3);
+                $ft_left = substr($testt, 0, $ft_beg);
+                $ft_right = substr($testt, $ft_end + 5);
+                //echo "<br>".$ft_left."--".$ft_right."<br>";
+                $testt = $ft_left.$ft_right;
+                array_push($freetext_results, $ft_sub);
+                $k++;
+            }
+            //echo $freetext_results."<br>".$testt;
+            //$testtt = str_replace($subb, "", $testt, 1);
+            //echo "$testto<br>$subb<br>";
+            $result_csv = $testt;
+            if(strpos($testt, ",") == 0)
+                    $result_csv = substr($testt, 1, strlen($testt));
+            $result_list = explode(",", $result_csv);
+            //echo "<br>";
+            //print_r($result_list);
+            //echo "<br>";
+        }
+        $retval = "";
+        //NC3065
+        //echo print_r($measure_list);
+        //echo "<br>";
+        //echo $result_csv;
+        //echo "<br>";
+        //echo print_r($result_list,true);
+        //echo "Num->".count($measure_list);
+//-NC3065
+        $j = 0;
+        $i = 0;
+        $c = 0;
+        //for($i = 0; $i < count($measure_list); $i++) {
+        while($c < count($measure_list)) {
+            # Pretty print
+            $curr_measure = $measure_list[$c];
+            if($curr_measure->getRangeType() != Measure::$RANGE_FREETEXT) {
+                if(isset($result_list[$i])) {
+                    //echo "Num->".$i;
+                    # If matching result value exists (e.g. after a new measure was added to this test type)
+                    if(count($measure_list) == 1) {
+                        # Only one measure: Do not print measure name
+                        if($curr_measure->getRangeType() == Measure::$RANGE_AUTOCOMPLETE) {
+                            $result_string = "";
+                            $value_list = explode("_", $result_list[$i]);
+                            foreach($value_list as $value) {
+                                    if(trim($value) == "")
+                                            continue;
+                                    $result_string .= $value."<br>";
                             }
-                            else
-                            {
-                                    # Matching result value not found: Show "-"
-                                    if(count($measure_list) == 1)
-                                    {
-                                            if(strpos($curr_measure->name, "\$sub") !== false)
-                                                            {
-                                                                $decName = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$curr_measure->truncateSubmeasureTag();
-
-                                                            }
-                                                            else
-                                                            {
-                                                                $decName = $curr_measure->name;
-                                                            }
-                                            $retval .= $decName."&nbsp;";
-                                    }
-                                    $retval .= " - <br>";
+                            $result_string = substr($result_string, 0, -4);
+                            $retval .= "<br>".$result_string."&nbsp;";
+                        } else if($curr_measure->getRangeType() == Measure::$RANGE_OPTIONS) {
+                            if($result_list[$i] != $curr_measure->unit) {
+                                $retval .= "<br><b>".$result_list[$i]."</b> &nbsp;";
+                            } else {
+                                $retval .= "<br>".$result_list[$i]."&nbsp;";
                             }
-                            $i++;
+                        } else {
+                            $retval .= "<br>".$result_list[$i]."&nbsp;";
                         }
-                        else
-                        {
-                            $ft_result = $freetext_results[$j];
 
-                            if(count($measure_list) == 1)
-                            {
-                                $retval .= "<br>".$ft_result."&nbsp;";
-                            }
-                            else
-                            {
-                                if(strpos($curr_measure->name, "\$sub") !== false)
-                                                            {
-                                                                $decName = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$curr_measure->truncateSubmeasureTag();
+                        if($add_units == true) {
+                            $retval.=$curr_measure->unit."&nbsp";
+                        }
+                    } else {
+                        # Print measure name with each result value
+                        if(strpos($curr_measure->name, "\$sub") !== false) {
+                            $decName = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$curr_measure->truncateSubmeasureTag();
+                        } else {
+                            $decName = $curr_measure->name;
+                        }
+                        $retval .= "<br>".$decName.":"."&nbsp;";
 
-                                                            }
-                                                            else
-                                                            {
-                                                                $decName = $curr_measure->name;
-                                                            }
-                                $retval .= "<br>".$decName.":"."&nbsp;"."<b>".$ft_result."</b>"."&nbsp;";
-                            }
-                            if($show_range === true)
-                                        {
-                                                $retval .= $curr_measure->getRangeString();
-                                        }
-                                        if($i != count($measure_list) - 1)
-                                        {
-                                                $retval .= "<br>";
-                                        }
-                            $j++;
+                        if($curr_measure->getRangeType() == Measure::$RANGE_AUTOCOMPLETE) {
+                                $result_string = "";
+                                $value_list = str_replace("_", ",", $result_list[$i]);
+                                $retval .= "<b>".$value_list."</b>";
+                        } else if($curr_measure->getRangeType() == Measure::$RANGE_OPTIONS) {
+                                if($result_list[$i]!=$curr_measure->unit)
+                                        $retval .= "<b>".$result_list[$i]."</b>"."&nbsp;";
+                                else
+                                        $retval .= $result_list[$i]."&nbsp;";
+                        } else {
+                                $retval .= "<b>".$result_list[$i]."</b>"."&nbsp;";
+                        }
+                        if($add_units == true) {
+                            $retval.=$curr_measure->unit."&nbsp";
+                        }
+                    }
 
-                        }$c++;
-		}//end
+
+                    if($show_range === true) {
+                        $retval .= $curr_measure->getRangeString();
+                    }
+                    if($i != count($measure_list) - 1) {
+                        $retval .= "<br>";
+                    }
+                } else {
+                    # Matching result value not found: Show "-"
+                    if(count($measure_list) == 1)
+                    {
+                        if(strpos($curr_measure->name, "\$sub") !== false) {
+                            $decName = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$curr_measure->truncateSubmeasureTag();
+                        } else {
+                            $decName = $curr_measure->name;
+                        }
+                        $retval .= $decName."&nbsp;";
+                    }
+                    $retval .= " - <br>";
+                }
+                $i++;
+            } else {
+                $ft_result = $freetext_results[$j];
+
+                if(count($measure_list) == 1) {
+                    $retval .= "<br>".$ft_result."&nbsp;";
+                } else {
+                    if(strpos($curr_measure->name, "\$sub") !== false) {
+                        $decName = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$curr_measure->truncateSubmeasureTag();
+                    } else {
+                        $decName = $curr_measure->name;
+                    }
+                    $retval .= "<br>".$decName.":"."&nbsp;"."<b>".$ft_result."</b>"."&nbsp;";
+                }
+
+                if($show_range === true) {
+                    $retval .= $curr_measure->getRangeString();
+                }
+
+                if($i != count($measure_list) - 1) {
+                        $retval .= "<br>";
+                }
+                $j++;
+            }
+
+            $c++;
+        }//end
 		//$retval = str_replace("_",",",$retval); # Replace all underscores with a comma
 		return $retval;
-	}
+    }
 
         public function decodeResultWithoutMeasures($show_range=false) {
             # Converts stored result value(s) for showing on front-end
@@ -14945,7 +14925,7 @@ function db_analysis_ratings($lb)
 	{
 		// entries from 2011-12-20 to 2013-4-24
 		$labdb = "blis_153";
-		$lastdate = mktime( 0, 0, 0, 08, 30, 2013 );
+		$lastdate = mktime( 0, 0, 0, 8, 30, 2013 );
 		$day = 1;
 		$yr = 2011;
 		$mth = 10;
@@ -14964,7 +14944,7 @@ function db_analysis_ratings($lb)
 	{
 		// entries from 2010-05-11 to 2013-04-29
 		$labdb = "blis_131";
-		$lastdate = mktime( 0, 0, 0, 07, 09, 2012);
+		$lastdate = mktime( 0, 0, 0, 7, 09, 2012);
 		$day = 26;
 		$yr = 2010;
 		$mth = 4;

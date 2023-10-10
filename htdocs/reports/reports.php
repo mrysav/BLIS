@@ -1,6 +1,9 @@
 <?php
 include("redirect.php");
 include("includes/header.php");
+require_once("includes/lab_config.php");
+require_once("includes/composer.php");
+
 LangUtil::setPageId("reports");
 
 putUILog('reports', 'X', basename($_SERVER['REQUEST_URI'], ".php"), 'X', 'X', 'X');
@@ -11,7 +14,23 @@ $script_elems->enableJQueryForm();
 $script_elems->enableTableSorter();
 db_get_current();
 
-$lab_config_id = $_SESSION['lab_config_id'];
+
+$current_user_id = $_SESSION['user_id'];
+$current_user = null;
+if ($current_user_id) {
+    $current_user = get_user_by_id($current_user_id);
+} else {
+    $log->warn("\$current_user_id is null");
+}
+
+// It's not really clear whether to use the `lab_config_id` value in
+// $_SESSION or to get a value from the database like this.
+// For whatever reason the value in the session is not reliable so
+// I'm going with the database here.
+$user_lab_configs = get_lab_configs($current_user_id);
+$lab_config = $user_lab_configs[0];
+$lab_config_id = $lab_config->id;
+
 ?>
 
     <div class='reports_subdiv_help' id='reports_div_help' style='display:none'>
@@ -1478,7 +1497,7 @@ alert(dd_to);
 
         function search_patient_history()
         {
-            var superuser = <?php echo(is_super_admin(get_user_by_id($_SESSION["user_id"])) ? 'true' : 'false'); ?>;
+            var superuser = <?php echo(is_super_admin($current_user) ? 'true' : 'false'); ?>;
             var location = $("#location8").attr("value");
             var search_attrib = $('#p_attrib').attr("value");
             var condition_attrib = $('#h_attrib').attr("value");
@@ -1872,14 +1891,14 @@ alert(dd_to);
 
         function get_reference_range() {
 
-           
+
             $('#test_type_id_details').html("");
             $selected_test_type_id = $('#test_type_id_1').attr('value');
             if($selected_test_type_id !='0')
             {
                 $.ajax({
                     url : "ajax/getTestReferenceRange.php?id="+$selected_test_type_id,
-                    success : function(data) 
+                    success : function(data)
                     {
                         var objData = JSON.parse(data);
                         var html = "<form>"+
@@ -1897,19 +1916,19 @@ alert(dd_to);
                                 "<td>Age-Max :</td>"+
                                 "</tr>";
                         for (var c_i = 0; c_i < objData.length; c_i++){
-                        
+
                              html+="<tr>"+
-                                "<td><input type='text' id = 'name' value = '"+objData[c_i].name+"'></td>  "+ 
-                                "<td><input type='text' id = 'name' value = '"+objData[c_i].sex+"'></td>  "+                                
+                                "<td><input type='text' id = 'name' value = '"+objData[c_i].name+"'></td>  "+
+                                "<td><input type='text' id = 'name' value = '"+objData[c_i].sex+"'></td>  "+
                                 "<td><input type='text' id = 'range_lower' value = '"+objData[c_i].range_lower+"'></td>  "+
                                 "<td><input type='text' id = 'range_upper' value = '"+objData[c_i].range_upper+"'></td>  "+
                                 "<td><input type='text' id = 'range_lower' value = '"+objData[c_i].age_min+"'></td>  "+
                                 "<td><input type='text' id = 'range_upper' value = '"+objData[c_i].age_max+"'></td>  "+
                                 "</tr>"
                                 "</table> "+
-				                "</form>";                        
+				                "</form>";
                              }
-                             $('#test_type_id_details').html(html);   
+                             $('#test_type_id_details').html(html);
                 }});
             }
         }
@@ -1921,7 +1940,7 @@ alert(dd_to);
             <td id='left_pane' width='200px'>
                 <?php
                 $site_list = get_site_list($_SESSION['user_id']);
-                $user = get_user_by_id($_SESSION['user_id']);
+                $user = $current_user;
                 if (!is_country_dir($user)) {
                     echo LangUtil::$pageTerms['MENU_DAILY']; ?>
                     <ul>
@@ -1983,7 +2002,7 @@ alert(dd_to);
                 <ul>
                     <?php
                     $site_list = get_site_list($_SESSION['user_id']);
-                    if (is_country_dir(get_user_by_id($_SESSION['user_id']))) { ?>
+                    if (is_country_dir($current_user)) { ?>
                         <li class='menu_option' id='country_aggregate_menu'>
                             <a href='javascript:show_selection("prevalance_aggregate");'><?php echo LangUtil::$pageTerms['MENU_INFECTIONSUMMARY']; ?></a>
                         </li>
@@ -1996,10 +2015,6 @@ alert(dd_to);
                         <li class='menu_option' id='test_aggregate_reports_form_menu'>
                             <a href='javascript:show_selection("test_aggregate_report_form");'><?php echo LangUtil::$pageTerms['MENU_TEST_AGGREGATE_REPORT_FORM']; ?></a>
                         </li>
-                        <li class='menu_option' id='export_to_excel_menu'>
-                            <a href='javascript:show_selection("export_to_excel");'><?php echo "Export to Excel" ?></a>
-                        </li>
-
 
                         <!--<li class='menu_option' id='disease_report_menu'>
 							<a href='javascript:show_selection("infection_aggregate");'><?php echo LangUtil::$pageTerms['MENU_INFECTIONREPORT']; ?></a>
@@ -2017,12 +2032,12 @@ alert(dd_to);
                         <li class='menu_option' id='disease_report_menu'>
                             <a href='javascript:show_selection("disease_report");'><?php echo LangUtil::$pageTerms['MENU_INFECTIONREPORT']; ?></a>
                         </li>
-                        <?php if (is_admin(get_user_by_id($_SESSION['user_id']))) { ?>
+                        <?php if (is_admin($current_user)) { ?>
                             <li class='menu_option' id='user_stats_menu'>
                                 <a href='javascript:show_selection("user_stats");'>User Statistics</a>
                             </li>
                         <?php } ?>
-                        
+
 
 
                         <!--<li class='menu_option' id='stock_report_menu'>
@@ -2051,6 +2066,13 @@ alert(dd_to);
                     # PLUG_AGGREGATE_REPORT_ENTRY
                     ?>
 
+                </ul>
+
+                Export
+                <ul>
+                    <li class='menu_option' id='export_to_excel_menu'>
+                        <a href='javascript:show_selection("export_to_excel");'><?php echo "Export to Excel" ?></a>
+                    </li>
                 </ul>
             </td>
             <td></td>
@@ -2809,8 +2831,6 @@ alert(dd_to);
                                 <td>
                                     <br>
                                     <input type='button' id='test_aggregate_report_submit_button' value='<?php echo LangUtil::$generalTerms['CMD_GET_TEST_REPORT']; ?>' onclick="javascript:submit_test_aggregate_report_form();"></input>
-                                    <input type='button' id='test_aggregate_report_submit_button' value='Export to Excel' onclick="javascript:alert('hello');"></input>
-
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                     <span id='test_aggregate_report_form_progress_spinner' style='display:none;'>
 							<?php $page_elems->getProgressSpinner(LangUtil::$generalTerms['CMD_FETCHING']); ?>
@@ -2921,10 +2941,26 @@ alert(dd_to);
                             <tr class="location_row_aggregate" id="location_row_aggregate">
                                 <td><?php echo LangUtil::$generalTerms['FACILITY']; ?> &nbsp;&nbsp;&nbsp;</td>
                                 <td id='locationAggregation'>
-                                    <!--<input type='checkbox' name='locationAgg' id='locationAgg' value='0'><?php echo LangUtil::$generalTerms['ALL']; ?></input>-->
-                                    <?php
+                                <?php
+                                if (is_super_admin($current_user) || is_country_dir($current_user)) {
                                     $page_elems->getSiteOptionsCheckBoxesCountryDir("locationAgg[]");
-                                    ?>
+                                } else {
+                                ?>
+                                    <p><?php echo $lab_config->name ?></p>
+                                    <input type="hidden" name="locationAgg[]" id="locationAgg[]" value="<?php echo $lab_config->id .":". $lab_config->name .":". $lab_config->location ?>">
+                                <?php
+                                }
+                                ?>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td><?php echo LangUtil::$generalTerms['TEST_TYPE']; ?></td>
+                                <td>
+                                    <select name="test_type" id="test_type" class="uniform_width">
+                                        <option value="-1"></option>
+                                        <?php $page_elems->getTestTypewithreferencerangeOptions(); ?>
+                                    </select>
                                 </td>
                             </tr>
 
@@ -3399,7 +3435,7 @@ alert(dd_to);
 
                     <form name="test_range_form" id="test__range_form" action="reports_test_range_stats.php" method='post'>
                     <input type="hidden" id="lab_config_id" value="<?php echo $lab_config_id; ?>">
-                 
+
                     <table cellpadding="4px">
                     <tr valign="top">
                                 <td><?php echo LangUtil::$generalTerms['FROM_DATE']; ?></td>
@@ -3425,9 +3461,9 @@ alert(dd_to);
                             </tr>
                             <tr valign="top">
                                 <td><?php echo LangUtil::$pageTerms['MENU_TEST_TYPES']; ?></td>
- 
+
                                 <td>
-                                        <select name='test_type_id_1' id='test_type_id_1' class='uniform_width' onchange="get_reference_range();">                                        
+                                        <select name='test_type_id_1' id='test_type_id_1' class='uniform_width' onchange="get_reference_range();">
                                                <option value="0">-</option>
                                                <?php $page_elems->getTestTypewithreferencerangeOptions(); ?>
                                         </select>
@@ -3435,7 +3471,7 @@ alert(dd_to);
                             </tr>
                             <tr>
                                 <td colspan="2"><div id="test_type_id_details"></div></td>
-                            </tr> 
+                            </tr>
                             <tr>
                             <td></td>
                             <td>
@@ -3572,7 +3608,7 @@ alert(dd_to);
                                     <select name='cat_code_patient_report' id='cat_code_patient_report' class='uniform_width'>
                                         <option value='0'><?php echo LangUtil::$generalTerms['ALL']; ?></option>
                                         <?php
-                                        if (is_country_dir(get_user_by_id($_SESSION['user_id']))) {
+                                        if (is_country_dir($current_user)) {
                                             $page_elems->getTestCategoryCountrySelect();
                                         } else {
                                             $page_elems->getTestCategorySelect();
@@ -3582,8 +3618,6 @@ alert(dd_to);
                                 </td>
                             </tr>
                             <?php
-                                $current_user_id = $_SESSION['user_id'];
-                                $current_user = get_user_by_id($current_user_id);
                                 if (is_super_admin($current_user)) {
                                     $labs = get_lab_configs($current_user_id); ?>
                                 <tr>
@@ -3800,7 +3834,7 @@ alert(dd_to);
                                 <select name='cat_code' id='cat_code13' class='uniform_width'>
                                     <option value='0'><?php echo LangUtil::$generalTerms['ALL']; ?></option>
                                     <?php
-                                    if (is_country_dir(get_user_by_id($_SESSION['user_id']))) {
+                                    if (is_country_dir($current_user)) {
                                         $page_elems->getTestCategoryCountrySelect();
                                     } else {
                                         $page_elems->getTestCategorySelect();
@@ -3899,7 +3933,7 @@ alert(dd_to);
                                 <select name='cat_code' id='cat_code13' class='uniform_width'>
                                     <option value='0'><?php echo LangUtil::$generalTerms['ALL']; ?></option>
                                     <?php
-                                    if (is_country_dir(get_user_by_id($_SESSION['user_id']))) {
+                                    if (is_country_dir($current_user)) {
                                         $page_elems->getTestCategoryCountrySelect();
                                     } else {
                                         $page_elems->getTestCategorySelect();
