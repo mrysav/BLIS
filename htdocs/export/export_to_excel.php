@@ -70,13 +70,42 @@ $end_date = intval($_REQUEST['yyyy_to'])."-".intval($_REQUEST['mm_to'])."-".intv
 
 $test_type_id = $_REQUEST['test_type'];
 
-// The headers for the spreadsheet must match the columns in the query below
-$headers = array("Patient Name", "Sex", "Date of Birth", "Specimen Type", "Date Collected", "Test Result");
+$include_name = ($_REQUEST["include_patient_name"] == "true");
+$include_sex = ($_REQUEST["include_patient_sex"] == "true");
+$include_dob = ($_REQUEST["include_patient_birthday"] == "true");
+
+// Okay... let's build the SQL query
+
+// The headers for the spreadsheet must match the order of the columns/fields
+$headers = array();
+$fields = array();
+
+if ($include_name) {
+    $headers[] = "Patient Name";
+    $fields[] = "p.name AS patient_name";
+}
+
+if ($include_sex) {
+    $headers[] = "Sex";
+    $fields[] = "p.sex";
+}
+
+if ($include_dob) {
+    $headers[] = "Date of Birth";
+    $fields[] = "p.dob AS patient_dob";
+}
+
+array_push($headers, "Specimen Type", "Date Collected");
+array_push($fields, "st.name AS specimen_type", "s.date_collected AS specimen_collected");
+
+// Push additional field for test result - the headers for this will be generated separately
+// Must be the last field! There is logic in the loop below that depends on it.
+array_push($fields, "t.result AS test_result");
+
+$fields_sql = implode(", ", $fields);
+
 $query = <<<EOQ
-    SELECT
-        p.name AS patient_name, p.sex, p.dob as patient_dob,
-        st.name AS specimen_type, s.date_collected AS specimen_collected,
-        t.result AS test_result
+    SELECT $fields_sql
     FROM specimen AS s
     INNER JOIN specimen_type AS st ON s.specimen_type_id = st.specimen_type_id
     INNER JOIN test AS t ON s.specimen_id = t.specimen_id
@@ -94,17 +123,66 @@ foreach($labs as $lab_id => $lab) {
     $sheet->setTitle(substr($lab['name'], 0, 31));
 
     db_change($lab['db_name']);
+    
+    // Grab all the measures for this test type from the database.
+    $test_type = TestType::getById($test_type_id, $lab['lab_config_id']);
+    $measure_list = array();
+    $measure_headers = array();
+    
+    $db_measure_list = $test_type->getMeasures($lab['lab_config_id']);
+    foreach($db_measure_list as $measure) {
+        if($measure->checkIfSubmeasure() == 1) {
+            continue;
+        }
+
+        $measure_list[] = $measure;
+
+        $submeasure_list = $measure->getSubmeasuresAsObj($lab['lab_config_id']);
+        if(count($submeasure_list) > 0) {
+            foreach($submeasure_list as $submeasure) {
+                $measure_list[] = $submeasure;
+            }
+        }
+    }
+    $log->info("Found measures: ".count($measure_list));
+    foreach($measure_list as $measure) {
+        $hname = $measure->name;
+        if (strlen($measure->unit) > 0) {
+            $hname = $hname . "(" . $measure->unit . ")";
+        }
+        $log->info("measure header: $hname");
+        $measure_headers[] = $hname;
+    }
+    
     $results = query_associative_all($query);
 
     foreach($headers as $index => $header) {
         $sheet->setCellValueByColumnAndRow($index, 1, $header);
     }
     
+    foreach($measure_headers as $index => $header) {
+        $sheet->setCellValueByColumnAndRow(count($headers) + $index, 1, $header);
+    }
+    
+    $total_columns = count($headers) + count($measure_headers);
+    
     foreach($results as $row_index => $row) {
         $col = 0;
+        $test_result = "";
         foreach($row as $col_name => $value) {
+            if ($col_name == "test_result") {
+                $test_result = $value;
+                break;
+            }
+            
             $sheet->setCellValueByColumnAndRow($col, $row_index + 2, $value);
             $col = $col + 1;
+        }
+        $test_result_split = explode(",", $test_result);
+        foreach($test_result_split as $result) {
+            $sheet->setCellValueByColumnAndRow($col, $row_index + 2, $result);
+            $col = $col + 1;
+            if ($col >= $total_columns) break;
         }
     }
 }

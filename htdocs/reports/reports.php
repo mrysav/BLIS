@@ -2910,11 +2910,11 @@ alert(dd_to);
 
                 </div>
 
-                <div id='export_to_excel_div' style='display:none;' class='reports_subdiv'>
+                <div id='export_to_excel_div' style='display:none;' class='reports_subdiv'>                    
                     <h4>Export to Excel</h4>
 
                     <form name="export_to_excel_form" id="export_to_excel_form" action="export_to_excel.php" method='get'>
-                        <table cellpadding="4px">
+                        <table cellpadding="4px" style="border-collapse: collapse">
                             <tr valign='top'>
                                 <td><?php echo LangUtil::$generalTerms['FROM_DATE']; ?> </td>
                                 <td>
@@ -2926,7 +2926,8 @@ alert(dd_to);
                                     ?>
                                 </td>
                             </tr>
-                            <tr valign='top'>
+                            
+                            <tr valign='top' style="border-bottom: 1px solid black">
                                 <td><?php echo LangUtil::$generalTerms['TO_DATE']; ?> </td>
                                 <td>
                                     <?php
@@ -2937,30 +2938,39 @@ alert(dd_to);
                                     ?>
                                 </td>
                             </tr>
-
-                            <tr class="location_row_aggregate" id="location_row_aggregate">
-                                <td><?php echo LangUtil::$generalTerms['FACILITY']; ?> &nbsp;&nbsp;&nbsp;</td>
-                                <td id='locationAggregation'>
+                            
+                            <tr id="location_row_aggregate" style="border-bottom: 1px solid black" valign="top">
+                                <td style="padding: 1rem 1rem; text-align: right"><?php echo LangUtil::$generalTerms['FACILITY']; ?></td>
+                                <td style="padding: 1rem 0" id='locationAggregation'>
                                 <?php
                                 if (is_super_admin($current_user) || is_country_dir($current_user)) {
                                     $page_elems->getSiteOptionsCheckBoxesCountryDir("locationAgg[]");
                                 } else {
                                 ?>
-                                    <p><?php echo $lab_config->name ?></p>
+                                    <?php echo $lab_config->name ?>
                                     <input type="hidden" name="locationAgg[]" id="locationAgg[]" value="<?php echo $lab_config->id .":". $lab_config->name .":". $lab_config->location ?>">
                                 <?php
                                 }
                                 ?>
                                 </td>
                             </tr>
-                            
-                            <tr>
-                                <td><?php echo LangUtil::$generalTerms['TEST_TYPE']; ?></td>
-                                <td>
+                                                       
+                            <tr style="border-bottom: 1px solid black" valign="top">
+                                <td style="padding: 1rem 1rem; text-align: right"><?php echo LangUtil::$generalTerms['TEST_TYPE']; ?></td>
+                                <td style="padding: 1rem 0">
                                     <select name="test_type" id="test_type" class="uniform_width">
                                         <option value="-1"></option>
                                         <?php $page_elems->getTestTypewithreferencerangeOptions(); ?>
                                     </select>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td style="padding: 1rem 1rem; text-align: right"><?php echo LangUtil::$generalTerms['OPTIONS']; ?></td>
+                                <td style="padding: 1rem 0">
+                                    <input type="checkbox" name="include_patient_name" id="include_patient_name" value="true" checked>Include Patient Name</input><br/>
+                                    <input type="checkbox" name="include_patient_birthday" id="include_patient_birthday" value="true" checked>Include Patient Birthday</input><br/>
+                                    <input type="checkbox" name="include_patient_sex" id="include_patient_sex" value="true" checked>Include Patient Sex</input><br/>                        
                                 </td>
                             </tr>
 
