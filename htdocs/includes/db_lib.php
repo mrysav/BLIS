@@ -1188,15 +1188,19 @@ class TestType
 		return $retval;
 	}
 
-	public static function getById($test_type_id)
+	public static function getById($test_type_id, $lab_config_id=null)
 	{
 		# Returns test type record in DB
 		global $con;
+        
+        if ($lab_config_id == null) {
+            $lab_config_id = $_SESSION['lab_config_id'];
+        }
+        
 		$test_type_id = mysql_real_escape_string($test_type_id, $con);
 		//$saved_db = DbUtil::switchToLabConfigRevamp();
-		$saved_db = DbUtil::switchToLabConfig($_SESSION['lab_config_id']);
-		$query_string =
-			"SELECT * FROM test_type WHERE test_type_id=$test_type_id LIMIT 1";
+		$saved_db = DbUtil::switchToLabConfig($lab_config_id);
+		$query_string = "SELECT * FROM test_type WHERE test_type_id=$test_type_id LIMIT 1";
 		$record = query_associative_one($query_string);
 		DbUtil::switchRestore($saved_db);
 		return TestType::getObject($record);
@@ -1264,20 +1268,26 @@ return $retval;
         }
     }
 
-	public function getMeasures()
+	public function getMeasures($lab_config_id=null)
 	{
 		# Returns list of measures included in a test type
-		$saved_db = DbUtil::switchToLabConfigRevamp();
-		$query_string =
-			"SELECT measure_id FROM test_type_measure ".
-			"WHERE test_type_id=$this->testTypeId ";
-                        //"ORDER BY ts";
+		$saved_db = DbUtil::switchToLabConfigRevamp($lab_config_id);
+            
+        // Select all the measures in the database that match this test_type_id
+        $query_string =
+            "SELECT m.* FROM measure AS m ".
+            "INNER JOIN test_type_measure AS ttm ON ttm.measure_id = m.measure_id ".
+            "WHERE ttm.test_type_id = ".$this->testTypeId;
+            
+        global $log;
+        $log->info("big query: ".$query_string);
+        
 		$resultset = query_associative_all($query_string);
 		$retval = array();
 		if($resultset) {
 			foreach($resultset as $record)
 			{
-				$measure_obj = Measure::getById($record['measure_id']);
+				$measure_obj = Measure::getObject($record);
 				$retval[] = $measure_obj;
 			}
 		}
@@ -1565,28 +1575,27 @@ class Measure
         }
 
         #nc50
-        public function getSubmeasuresAsObj()
+        public function getSubmeasuresAsObj($lab_config_id=null)
         {
             $id = $this->measureId;
             $tagID = "\$sub*".$id."/\$";
             $submeasureList = array();
-             $query_string =
-			"SELECT * FROM measure ";
-		$saved_db = DbUtil::switchToLabConfig($lab_config_id);
-		$recordset = query_associative_all($query_string);
-                DbUtil::switchRestore($saved_db);
-                foreach( $recordset as $record )
+            $query_string = "SELECT * FROM measure ";
+            $saved_db = DbUtil::switchToLabConfig($lab_config_id);
+            $recordset = query_associative_all($query_string);
+            DbUtil::switchRestore($saved_db);
+            foreach( $recordset as $record )
+            {
+                $measureName = $record['name'];
+                $smID = intval($record['measure_id']);
+                if(strpos($measureName, $tagID) !== false)
                 {
-				$measureName = $record['name'];
-                                $smID = intval($record['measure_id']);
-                                if(strpos($measureName, $tagID) !== false)
-                                {
-                                    //echo "<br>---".strpos($measureName, $tagID);
-                                    $smObj = Measure::getById($record['measure_id']);
-                                    array_push($submeasureList, $smObj);
-                                }
-		}
-                return $submeasureList;
+                    //echo "<br>---".strpos($measureName, $tagID);
+                    $smObj = Measure::getById($record['measure_id'], $lab_config_id);
+                    array_push($submeasureList, $smObj);
+                }
+            }
+            return $submeasureList;
         }
 
         public function getSubmeasures()
@@ -1596,8 +1605,8 @@ class Measure
             $submeasureList = array();
              $query_string =
 			"SELECT * FROM measure ";
-		$saved_db = DbUtil::switchToLabConfig($lab_config_id);
-		$recordset = query_associative_one($query_string);
+            $saved_db = DbUtil::switchToLabConfig($lab_config_id);
+            $recordset = query_associative_one($query_string);
                 DbUtil::switchRestore($saved_db);
                 foreach( $recordset as $record )
                 {
@@ -1700,7 +1709,7 @@ class Measure
 		return $this->unit;
 	}
 
-	public static function getById($measure_id)
+	public static function getById($measure_id, $lab_config_id=null)
 	{
 		# Returns a test measure by ID
 		global $con;
@@ -1708,7 +1717,7 @@ class Measure
 		if($measure_id == null || $measure_id < 0)
 			return null;
 		$query_string = "SELECT * FROM measure WHERE measure_id=$measure_id LIMIT 1";
-		$saved_db = DbUtil::switchToLabConfigRevamp();
+		$saved_db = DbUtil::switchToLabConfigRevamp($lab_config_id);
 		$record = query_associative_one($query_string);
 		DbUtil::switchRestore($saved_db);
 		return Measure::getObject($record);
