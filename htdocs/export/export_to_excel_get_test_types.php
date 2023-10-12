@@ -41,16 +41,6 @@ if ($unauthorized) {
     exit;
 }
 
-$query = <<<EOQ
-    SELECT $fields_sql
-    FROM specimen AS s
-    INNER JOIN specimen_type AS st ON s.specimen_type_id = st.specimen_type_id
-    INNER JOIN test AS t ON s.specimen_id = t.specimen_id
-    INNER JOIN patient AS p ON s.patient_id = p.patient_id
-    WHERE s.date_collected BETWEEN '$start_date' AND '$end_date'
-    AND t.test_type_id = '$test_type_id';
-EOQ;
-
 DbUtil::switchToGlobal();
 $lab_db_name_query = "SELECT db_name FROM lab_config WHERE lab_config_id = $lab_id";
 $db_name_res = query_associative_one($lab_db_name_query);
