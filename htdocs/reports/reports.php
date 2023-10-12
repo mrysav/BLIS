@@ -2939,15 +2939,40 @@ alert(dd_to);
                                 </td>
                             </tr>
                             
+                            <script type="text/javascript">
+                                function exportExcel_updateTestTypes() {
+                                    selectEl = $("#export_to_excel_form select#locationAgg\\[\\]");
+                                    if (selectEl.val() === -1) {
+                                        return;
+                                    }
+                                    
+                                    $.getJSON("export_to_excel_get_test_types.php",{lab_config_id: selectEl.val()}, function(j){
+                                        var options = '';
+                                        for (var i = 0; i < j.length; i++) {
+                                            options += '<option value="' + j[i].id + '">' + j[i].name + '</option>';
+                                        }
+                                        var tt_select = $("#export_to_excel_form select#test_type");
+                                        tt_select.html(options);
+                                    })
+                                }
+                            </script>
+                            
                             <tr id="location_row_aggregate" style="border-bottom: 1px solid black" valign="top">
                                 <td style="padding: 1rem 1rem; text-align: right"><?php echo LangUtil::$generalTerms['FACILITY']; ?></td>
                                 <td style="padding: 1rem 0" id='locationAggregation'>
                                 <?php
                                 if (is_super_admin($current_user) || is_country_dir($current_user)) {
-                                    $page_elems->getSiteOptionsCheckBoxesCountryDir("locationAgg[]");
+                                    echo '<select name="locationAgg[]" id="locationAgg[]" onchange="exportExcel_updateTestTypes()">';
+                                    echo '<option value="-1"></option>';
+                                    
+                                    $lab_config_list_imported = get_lab_configs_imported();
+                                    foreach($lab_config_list_imported as $lc) {
+                                        echo "<option value=\"$lc->id\">$lc->name</option>";
+                                    }
+                                    echo '</select>';
                                 } else {
+                                    echo $lab_config->name 
                                 ?>
-                                    <?php echo $lab_config->name ?>
                                     <input type="hidden" name="locationAgg[]" id="locationAgg[]" value="<?php echo $lab_config->id .":". $lab_config->name .":". $lab_config->location ?>">
                                 <?php
                                 }
@@ -2959,8 +2984,13 @@ alert(dd_to);
                                 <td style="padding: 1rem 1rem; text-align: right"><?php echo LangUtil::$generalTerms['TEST_TYPE']; ?></td>
                                 <td style="padding: 1rem 0">
                                     <select name="test_type" id="test_type" class="uniform_width">
-                                        <option value="-1"></option>
-                                        <?php $page_elems->getTestTypewithreferencerangeOptions(); ?>
+                                        <?php
+                                        if (!is_super_admin($current_user) && !is_country_dir($current_user)) {
+                                            // If we are not the superuser or country director, we know what site we are looking at
+                                            // so we can render the test types
+                                            $page_elems->getTestTypewithreferencerangeOptions();
+                                        }
+                                        ?>
                                     </select>
                                 </td>
                             </tr>

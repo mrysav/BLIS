@@ -10,7 +10,7 @@ AddCharset UTF-8 .php
 Options +FollowSymLinks
 RewriteEngine on
 
-# 
+#
 # Prevent Directory Listing
 #
 Options -Indexes
@@ -166,6 +166,7 @@ RewriteRule ^backupDataUI\.php$ export/backupDataUI.php
 RewriteRule ^lab_backups\.php$ export/lab_backups.php
 RewriteRule ^export/backups/(.+\.zip)$ export/get_file.php?f=backups/$1
 RewriteRule ^export_to_excel\.php$ export/export_to_excel.php
+RewriteRule ^export_to_excel_get_test_types\.php$ export/export_to_excel_get_test_types.php
 
 
 ## /users folder
