@@ -10,22 +10,17 @@ FROM ubuntu:focal
 RUN apt-get update && apt-get install -y software-properties-common && \
     add-apt-repository ppa:ondrej/php && apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y \
+        acl \
         apache2 \
         curl \
         git \
-        gpg \
-        htop \
         libharfbuzz0b \
         libpango-1.0-0 \
         libpangoft2-1.0-0 \
         mysql-client \
-        p7zip \
         python3-pip \
-        ripgrep \
-        shellcheck \
         software-properties-common \
         sudo \
-        tmux \
         unzip \
         zip \
         php5.6 \
