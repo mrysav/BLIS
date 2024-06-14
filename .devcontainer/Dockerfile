@@ -18,10 +18,12 @@ RUN apt-get update && apt-get install -y software-properties-common && \
         libpango-1.0-0 \
         libpangoft2-1.0-0 \
         mysql-client \
+        pandoc \
         python3-pip \
         software-properties-common \
         sudo \
         unzip \
+        weasyprint \
         zip \
         php5.6 \
         php5.6-bcmath \
