@@ -4,9 +4,9 @@
 # Returns list of matched patients
 # Called via Ajax from /search.php
 #
-include("../includes/db_lib.php");
-include("../includes/script_elems.php");
-include("../includes/SessionCheck.php");
+include(__DIR__ . "/../includes/db_lib.php");
+include(__DIR__ . "/../includes/script_elems.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
 LangUtil::setPageId("find_patient");
 
 $script_elems = new ScriptElems();

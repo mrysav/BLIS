@@ -1,7 +1,7 @@
 <?php
 
-include("../includes/db_lib.php");
-include("../includes/SessionCheck.php");
+include(__DIR__ . "/../includes/db_lib.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
 $userId = $_SESSION['user_id'];
 $testCategoryName = $_REQUEST['testCategoryName'];
 $labIdTestCategoryId = $_REQUEST['labIdTestCategoryId'];

@@ -4,8 +4,8 @@
 # Returns <option> tags for list of locations available for selection for a particular test
 # Called via Ajax from reports.php
 #
-include("../includes/SessionCheck.php");
-include("../includes/db_lib.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
+include(__DIR__ . "/../includes/db_lib.php");
 
 $selectValues = $_REQUEST['l'];
 $labIdTestIdArr = explode(';',$selectValues);

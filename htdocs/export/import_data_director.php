@@ -1,9 +1,9 @@
 <?php
 
 require_once("redirect.php");
-require_once("../includes/db_lib.php");
-require_once("../includes/platform_lib.php");
-require_once("../includes/composer.php");
+require_once(__DIR__ . "/../includes/db_lib.php");
+require_once(__DIR__ . "/../includes/platform_lib.php");
+require_once(__DIR__ . "/../includes/composer.php");
 
 $file_name = $_FILES['sqlFile']['name'];
 $log->info("Uploaded $file_name");
@@ -59,9 +59,9 @@ if ($file_name_and_extension[1]=="zip") {
         // in the extracted path. If there is only one folder in the folder
         // we unzipped, use that.
         $extracted_files = scandir($extractPath);
-        // Strip '.' and '..' from the file list if present.
+        // Strip '.' and __DIR__ . '/..' from the file list if present.
         for($_x = 0; $_x < 2; $_x++) {
-            if (count($extracted_files) > 0 && ($extracted_files[0] == "." || $extracted_files[0] == "..")) {
+            if (count($extracted_files) > 0 && ($extracted_files[0] == "." || $extracted_files[0] == __DIR__ . "/..")) {
                 array_splice($extracted_files, 0, 1);
             }
         }

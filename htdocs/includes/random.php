@@ -6,11 +6,11 @@
 
 if(strpos($_SERVER['HTTP_REFERER'], "lab_config_home.php") !== false)
 {
-	require_once("../includes/db_lib.php");
+	require_once(__DIR__ . "/../includes/db_lib.php");
 }
 else
 {
-	require_once("../includes/db_lib.php");
+	require_once(__DIR__ . "/../includes/db_lib.php");
 }
 
 
@@ -210,15 +210,15 @@ function add_patients_random($num_patients)
 	{
 		$num_patients = $MAX_NUM_PATIENTS;
 	}
-	//$patient_sql_filename = "../data/patients.sql";	
+	//$patient_sql_filename = __DIR__ . "/../data/patients.sql";	
 	/*
 	if(strpos($_SERVER['HTTP_REFERER'], "lab_config_home.php") !== false)
 	{
-		$patient_sql_filename = "../data/patients.sql";	
+		$patient_sql_filename = __DIR__ . "/../data/patients.sql";	
 	}
 	else
 	{
-		$patient_sql_filename = "../data/patients.sql";	
+		$patient_sql_filename = __DIR__ . "/../data/patients.sql";	
 	}
 	*/	
 	/*$patient_sql_file = fopen($patient_sql_filename, 'r');

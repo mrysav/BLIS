@@ -3,9 +3,9 @@
 # Returns token input values for "autocomplete" type measure
 # Called via Ajax from results_entry.php
 #
-include("../includes/SessionCheck.php");
-include ("../includes/ajax_lib.php");
-include ("../includes/db_lib.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
+include (__DIR__ . "/../includes/ajax_lib.php");
+include (__DIR__ . "/../includes/db_lib.php");
 
 function find_matched($list, $search_string)
 {

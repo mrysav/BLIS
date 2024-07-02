@@ -4,8 +4,8 @@
 # Called via Ajax form result_entry.php
 #
 
-include("../includes/db_lib.php");
-require_once("../includes/user_lib.php");
+include(__DIR__ . "/../includes/db_lib.php");
+require_once(__DIR__ . "/../includes/user_lib.php");
 LangUtil::setPageId("results_entry");
 
 $attrib_value = $_REQUEST['a'];
@@ -584,19 +584,19 @@ if($attrib_type == 3 && $count > 2)
 <?php 
         if(isset($_REQUEST['labsec']))
         { 
-            $next_link = "../ajax/result_data_page.php?a=".$_REQUEST['a']."&t=".$_REQUEST['t']."&l=".$_REQUEST['labsec']."&result_cap=".$result_cap."&result_counter=".($result_counter+1); 
+            $next_link = __DIR__ . "/../ajax/result_data_page.php?a=".$_REQUEST['a']."&t=".$_REQUEST['t']."&l=".$_REQUEST['labsec']."&result_cap=".$result_cap."&result_counter=".($result_counter+1); 
         }
         else
         {
-            $next_link = "../ajax/result_data_page.php?a=".$_REQUEST['a']."&t=".$_REQUEST['t']."&result_cap=".$result_cap."&result_counter=".($result_counter+1);             
+            $next_link = __DIR__ . "/../ajax/result_data_page.php?a=".$_REQUEST['a']."&t=".$_REQUEST['t']."&result_cap=".$result_cap."&result_counter=".($result_counter+1);             
         }
         if(isset($_REQUEST['labsec']))
         { 
-            $prev_link = "../ajax/result_data_page.php?a=".$_REQUEST['a']."&t=".$_REQUEST['t']."&l=".$_REQUEST['labsec']."&result_cap=".$result_cap."&result_counter=".($result_counter - 1); 
+            $prev_link = __DIR__ . "/../ajax/result_data_page.php?a=".$_REQUEST['a']."&t=".$_REQUEST['t']."&l=".$_REQUEST['labsec']."&result_cap=".$result_cap."&result_counter=".($result_counter - 1); 
         }
         else
         {
-            $prev_link = "../ajax/result_data_page.php?a=".$_REQUEST['a']."&t=".$_REQUEST['t']."&result_cap=".$result_cap."&result_counter=".($result_counter - 1);             
+            $prev_link = __DIR__ . "/../ajax/result_data_page.php?a=".$_REQUEST['a']."&t=".$_REQUEST['t']."&result_cap=".$result_cap."&result_counter=".($result_counter - 1);             
         }
     ?>        
 <div class="prev_link">                       

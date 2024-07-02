@@ -1,5 +1,5 @@
 <?php
-include("../includes/db_lib.php");
+include(__DIR__ . "/../includes/db_lib.php");
 
 $test_type_id = $_REQUEST['tid'];
 $labs = explode('-', $_REQUEST['labs']);

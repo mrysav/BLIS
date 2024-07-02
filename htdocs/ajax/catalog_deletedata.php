@@ -3,9 +3,9 @@
 # Deletes all data (test/specimen types) in catalog
 #
 
-include("../includes/db_lib.php");
-include("../includes/SessionCheck.php");
-require_once("../includes/perms_check.php");
+include(__DIR__ . "/../includes/db_lib.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
+require_once(__DIR__ . "/../includes/perms_check.php");
 
 # Enable to delete by entry
 $CLEAN_DELETE = false;

@@ -12,12 +12,12 @@
 		
 		<title>DataTables unit testing</title>
 		<style type="text/css" title="currentStyle">
-			@import "../../css/demo_page.css";
-			@import "../../css/demo_table.css";
+			@import __DIR__ . "/../../css/demo_page.css";
+			@import __DIR__ . "/../../css/demo_table.css";
 		</style>
-		<script type="text/javascript" language="javascript" src="../../js/jquery.js"></script>
-		<script type="text/javascript" language="javascript" src="../../js/jquery.dataTables.js"></script>
-		<script type="text/javascript" language="javascript" src="../unit_test.js"></script>
+		<script type="text/javascript" language="javascript" src=__DIR__ . "/../../js/jquery.js"></script>
+		<script type="text/javascript" language="javascript" src=__DIR__ . "/../../js/jquery.dataTables.js"></script>
+		<script type="text/javascript" language="javascript" src=__DIR__ . "/../unit_test.js"></script>
 		<script type="text/javascript" charset="utf-8">
 			$(document).ready( function () {
 				$('#demo').html( '<table cellpadding="0" cellspacing="0" border="0" class="display" id="example"></table>' );
@@ -27,7 +27,7 @@
 			$aScripts = explode( ":", $_GET['scripts'] );
 			for ( $i=0 ; $i<count($aScripts) ; $i++ )
 			{
-				echo '<script type="text/javascript" language="javascript" src="../'.$aScripts[$i].'?rand='.rand().'"></script>'."\n";
+				echo '<script type="text/javascript" language="javascript" src=__DIR__ . "/../'.$aScripts[$i].'?rand='.rand().'"></script>'."\n";
 			}
 		?>
 	</head>

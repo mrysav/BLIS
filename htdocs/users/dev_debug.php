@@ -6,7 +6,7 @@
  */
     include("redirect.php");
     //include("includes/header.php");
-include("../includes/db_lib.php");
+include(__DIR__ . "/../includes/db_lib.php");
 
 
 

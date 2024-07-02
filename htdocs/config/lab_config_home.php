@@ -9,7 +9,7 @@ include("includes/db_lib.php");
 include("includes/header.php");
 include("includes/random.php");
 include("includes/stats_lib.php");
-include("../AntiXSS.php");
+include(__DIR__ . "/../AntiXSS.php");
 
 require_once(dirname(__FILE__).'/../includes/composer.php');
 
@@ -337,7 +337,7 @@ return;
 formData.append("lab_name", lab_name.value);
 }
 var xhr = new XMLHttpRequest();
-xhr.open('POST', '../ajax/add_keys.php', true);
+xhr.open('POST', __DIR__ . '/../ajax/add_keys.php', true);
 xhr.onload = function () {
   if (xhr.status === 200) {
 var r=xhr.response;
@@ -884,7 +884,7 @@ l="<?php echo LangUtil::$pageTerms['enable_encrypted_backup']; ?>";
 val=0;
 }
 $('#btn_enc').val(l);
-$.get('../ajax/update_enc_setting.php?val='+val);
+$.get(__DIR__ . '/../ajax/update_enc_setting.php?val='+val);
 }
 function edit_key(id)
 {
@@ -895,7 +895,7 @@ function delete_key(id)
     $.ajax({
       type: "GET",
 //      dataType: "json",
-      url: "../ajax/delete_keys.php?id="+id,
+      url: __DIR__ . "/../ajax/delete_keys.php?id="+id,
 //      data: data,
       success: function(data) {
 alert(data);
@@ -935,7 +935,7 @@ function language_div_load() {
 function export_html()
 {
 <?php
-$myFile = "../../BlisSetup.html";
+$myFile = __DIR__ . "/../../BlisSetup.html";
 $fh = fopen($myFile, 'w') or die("can't open file");
 $content =('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -2566,7 +2566,7 @@ function AddnewDHIMS2Config()
 					<div id="site_config_msg" class="clean-orange" style="display: none;width: 350px;"></div>
 					<div id="site_config_form_div" class="pretty_box">
 						<form id="site_config_form" name="site_config_form"
-							  action="../ajax/site_config_update.php"
+							  action=__DIR__ . "/../ajax/site_config_update.php"
 							  method="post">
 							<br> <?php echo LangUtil::$pageTerms['MODIFY_SITE'];  ?> :<br>
 							<?php
@@ -2583,7 +2583,7 @@ function AddnewDHIMS2Config()
                     <div id="site_config_add_form_div" class="pretty_box" style="display: none; margin-left: 10px;">
                         <form id="site_config_add_form"
 							  name="site_config_add_form"
-							  action="../ajax/site_config_add.php"
+							  action=__DIR__ . "/../ajax/site_config_add.php"
 							  method="post">
 							<input type="hidden" id="lab_config_id"
 								   name="lab_config_id"
@@ -2723,13 +2723,13 @@ function AddnewDHIMS2Config()
                                         <br/>
 
                                         <!-- Billing logo upload code -->
-                                        <?php $name="../logos/logo_billing_".$lab_config->id.".jpg";
-                                         if (file_exists("../logos/logo_billing_".$lab_config->id.".jpg")==true) {
+                                        <?php $name=__DIR__ . "/../logos/logo_billing_".$lab_config->id.".jpg";
+                                         if (file_exists(__DIR__ . "/../logos/logo_billing_".$lab_config->id.".jpg")==true) {
                                              echo "LOGO being Used ";
                                          } ?></h4>
 	  									<h3>File Upload:</h3><?php
 
-                                        if (file_exists("../logos/logo_billing_".$lab_config->id.".jpg")==false) {
+                                        if (file_exists(__DIR__ . "/../logos/logo_billing_".$lab_config->id.".jpg")==false) {
                                             echo "( Add a Logo)";
                                         } else {
                                             echo "(Change Logo)";
@@ -4371,14 +4371,14 @@ function AddnewDHIMS2Config()
     <tr>
         <td><input id="btn_enc" style="font: 15px Calibri;cursor: pointer;border: none;color: green;" type="button" onclick="toggle_encryption()" value="<?php echo KeyMgmt::read_enc_setting()==0?LangUtil::$pageTerms['enable_encrypted_backup']:LangUtil::$pageTerms['disable_encrypted_backup']; ?>"/></td>
         <td><input style="font: 15px Calibri;cursor: pointer;border: none;color: green;" type="button" id="addbtn" onclick="add_key()" value="<?php echo LangUtil::$pageTerms['add_key']; ?>"/>
-		<td><a style="font: 15px Calibri;cursor: pointer;border: none;padding:2px;" type="button" href="../ajax/download_key.php?id=<?php echo($lab_config_id) ?>"><?php echo LangUtil::$pageTerms['download_key']; ?></a></td>
+		<td><a style="font: 15px Calibri;cursor: pointer;border: none;padding:2px;" type="button" href=__DIR__ . "/../ajax/download_key.php?id=<?php echo($lab_config_id) ?>"><?php echo LangUtil::$pageTerms['download_key']; ?></a></td>
     </tr>
 </table>
 <br/>
 <div id="container" style="width:700px;">
 </div>
 <div id="container1" style="width:700px;display:none">
-<form id="form_key" action="../ajax/add_keys.php" method="post" enctype="multipart/form-data">
+<form id="form_key" action=__DIR__ . "/../ajax/add_keys.php" method="post" enctype="multipart/form-data">
 <h3><?php echo LangUtil::$pageTerms['add_header']; ?></h3>
 <table border="0">
 <tr>

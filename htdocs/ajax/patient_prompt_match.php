@@ -3,8 +3,8 @@
 # Returns a list of similar patient names
 # To aid/help during new patient registration
 #
-include("../includes/SessionCheck.php");
-include("../includes/db_lib.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
+include(__DIR__ . "/../includes/db_lib.php");
 LangUtil::setPageId("new_patient");
 
 $q = $_REQUEST['q'];

@@ -2,8 +2,8 @@
 
 // Get test result data for visualization
 
-include("../includes/db_lib.php");
-include("../includes/stats_lib.php");
+include(__DIR__ . "/../includes/db_lib.php");
+include(__DIR__ . "/../includes/stats_lib.php");
 
 $loc = $_REQUEST['location'];
 $lab_config = get_lab_config_by_id($loc);

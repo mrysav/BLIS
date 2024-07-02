@@ -3,8 +3,8 @@
 # Main page for adding custom data values for patients
 # Called via Ajax from find_patient.php
 #
-include("../includes/SessionCheck.php");
-include("../includes/db_lib.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
+include(__DIR__ . "/../includes/db_lib.php");
 
 $saved_session = SessionUtil::save();
 

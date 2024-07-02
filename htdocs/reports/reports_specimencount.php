@@ -45,8 +45,7 @@ function toggle_stat_table()
 <br><br>
 <?php
 //AS Fixing error of invalid lab config id
-	session_start();
-$user = get_user_by_name($_SESSION['username']);
+	$user = get_user_by_name($_SESSION['username']);
 $lab_config_id = $user->labConfigId;
 //$lab_config_id = $_REQUEST['location'];
 $date_from = $_REQUEST['yyyy_from']."-".$_REQUEST['mm_from']."-".$_REQUEST['dd_from'];

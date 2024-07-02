@@ -1,6 +1,6 @@
 <?php
-include("../includes/db_lib.php");
-include("../includes/SessionCheck.php");
+include(__DIR__ . "/../includes/db_lib.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
 $attrib_value = $_REQUEST['q'];
 $count = 0;
 

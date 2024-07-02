@@ -1,7 +1,7 @@
 <?php
 
-include("../includes/db_lib.php");
-include("../includes/SessionCheck.php");
+include(__DIR__ . "/../includes/db_lib.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
 $userId = $_SESSION['user_id'];
 $measureName = $_REQUEST['measureName'];
 $labIdMeasureId = $_REQUEST['labIdMeasureId'];

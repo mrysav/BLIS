@@ -5,9 +5,9 @@
  * Date: 9/15/2016
  * Time: 12:01 PM
  */
-include("../includes/SessionCheck.php");
-include("../includes/db_lib.php");
-include("../includes/page_elems.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
+include(__DIR__ . "/../includes/db_lib.php");
+include(__DIR__ . "/../includes/page_elems.php");
 
 LangUtil::setPageId("lab_config_home");
 $page_elems = new PageElems();

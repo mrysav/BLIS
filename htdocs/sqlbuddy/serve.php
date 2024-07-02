@@ -71,7 +71,7 @@ if (isset($_GET['file'])) {
 	if (!(strpos($filename, "css/") === 0 || strpos($filename, "themes/") === 0 || strpos($filename, "js/") === 0))
 		exit;
 	
-	if (strpos($filename, "..") !== false)
+	if (strpos($filename, __DIR__ . "/..") !== false)
 		exit;
 	
 	if (file_exists($filename)) {

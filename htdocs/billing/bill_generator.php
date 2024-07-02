@@ -4,9 +4,9 @@
 # Need to look at file extensions
 #
 
-include("../includes/db_lib.php");
-include("../includes/script_elems.php");
-include("../includes/page_elems.php");
+include(__DIR__ . "/../includes/db_lib.php");
+include(__DIR__ . "/../includes/script_elems.php");
+include(__DIR__ . "/../includes/page_elems.php");
 
 $script_elems = new ScriptElems();
 $page_elems = new PageElems();
@@ -31,7 +31,7 @@ $script_elems->enableJQueryForm();
 				});
 			});
 		</script>
-		<?php include("../includes/styles.php"); ?>
+		<?php include(__DIR__ . "/../includes/styles.php"); ?>
 	</head>
 	<body>
 		<form name='bill_generator_form' id='bill_generator_form' action='create_new_bill.php'>

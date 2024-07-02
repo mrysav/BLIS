@@ -1,8 +1,8 @@
 
 <?php
-include("../includes/SessionCheck.php");
-include("../includes/db_lib.php");
-include("../includes/script_elems.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
+include(__DIR__ . "/../includes/db_lib.php");
+include(__DIR__ . "/../includes/script_elems.php");
 LangUtil::setPageId("find_patient");
 
 $script_elems = new ScriptElems();

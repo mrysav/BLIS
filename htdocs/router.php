@@ -1,14 +1,16 @@
 <?php
 
-require_once(__DIR__ . "//includes/composer.php");
+session_start();
 
-$request = $_SERVER['REQUEST_URI'];
+require_once(__DIR__ . "/includes/composer.php");
 
-$log->info("Debug router request $request");
+$request = strtok($_SERVER["REQUEST_URI"], '?');
+$log->info("Debug router request $request; PHP_SELF: ".$_SERVER['PHP_SELF'].", REQUEST_URI: ".$_SERVER['REQUEST_URI']);
 
 switch ($request) {
-    case '/ping':
-        require_once(__DIR__ . '/healthcheck.php');
+    case "/":
+        $log->info("index.php redirect");
+        require_once(__DIR__ . '/index.php');
         break;
 
     case "/lang_update.php":

@@ -36,7 +36,7 @@ class ScriptElems
 		{
 		?>
 			
-			<script src="../js/jquery-1.3.2.js"></script>
+			<script src=__DIR__ . "/../js/jquery-1.3.2.js"></script>
 			
 			<script type='text/javascript'>
 			
@@ -352,8 +352,7 @@ class ScriptElems
 		{
 			if(session_id() == '')
 			{
-				session_start();
-			}
+							}
 			$_SESSION['DELAY_RECORDED'] = false;
 		?>
 			<script language="javascript" type="text/javascript" src="record.js"></script> 

@@ -36,7 +36,7 @@ $script_elems->enableTableSorter();
 				window.focus();
 			}
 		</script>
-		<?php include("../includes/styles.php"); ?>
+		<?php include(__DIR__ . "/../includes/styles.php"); ?>
 	</head>
 	
 	<body>

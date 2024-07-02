@@ -3,8 +3,8 @@
 # Sends a new specimen registration form
 # Called via Ajax from new_specimen.php
 #
-include("../includes/SessionCheck.php");
-include("../includes/page_elems.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
+include(__DIR__ . "/../includes/page_elems.php");
 
 
 /*
@@ -20,7 +20,7 @@ foreach($included_list as $included_file)
 }
 if($lang_util_included === false)
 {
-	include("../lang/".$_SESSION['locale'].".php");
+	include(__DIR__ . "/../lang/".$_SESSION['locale'].".php");
 }
 */
 $doc_session = $_SESSION['doctor'];

@@ -1,6 +1,5 @@
 <?php
-session_start();
-include("../includes/page_elems.php");
+include(__DIR__ . "/../includes/page_elems.php");
 $page_elems = new PageElems();
 ?>
 <html>

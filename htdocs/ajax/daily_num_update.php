@@ -4,8 +4,8 @@
 # Called via Ajax from new_specimen.php
 #
 
-include("../includes/db_lib.php");
-include("../includes/SessionCheck.php");
+include(__DIR__ . "/../includes/db_lib.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
 $daily_date_string = $_REQUEST['dnum'];
 $dnum_val = $_REQUEST['dval'];
 update_daily_number($daily_date_string, $dnum_val);

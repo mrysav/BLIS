@@ -14,10 +14,10 @@ $page_id = $_REQUEST['page_id'];
 # Refresh entries from DB into xml
 catalog_db2xml($lang_id);
 
-$LANGDATA_PATH = "../../langdata/";
+$LANGDATA_PATH = __DIR__ . "/../../langdata/";
 if($SERVER == $ON_ARC)
 {
-	$LANGDATA_PATH = "../langdata/";
+	$LANGDATA_PATH = __DIR__ . "/../langdata/";
 }
 $xml_file_name = $LANGDATA_PATH.$lang_id."_catalog.xml";
 

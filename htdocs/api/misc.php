@@ -1,5 +1,5 @@
 <?php
-include_once "../includes/db_lib.php";
+include_once __DIR__ . "/../includes/db_lib.php";
 
 function getAuxID($fromAnalyzer,$dbname)
 {

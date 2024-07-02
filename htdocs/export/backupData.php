@@ -1,12 +1,11 @@
 <?php
 require_once("./backup_lib.php");
-require_once("../includes/composer.php");
-require_once("../includes/db_lib.php");
-require_once("../includes/platform_lib.php");
+require_once(__DIR__ . "/../includes/composer.php");
+require_once(__DIR__ . "/../includes/db_lib.php");
+require_once(__DIR__ . "/../includes/platform_lib.php");
 require_once("redirect.php");
 
 putUILog('backup_data', 'X', basename($_SERVER['REQUEST_URI'], ".php"), 'X', 'X', 'X');
-session_start();
 if ($SERVER == $ON_ARC) {
     # System on arc2 server: Do not allow backup option
     echo "Sorry, data backup option is not available in online version.";

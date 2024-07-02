@@ -4,7 +4,7 @@
 # Called via POST from lab_config_home.php
 # Redirects back after update is complete
 #
-include("../includes/header.php");
+include(__DIR__ . "/../includes/header.php");
 $siteList = get_site_list($_SESSION['user_id']);
 ?>
 <script type="text/javascript">
@@ -76,5 +76,5 @@ $siteList = get_site_list($_SESSION['user_id']);
 </table>
 </form>
 <?
-include("../includes/footer.php");
+include(__DIR__ . "/../includes/footer.php");
 ?>

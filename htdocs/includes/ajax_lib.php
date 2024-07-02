@@ -6,7 +6,7 @@
 # Require LangUtil class here so AJAX pages have access to it
 if(!class_exists('LangUtil')) {
     # Hack to prevent legacy language files from double-including this file
-    require_once("../lang/lang_util.php");
+    require_once(__DIR__ . "/../lang/lang_util.php");
 }
 
 

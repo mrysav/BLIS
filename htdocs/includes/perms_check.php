@@ -6,8 +6,7 @@
 require_once("user_lib.php");
 
 if(session_id() == '')
-	session_start();
-if(isset($TRACK_LOADTIME) && $TRACK_LOADTIME)
+	if(isset($TRACK_LOADTIME) && $TRACK_LOADTIME)
 {
 	# TEMP
 	# Initialize session for testing load times with hard-coded values

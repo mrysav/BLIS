@@ -45,8 +45,8 @@ body {
 </div>
 
 <?php 
-include("../includes/db_lib.php");
-require_once("../includes/user_lib.php");
+include(__DIR__ . "/../includes/db_lib.php");
+require_once(__DIR__ . "/../includes/user_lib.php");
 $reset_before_date = "2013-08-30";
 ?>
 
@@ -64,4 +64,4 @@ echo LangUtil::$generalTerms["PASSWORDRESET_ERR"];
  ?>
 <div id='confirm_msg'>
 </div>
-<?php include("../includes/footer.php"); ?>
+<?php include(__DIR__ . "/../includes/footer.php"); ?>

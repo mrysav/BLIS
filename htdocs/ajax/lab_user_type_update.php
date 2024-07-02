@@ -3,8 +3,8 @@
 # Main page for updating a lab user account
 # Called via Ajax from lab_user_edit.php
 #
-include("../includes/SessionCheck.php");
-include("../includes/db_lib.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
+include(__DIR__ . "/../includes/db_lib.php");
 
 $saved_session = SessionUtil::save();
 

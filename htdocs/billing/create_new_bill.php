@@ -3,7 +3,7 @@
 # Generates a bill for a set of tests and adds it to the DB.
 #
 
-include("../includes/db_lib.php");
+include(__DIR__ . "/../includes/db_lib.php");
 
 $lab_config_id = $_SESSION['lab_config_id'];
 

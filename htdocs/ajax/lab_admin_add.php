@@ -3,10 +3,10 @@
 # Adds a new lab admin account to DB
 # Called via Ajax from lab_admin_new.php
 #
-include("../includes/SessionCheck.php");
-include("../includes/db_lib.php");
-include("../includes/script_elems.php");
-include("../includes/page_elems.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
+include(__DIR__ . "/../includes/db_lib.php");
+include(__DIR__ . "/../includes/script_elems.php");
+include(__DIR__ . "/../includes/page_elems.php");
 LangUtil::setPageId("lab_admins");
 
 $script_elems = new ScriptElems();

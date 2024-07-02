@@ -6,10 +6,10 @@
 # https://github.com/PHPOffice/PHPExcel/blob/1.8/Documentation/markdown/Overview/08-Recipes.md#http-headers
 # Ensure that these files are _not_ encoded as "UTF-8 with BOM" (Byte Order Mark)
 # since that also counts. They should be "UTF-8".
-require_once("../includes/composer.php");
-require_once("../includes/db_lib.php");
-require_once("../includes/db_util.php");
-require_once("../includes/user_lib.php");
+require_once(__DIR__ . "/../includes/composer.php");
+require_once(__DIR__ . "/../includes/db_lib.php");
+require_once(__DIR__ . "/../includes/db_util.php");
+require_once(__DIR__ . "/../includes/user_lib.php");
 
 $lab_id = intval($_REQUEST['lab_config_id']);
 if (!$lab_id) {

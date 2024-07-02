@@ -3,11 +3,10 @@
 # Searches for lab configurations by search term
 # Called via Ajax from lab_configs.php
 #
-include("../includes/SessionCheck.php");
-session_start();
-include("../includes/db_lib.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
+include(__DIR__ . "/../includes/db_lib.php");
 
-include("../includes/page_elems.php");
+include(__DIR__ . "/../includes/page_elems.php");
 
 $page_elems = new PageElems();
 $search_term = trim($_REQUEST['q']);

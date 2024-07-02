@@ -1,5 +1,5 @@
 <?php
-include("../includes/db_lib.php");
+include(__DIR__ . "/../includes/db_lib.php");
 
 function generate_worksheet_config($lab_config_id)
 {

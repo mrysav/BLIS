@@ -10,7 +10,7 @@ include("includes/stats_lib.php");
 include("includes/script_elems.php");
 LangUtil::setPageId("reports");
 
-include("../users/accesslist.php");
+include(__DIR__ . "/../users/accesslist.php");
  if(!(isLoggedIn(get_user_by_id($_SESSION['user_id']))))
     header( 'Location: home.php' );
 

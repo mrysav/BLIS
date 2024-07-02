@@ -6,8 +6,8 @@ include("redirect.php");
 include("includes/header.php");
 include("includes/stats_lib.php");
 include("lang/lang_xml2php.php");
-include("../users/accesslist.php");
-include("../AntiXSS.php");
+include(__DIR__ . "/../users/accesslist.php");
+include(__DIR__ . "/../AntiXSS.php");
 
 LangUtil::setPageId("stocks");
 

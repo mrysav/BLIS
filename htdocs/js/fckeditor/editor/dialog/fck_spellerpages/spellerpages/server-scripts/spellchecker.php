@@ -11,8 +11,8 @@ $aspell_opts	= "-a --lang=$lang --encoding=utf-8 -H --rem-sgml-check=alt";		// b
 
 $tempfiledir	= "./";
 
-$spellercss		= '../spellerStyle.css';						// by FredCK
-$word_win_src	= '../wordWindow.js';							// by FredCK
+$spellercss		= __DIR__ . '/../spellerStyle.css';						// by FredCK
+$word_win_src	= __DIR__ . '/../wordWindow.js';							// by FredCK
 
 $textinputs		= $_POST['textinputs']; # array
 $input_separator = "A";

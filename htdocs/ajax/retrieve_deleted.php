@@ -3,10 +3,10 @@
 # Deletes a patient profile from DB
 # Called via Ajax from lab_user_new.php
 #
-include("../includes/db_lib.php");
-include("../includes/script_elems.php");
-include("../includes/page_elems.php");
-include("../includes/SessionCheck.php");
+include(__DIR__ . "/../includes/db_lib.php");
+include(__DIR__ . "/../includes/script_elems.php");
+include(__DIR__ . "/../includes/page_elems.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
 $item_id=$_REQUEST['item_id'];
 
 if(isset($_REQUEST['ret_cat'])){

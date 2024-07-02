@@ -1,8 +1,8 @@
 <?php
 ini_set('max_execution_time', 600); 
 ini_set('memory_limit','300M');
-include_once("../includes/db_lib.php");
-include_once("../includes/dhims2.php");
+include_once(__DIR__ . "/../includes/db_lib.php");
+include_once(__DIR__ . "/../includes/dhims2.php");
 $dhims2_test_counts = json_decode(stripslashes($_REQUEST['dhims2_test_counts']),true);
 $dhims2 = new DHIMS2();
 $sending_configs = $dhims2->getSendingConfigs($_REQUEST['lab_config_id']);

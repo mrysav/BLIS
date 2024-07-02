@@ -4,8 +4,8 @@
 # Updates report configuration in DB
 # Called via Ajax from lab_config_home.php
 #
-include("../includes/SessionCheck.php");
-include("../includes/db_lib.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
+include(__DIR__ . "/../includes/db_lib.php");
 $lab_config_id = $_REQUEST['location'];
 $report_config = new ReportConfig();
 $report_config->labConfigId = $lab_config_id;

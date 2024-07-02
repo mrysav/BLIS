@@ -1,9 +1,9 @@
 <?php
 
 include("redirect.php");
-include("../includes/db_lib.php");
-//include("../includes/db_constants.php");
-require_once("../includes/platform_lib.php");
+include(__DIR__ . "/../includes/db_lib.php");
+//include(__DIR__ . "/../includes/db_constants.php");
+require_once(__DIR__ . "/../includes/platform_lib.php");
 
 global $DB_HOST,$DB_USER,$DB_PASS;
 
@@ -17,7 +17,7 @@ $command = $mysqldumpPath." -B -h $DB_HOST -P $DB_PORT -u $DB_USER -p$DB_PASS $d
 system($command,$return);
 $file_list1[] = $backupDbFileName;
 
-$destination = "../../blis_backup_".$country."_".date("Ymd-Hi")."/";
+$destination = __DIR__ . "/../../blis_backup_".$country."_".date("Ymd-Hi")."/";
 $toScreenDestination = "blis_backup_".$country."_".date("Ymd-Hi");
 @mkdir($destination);
 chmod($destination, 0755);

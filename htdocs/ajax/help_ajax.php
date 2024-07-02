@@ -1,5 +1,5 @@
 <?php 
-include("../includes/SessionCheck.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
 include("redirect.php");
 include("includes/header.php"); 
 ?>

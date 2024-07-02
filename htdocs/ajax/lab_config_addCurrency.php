@@ -3,8 +3,8 @@
 # Main page for deleting a lab configuration
 # Called via Ajax from lab_config_home.php
 #
-include("../includes/SessionCheck.php");
-include("../includes/db_lib.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
+include(__DIR__ . "/../includes/db_lib.php");
 $lab_config_id = $_REQUEST['id'];
 $new_currency_value = $_REQUEST['currencyName'];
 # Delete DB tables corresponding to this lab configuration

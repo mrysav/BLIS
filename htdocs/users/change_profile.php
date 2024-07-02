@@ -4,7 +4,7 @@
 # Called from edit_profile.php
 #
 include("redirect.php");
-session_start(); 
+ 
 include("includes/db_lib.php");
 $updated_entry = new User();
 $updated_entry->userId = $_REQUEST['user_id'];

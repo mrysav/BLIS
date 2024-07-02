@@ -6,14 +6,13 @@
 
 require_once(__DIR__."/composer.php");
 
-include_once("../lang/lang_util.php");
+include_once(__DIR__ . "/../lang/lang_util.php");
 require_once('db_util.php');
 require_once('keymgmt.php');
 require_once('lab_config.php');
 
 # Start session if not already started
 if(session_id() == "")
-	session_start();
 
 require_once("defaults.php");
 
@@ -46,8 +45,9 @@ if(!isset($_SESSION['langdata_path']))
 	$_SESSION['langdata_path'] = $LOCAL_PATH."langdata_revamp/";
 }
 # Select appropriate locale file
-if(!isset($_SESSION['locale']))
+if(!isset($_SESSION['locale'])) {
 	$_SESSION['locale'] = $DEFAULT_LANG;
+}
 $locale_catalog_file = $_SESSION['langdata_path'].$_SESSION['locale']."_catalog.php";
 $locale_file = $_SESSION['langdata_path'].$_SESSION['locale'].".php";
 
@@ -4761,11 +4761,11 @@ class UILog
         public $tag2;
         public $tag3;
 
-    function UILog($logfilename = '../../local/UILog.csv', $separator = ',') {
+    function UILog($logfilename = __DIR__ . '/../../local/UILog.csv', $separator = ',') {
                 global $VERSION;
                 $vers = $VERSION;
                 $verss = str_replace('.','-',$vers);
-                $logfilename = "../../local/UILog_".$verss.".csv";
+                $logfilename = __DIR__ . "/../../local/UILog_".$verss.".csv";
 		$this->LOGFILENAME = $logfilename;
 		$this->SEPARATOR = $separator;
 		$this->HEADERS =
@@ -4817,11 +4817,11 @@ class UILog
         if($mode == 0)
         {
             $verss = str_replace('.','-',$vers);
-            $logfilename = "../../local/UILog_".$verss.".csv";
+            $logfilename = __DIR__ . "/../../local/UILog_".$verss.".csv";
         }
         else
         {
-            $logfilename = "../../local/".$filename;
+            $logfilename = __DIR__ . "/../../local/".$filename;
         }
         if (($handle = fopen($logfilename, "r")) !== FALSE)
         {
@@ -8402,7 +8402,7 @@ function create_lab_config_tables($lab_config_id, $db_name)
 	global $con;
 	$lab_config_id = mysql_real_escape_string($lab_config_id, $con);
 	db_change($db_name);
-	$file_name = '../data/create_tables.sql';
+	$file_name = __DIR__ . '/../data/create_tables.sql';
 	$sql_file = fopen($file_name, 'r');
 	$sql_string = fread($sql_file, filesize($file_name));
 	$sql_command_list = explode(";", $sql_string);
@@ -8418,7 +8418,7 @@ function blis_db_update($lab_config_id, $db_name, $ufile)
 	global $con;
 	$lab_config_id = mysql_real_escape_string($lab_config_id, $con);
 	db_change($db_name);
-	$file_name = "../data/".$ufile.".sql";
+	$file_name = __DIR__ . "/../data/".$ufile.".sql";
 	$sql_file = fopen($file_name, 'r');
 	$sql_string = fread($sql_file, filesize($file_name));
 	$sql_command_list = explode(";", $sql_string);
@@ -8449,7 +8449,7 @@ function create_lab_config_revamp_tables($lab_config_id, $revamp_db_name)
 	$lab_config_id = mysql_real_escape_string($lab_config_id, $con);
 	# Creates empty tables for a new lab configuration (revamp)
 	db_change($revamp_db_name);
-	$file_name = '../data/create_tables_revamp.sql';
+	$file_name = __DIR__ . '/../data/create_tables_revamp.sql';
 	$sql_file = fopen($file_name, 'r');
 	$sql_string = fread($sql_file, filesize($file_name));
 	$sql_command_list = explode(";", $sql_string);
@@ -10797,7 +10797,7 @@ function get_backup_folders($lab_config_id)
 {
 	# Returns a list of all backup folders available on main dir
 	$retval = array();
-	$start_dir = "../../";
+	$start_dir = __DIR__ . "/../../";
 	// echo "hi ";
 	// echo $start_dir;
 	// echo " hi";
@@ -14168,20 +14168,20 @@ function setVersionDataFlag($fl, $vers)
 }
 
 function update_language_files(){
-	$directories = scandir('../../local');
+	$directories = scandir(__DIR__ . '/../../local');
 	foreach($directories as $directory){
-		if($directory=='.' or $directory=='..' ){
+		if($directory=='.' or $directory==__DIR__ . '/..' ){
 			continue;
 		}else{
-			if (strpos($directory,'langdata_') !== false && is_dir("../../local/".$directory)) {
-				copy("../Language/en.php","../../local/".$directory."/en.php");
-				copy("../Language/en.xml","../../local/".$directory."/en.xml");
+			if (strpos($directory,'langdata_') !== false && is_dir(__DIR__ . "/../../local/".$directory)) {
+				copy(__DIR__ . "/../Language/en.php",__DIR__ . "/../../local/".$directory."/en.php");
+				copy(__DIR__ . "/../Language/en.xml",__DIR__ . "/../../local/".$directory."/en.xml");
 
-				copy("../Language/default.php","../../local/".$directory."/default.php");
-				copy("../Language/default.xml","../../local/".$directory."/default.xml");
+				copy(__DIR__ . "/../Language/default.php",__DIR__ . "/../../local/".$directory."/default.php");
+				copy(__DIR__ . "/../Language/default.xml",__DIR__ . "/../../local/".$directory."/default.xml");
 
-				copy("../Language/fr.php","../../local/".$directory."/fr.php");
-				copy("../Language/fr.xml","../../local/".$directory."/fr.xml");
+				copy(__DIR__ . "/../Language/fr.php",__DIR__ . "/../../local/".$directory."/fr.php");
+				copy(__DIR__ . "/../Language/fr.xml",__DIR__ . "/../../local/".$directory."/fr.xml");
 			}
 
 		}
@@ -15643,7 +15643,6 @@ class API
 
     public function start_session($username, $password)
     {
-         session_start();
 
          $sid = session_id();
          //$_SESSION['tok'] = $sid;

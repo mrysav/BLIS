@@ -3,8 +3,8 @@
 # Returns a list of matched specimens for generating reports
 # Called via Ajax from report.php
 #
-include("../includes/SessionCheck.php");
-include("../includes/db_lib.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
+include(__DIR__ . "/../includes/db_lib.php");
 LangUtil::setPageId("reports");
 
 $lab_config_id = $_REQUEST['location'];

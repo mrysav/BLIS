@@ -12,6 +12,10 @@ class PlatformLib {
 		return false;
 	}
 
+    public static function runningOnLinux() {
+        return !self::runningOnWindows();
+    }
+
 	public static function mySqlDumpPath() {
 		if(self::runningOnWindows()) {
 			// If running on Windows, assume that we're running the portable/traditional

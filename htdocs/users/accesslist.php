@@ -1,6 +1,6 @@
 <?php
 
-include_once("../includes/db_lib.php");
+include_once(__DIR__ . "/../includes/db_lib.php");
 
 # List of known user roles (These could be fetched from DB and populated)
 $LIS_TECH_RW = 0;

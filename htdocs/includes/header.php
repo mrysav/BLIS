@@ -2,7 +2,7 @@
 #
 # (c) C4G, Santosh Vempala, Ruban Monu and Amol Shintre
 #
-$path = "../";
+$path = __DIR__ . "/../";
 set_include_path(get_include_path() . PATH_SEPARATOR . $path);
 
 # Include required libraries
@@ -20,7 +20,7 @@ if ($TRACK_LOADTIME) {
 
 require_once("includes/page_elems.php");
 require_once("includes/script_elems.php");
-include_once("../lang/lang_util.php");
+include_once(__DIR__ . "/../lang/lang_util.php");
 LangUtil::setPageId("header");
 require_once("includes/perms_check.php");
 

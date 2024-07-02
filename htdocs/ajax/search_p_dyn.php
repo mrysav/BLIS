@@ -4,10 +4,10 @@
 # Returns list of matched patients
 # Called via Ajax from /search.php
 #
-require_once("../includes/db_lib.php");
-require_once("../includes/script_elems.php");
-require_once("../includes/SessionCheck.php");
-require_once("../includes/ajax_lib.php");
+require_once(__DIR__ . "/../includes/db_lib.php");
+require_once(__DIR__ . "/../includes/script_elems.php");
+require_once(__DIR__ . "/../includes/SessionCheck.php");
+require_once(__DIR__ . "/../includes/ajax_lib.php");
 LangUtil::setPageId("find_patient");
 
 $script_elems = new ScriptElems();
@@ -828,19 +828,19 @@ $url2 = "print_page.php?location=".$_SESSION['lab_config_id'];
     <?php
         if(isset($_REQUEST['l']))
         {
-            $next_link = "../ajax/patient_data_page.php?q=".$_REQUEST['q']."&a=".$_REQUEST['a']."&c=".$_REQUEST['c']."&l=".$_REQUEST['l']."&result_cap=".$result_cap."&result_counter=".($result_counter + 1);
+            $next_link = __DIR__ . "/../ajax/patient_data_page.php?q=".$_REQUEST['q']."&a=".$_REQUEST['a']."&c=".$_REQUEST['c']."&l=".$_REQUEST['l']."&result_cap=".$result_cap."&result_counter=".($result_counter + 1);
         }
         else
         {
-            $next_link = "../ajax/patient_data_page.php?q=".$_REQUEST['q']."&a=".$_REQUEST['a']."&c=".$_REQUEST['c']."&result_cap=".$result_cap."&result_counter=".($result_counter + 1);
+            $next_link = __DIR__ . "/../ajax/patient_data_page.php?q=".$_REQUEST['q']."&a=".$_REQUEST['a']."&c=".$_REQUEST['c']."&result_cap=".$result_cap."&result_counter=".($result_counter + 1);
         }
         if(isset($_REQUEST['l']))
         {
-            $prev_link = "../ajax/patient_data_page.php?q=".$_REQUEST['q']."&a=".$_REQUEST['a']."&c=".$_REQUEST['c']."&l=".$_REQUEST['l']."&result_cap=".$result_cap."&result_counter=".($result_counter - 1);
+            $prev_link = __DIR__ . "/../ajax/patient_data_page.php?q=".$_REQUEST['q']."&a=".$_REQUEST['a']."&c=".$_REQUEST['c']."&l=".$_REQUEST['l']."&result_cap=".$result_cap."&result_counter=".($result_counter - 1);
         }
         else
         {
-            $prev_link = "../ajax/patient_data_page.php?q=".$_REQUEST['q']."&a=".$_REQUEST['a']."&c=".$_REQUEST['c']."&result_cap=".$result_cap."&result_counter=".($result_counter - 1);
+            $prev_link = __DIR__ . "/../ajax/patient_data_page.php?q=".$_REQUEST['q']."&a=".$_REQUEST['a']."&c=".$_REQUEST['c']."&result_cap=".$result_cap."&result_counter=".($result_counter - 1);
         }
     ?>
 <div class="prev_link">

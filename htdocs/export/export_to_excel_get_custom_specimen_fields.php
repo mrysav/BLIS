@@ -1,9 +1,9 @@
 <?php
 
-require_once("../includes/composer.php");
-require_once("../includes/db_lib.php");
-require_once("../includes/db_util.php");
-require_once("../includes/user_lib.php");
+require_once(__DIR__ . "/../includes/composer.php");
+require_once(__DIR__ . "/../includes/db_lib.php");
+require_once(__DIR__ . "/../includes/db_util.php");
+require_once(__DIR__ . "/../includes/user_lib.php");
 
 $lab_id = intval($_REQUEST['lab_config_id']);
 if (!$lab_id) {

@@ -1,6 +1,5 @@
 <?php
 include("redirect.php");
-session_start();
 include('includes/db_constants.php');
 
 $con = mysql_connect($DB_HOST,$DB_USER,$DB_PASS);

@@ -1,6 +1,6 @@
 <?php
-include("../includes/SessionCheck.php");
-include("../includes/db_lib.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
+include(__DIR__ . "/../includes/db_lib.php");
 
 $patientId = $_REQUEST['p_id'];
 $logType = $_REQUEST['log_type'];

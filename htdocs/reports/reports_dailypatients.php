@@ -19,8 +19,7 @@ $script_elems->enableDragTable();
 $date_from = $_REQUEST['yf']."-".$_REQUEST['mf']."-".$_REQUEST['df'];
 $date_to = $_REQUEST['yt']."-".$_REQUEST['mt']."-".$_REQUEST['dt'];
 //AS Fixing error of invalid lab config id
-	session_start();
-$user = get_user_by_name($_SESSION['username']);
+	$user = get_user_by_name($_SESSION['username']);
 $lab_config_id = $user->labConfigId;
 //$lab_config_id = $_REQUEST['l'];
 $lab_section = $_REQUEST['labsec'];
@@ -667,7 +666,7 @@ for($j=0;$j<count($designation);$j++) {?>
 	<br> <?php
 	for($j=0;$j<count($designation);$j++) {?>
 	<td style="font-size:14pt;" >
-		<?php echo "................"; ?>
+		<?php echo __DIR__ . "/................"; ?>
 	</td>
 	<?php } ?>
 </tr>	

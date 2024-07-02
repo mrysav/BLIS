@@ -5,7 +5,7 @@
 # This maintains info for samples that were linked to this specimen type previously
 #
 
-include("../includes/db_lib.php");
+include(__DIR__ . "/../includes/db_lib.php");
 
 $saved_session = SessionUtil::save();
 $saved_db = DbUtil::switchToGlobal();

@@ -3,8 +3,8 @@
 # Adds result for a single test
 # Called via ajax from results_entry.php
 #
-include("../includes/SessionCheck.php");
-include("../includes/db_lib.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
+include(__DIR__ . "/../includes/db_lib.php");
 LangUtil::setPageId("results_entry");
 
 $test_id = $_REQUEST['test_id'];

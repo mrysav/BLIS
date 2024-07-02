@@ -1,8 +1,8 @@
 <?php
 # Returns a JSON list of test types for a site location via Ajax
 # Called from pages where site/location drop down box is used
-include("../includes/SessionCheck.php");
-include("../includes/db_lib.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
+include(__DIR__ . "/../includes/db_lib.php");
 
 function list_to_json($value_list, $json_params)
 {

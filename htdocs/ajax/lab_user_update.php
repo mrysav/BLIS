@@ -4,8 +4,8 @@
 # Called via Ajax from lab_user_edit.php
 #
 
-include_once("../includes/SessionCheck.php");
-include_once("../includes/db_lib.php");
+include_once(__DIR__ . "/../includes/SessionCheck.php");
+include_once(__DIR__ . "/../includes/db_lib.php");
 
 $saved_session = SessionUtil::save();
 

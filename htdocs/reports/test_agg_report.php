@@ -7,11 +7,11 @@
  */
 
 include('redirect.php');
-include('../includes/db_lib.php');
-include('../includes/stats_lib.php');
-include('../includes/script_elems.php');
-include('../includes/page_elems.php');
-include('../users/accesslist.php');
+include(__DIR__ . '/../includes/db_lib.php');
+include(__DIR__ . '/../includes/stats_lib.php');
+include(__DIR__ . '/../includes/script_elems.php');
+include(__DIR__ . '/../includes/page_elems.php');
+include(__DIR__ . '/../users/accesslist.php');
 
 LangUtil::setPageId('reports');
 
@@ -68,7 +68,7 @@ if ($site ==0)
 </script>
 
 <form name="word_format_form" id="word_format_form"
-      action="../export/export_word_aggregate.php" method="post"
+      action=__DIR__ . "/../export/export_word_aggregate.php" method="post"
       target="_blank">
     <input type="hidden" name="data" value="" id="word_data">
     <input type="hidden" name="report_type" value="test_aggregate_report"
@@ -83,7 +83,7 @@ if ($site ==0)
 <br>
 
 <div id="report_content">
-    <link rel="stylesheet" type="text/css" href="../css/table_print.css">
+    <link rel="stylesheet" type="text/css" href=__DIR__ . "/../css/table_print.css">
     <b><font size="5"><?php echo $test->name. " ". $report_type; ?></font> </b>
 
 <br><br>

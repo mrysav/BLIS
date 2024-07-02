@@ -1,9 +1,9 @@
 <?php
 
-include "../includes/db_lib.php";
-include "../includes/stats_lib.php";
-require_once "../includes/user_lib.php";
-include("../includes/SessionCheck.php");
+include __DIR__ . "/../includes/db_lib.php";
+include __DIR__ . "/../includes/stats_lib.php";
+require_once __DIR__ . "/../includes/user_lib.php";
+include(__DIR__ . "/../includes/SessionCheck.php");
 //DbUtil::switchToLabConfig($lab_config_id);
 // returns total , nrgative and prev threshold
 //$test_type_id = $_REQUEST['test_type_id'];

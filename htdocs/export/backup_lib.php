@@ -2,9 +2,9 @@
 #
 # Contains commonly used functions for performing backup or reverting to a backup
 #
-require_once("../includes/composer.php");
-require_once("../includes/db_lib.php");
-require_once("../includes/platform_lib.php");
+require_once(__DIR__ . "/../includes/composer.php");
+require_once(__DIR__ . "/../includes/db_lib.php");
+require_once(__DIR__ . "/../includes/platform_lib.php");
 
 class BackupArchive {
     private $file_path;
@@ -193,7 +193,7 @@ class BackupLib
         $lab_db = "blis_$lab_config_id";
 
         // Create backup directory structure
-        $backup_dir = "../../files/backups/blis_backup_".date("Ymd-His");
+        $backup_dir = __DIR__ . "/../../files/backups/blis_backup_".date("Ymd-His");
         mkdir($backup_dir, 0700, true);
         mkdir("$backup_dir/$lab_db/", 0700, false);
         mkdir("$backup_dir/blis_revamp/", 0700, false);
@@ -309,10 +309,10 @@ class BackupLib
         }
 
         // Add language data files to backup folder
-        $lab_langdata = "../../local/langdata_$lab_config_id";
+        $lab_langdata = __DIR__ . "/../../local/langdata_$lab_config_id";
         if ($handle = opendir($lab_langdata)) {
             while (false !== ($file = readdir($handle))) {
-                if ($file === "." || $file == "..") {
+                if ($file === "." || $file == __DIR__ . "/..") {
                     continue;
                 }
                 copy("$lab_langdata/$file", "$backup_dir/langdata_$lab_config_id/$file");
@@ -320,15 +320,15 @@ class BackupLib
         }
 
 
-        self::dumpLog("../../local/log_$lab_config_id.txt", "$backup_dir/log_$lab_config_id.txt", $server_public_key);
-        self::dumpLog("../../local/log_$lab_config_id"."_updates.txt", "$backup_dir/log_$lab_config_id"."_updates.txt", $server_public_key);
-        self::dumpLog("../../local/log_$lab_config_id"."_revamp_updates.txt", "$backup_dir/log_$lab_config_id"."_revamp_updates.txt", $server_public_key);
-        self::dumpLog("../../local/UILog_2-2.csv", "$backup_dir/UILog_2-2.csv", $server_public_key);
-        self::dumpLog("../../local/UILog_2-3.csv", "$backup_dir/UILog_2-3.csv", $server_public_key);
-        self::dumpLog("../../log/application.log", "$backup_dir/application.log", $server_public_key);
-        self::dumpLog("../../log/database.log", "$backup_dir/database.log", $server_public_key);
-        self::dumpLog("../../log/apache2_error.log", "$backup_dir/apache2_error.log", $server_public_key);
-        self::dumpLog("../../log/php_error.log", "$backup_dir/apache2_error.log", $server_public_key);
+        self::dumpLog(__DIR__ . "/../../local/log_$lab_config_id.txt", "$backup_dir/log_$lab_config_id.txt", $server_public_key);
+        self::dumpLog(__DIR__ . "/../../local/log_$lab_config_id"."_updates.txt", "$backup_dir/log_$lab_config_id"."_updates.txt", $server_public_key);
+        self::dumpLog(__DIR__ . "/../../local/log_$lab_config_id"."_revamp_updates.txt", "$backup_dir/log_$lab_config_id"."_revamp_updates.txt", $server_public_key);
+        self::dumpLog(__DIR__ . "/../../local/UILog_2-2.csv", "$backup_dir/UILog_2-2.csv", $server_public_key);
+        self::dumpLog(__DIR__ . "/../../local/UILog_2-3.csv", "$backup_dir/UILog_2-3.csv", $server_public_key);
+        self::dumpLog(__DIR__ . "/../../log/application.log", "$backup_dir/application.log", $server_public_key);
+        self::dumpLog(__DIR__ . "/../../log/database.log", "$backup_dir/database.log", $server_public_key);
+        self::dumpLog(__DIR__ . "/../../log/apache2_error.log", "$backup_dir/apache2_error.log", $server_public_key);
+        self::dumpLog(__DIR__ . "/../../log/php_error.log", "$backup_dir/apache2_error.log", $server_public_key);
 
         $zipFile=$backup_dir;
         if ($encryption_enabled) {

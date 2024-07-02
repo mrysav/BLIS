@@ -3,9 +3,9 @@
 # Main page for updating specimen type info
 # Called via Ajax from specimen_type_edit.php
 #
-include("../includes/SessionCheck.php");
-include("../includes/db_lib.php");
-include("../lang/lang_xml2php.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
+include(__DIR__ . "/../includes/db_lib.php");
+include(__DIR__ . "/../lang/lang_xml2php.php");
 
 $updated_entry = new SpecimenType();
 $updated_entry->specimenTypeId = $_REQUEST['sid'];

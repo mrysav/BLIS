@@ -11,7 +11,7 @@ include("includes/stats_lib.php");
 include("includes/script_elems.php");
 LangUtil::setPageId("reports");
 
-include("../users/accesslist.php");
+include(__DIR__ . "/../users/accesslist.php");
 if(!(isLoggedIn(get_user_by_id($_SESSION['user_id']))))
     header( 'Location: home.php' );
 
@@ -47,7 +47,7 @@ $script_elems->enableFacebox();
         background-position: 10px center;
         color: #D8000C;
         background-color: #FFBABA;
-        background-image: url('../includes/img/knob_cancel.png');
+        background-image: url(__DIR__ . '/../includes/img/knob_cancel.png');
     }
     .update_success {
 
@@ -59,7 +59,7 @@ $script_elems->enableFacebox();
         background-position: 10px center;
         color: #000000;
         background-color: #99FF99;
-        background-image: url('../includes/img/knob_valid_green.png');
+        background-image: url(__DIR__ . '/../includes/img/knob_valid_green.png');
     }
 </style>
 
@@ -97,7 +97,7 @@ $script_elems->enableFacebox();
 <hr>
 
 <div id='report_content'>
-    <link rel='stylesheet' type='text/css' href='../css/table.css' />
+    <link rel='stylesheet' type='text/css' href=__DIR__ . '/../css/table.css' />
     <b><font size="5"><?php echo "Site Aggregate Report"; ?></b>
     <br><br>
 

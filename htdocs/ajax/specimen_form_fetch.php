@@ -3,10 +3,10 @@
 # Returns specimen result entry form
 # Called via ajax from results_entry.php
 #
-include("../includes/SessionCheck.php");
-include("../includes/db_lib.php");
-include("../includes/page_elems.php");
-include("../includes/ajax_lib.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
+include(__DIR__ . "/../includes/db_lib.php");
+include(__DIR__ . "/../includes/page_elems.php");
+include(__DIR__ . "/../includes/ajax_lib.php");
 LangUtil::setPageId("results_entry");
 $page_elems = new PageElems();
 

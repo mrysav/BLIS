@@ -3,7 +3,7 @@
 # Adds user rating to DB.
 #
 
-include("../includes/db_lib.php");
+include(__DIR__ . "/../includes/db_lib.php");
 global $con;
 
 $user_id = $_REQUEST['user_id'];

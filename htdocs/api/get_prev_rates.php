@@ -1,9 +1,9 @@
 <?php
 
-include "../includes/db_lib.php";
-include "../includes/stats_lib.php";
-require_once "../includes/user_lib.php";
-include("../includes/SessionCheck.php");
+include __DIR__ . "/../includes/db_lib.php";
+include __DIR__ . "/../includes/stats_lib.php";
+require_once __DIR__ . "/../includes/user_lib.php";
+include(__DIR__ . "/../includes/SessionCheck.php");
 DbUtil::switchToLabConfig($lab_config_id);
 if(!isset($_REQUEST['yf']) || !isset($_REQUEST['mf']) || !isset($_REQUEST['df']) || !isset($_REQUEST['yt']) || !isset($_REQUEST['dt']) || !isset($_REQUEST['mt']) )
 {

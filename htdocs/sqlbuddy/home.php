@@ -260,7 +260,7 @@ if ($conn->getAdapter() != "sqlite") {
 	<table class="keyboardtable">
 	<tr>
 		<th><?php echo __("Press this key..."); ?></th>
-		<th><?php echo __("...and this will happen"); ?></th>
+		<th><?php echo __(__DIR__ . "/...and this will happen"); ?></th>
 	</tr>
 	<tr>
 		<td>a</td>

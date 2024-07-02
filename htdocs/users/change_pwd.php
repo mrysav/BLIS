@@ -4,7 +4,7 @@
 # Called from edit_profile.php
 #
 include("redirect.php");
-session_start(); 
+ 
 include("includes/db_lib.php");
 $username = $_SESSION['username'];
 $old_password = $_REQUEST['old_password'];

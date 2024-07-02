@@ -1,6 +1,6 @@
 <?php
 
-include "../includes/db_lib.php";
+include __DIR__ . "/../includes/db_lib.php";
 
 if(!isset($_REQUEST['yf']) || !isset($_REQUEST['mf']) || !isset($_REQUEST['df']) || !isset($_REQUEST['yt']) || !isset($_REQUEST['dt']) || !isset($_REQUEST['mt']) || !isset($_REQUEST['patient_id']) || !isset($_REQUEST['ip']))
 {

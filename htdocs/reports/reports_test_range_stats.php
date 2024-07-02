@@ -45,7 +45,6 @@ function toggle_stat_table()
  | <a href='reports.php?show_tsr'>&laquo; <?php echo LangUtil::$pageTerms['MSG_BACKTOREPORTS']; ?></a>
 <br><br>
 <?php
-session_start();
 
 $user = get_user_by_name($_SESSION['username']);
 $lab_config_id = $user->labConfigId;

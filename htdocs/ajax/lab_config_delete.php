@@ -3,8 +3,8 @@
 # Main page for deleting a lab configuration
 # Called via Ajax from lab_config_home.php
 #
-include("../includes/SessionCheck.php");
-include("../includes/db_lib.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
+include(__DIR__ . "/../includes/db_lib.php");
 $lab_config_id = $_REQUEST['id'];
 # Delete DB tables corresponding to this lab configuration
 delete_lab_config($lab_config_id);
@@ -17,7 +17,7 @@ if($SERVER != $ON_ARC)
 	{
 		while (false !== ($file = readdir($handle)))
 		{
-			if($file === "." || $file == "..")
+			if($file === "." || $file == __DIR__ . "/..")
 				continue;
 			$file_list[] = $langdata_dir."/$file";
 		}

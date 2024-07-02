@@ -40,7 +40,7 @@
 			}
 		</style>
 		
-		<script type="text/javascript" language="javascript" src="../js/jquery.js"></script>
+		<script type="text/javascript" language="javascript" src=__DIR__ . "/../js/jquery.js"></script>
 		<script type="text/javascript" charset="utf-8">
 			var gaoTest = [
 			<?php
@@ -49,7 +49,7 @@
 					$rDir = opendir( $path );
         	while ( ($file = readdir($rDir)) !== false )
 					{
-						if ( $file == "." || $file == ".." || $file == ".DS_Store" )
+						if ( $file == "." || $file == __DIR__ . "/.." || $file == ".DS_Store" )
 						{
 							continue;
 						}

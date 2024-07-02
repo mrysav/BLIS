@@ -4,8 +4,8 @@
 # Updates report configuration in DB
 # Called via Ajax from lab_config_home.php
 #
-include("../includes/SessionCheck.php");
-include("../includes/db_lib.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
+include(__DIR__ . "/../includes/db_lib.php");
 $lab_config_id = $_REQUEST['location'];
 $report_id = $_REQUEST['report_id'];
 $report_config = new ReportConfig();
@@ -45,7 +45,7 @@ if($_REQUEST['Clinical_Data'] == 'Y')
 	$ClinicalData = 1;
 else
 	$ClinicalData = 0;
-$name="../../logo_".$lab_config_id.".jpg";
+$name=__DIR__ . "/../../logo_".$lab_config_id.".jpg";
 # Header text
 $align_header=array();
 $align_header[0]=db_escape($_REQUEST['header']);

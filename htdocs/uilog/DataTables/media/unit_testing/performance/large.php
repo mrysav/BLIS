@@ -16,11 +16,11 @@
 		
 		<title>DataTables example</title>
 		<style type="text/css" title="currentStyle">
-			@import "../../css/demo_page.css";
-			@import "../../css/demo_table.css";
+			@import __DIR__ . "/../../css/demo_page.css";
+			@import __DIR__ . "/../../css/demo_table.css";
 		</style>
-		<script type="text/javascript" language="javascript" src="../../js/jquery.js"></script>
-		<script type="text/javascript" language="javascript" src="../../js/jquery.dataTables.js"></script>
+		<script type="text/javascript" language="javascript" src=__DIR__ . "/../../js/jquery.js"></script>
+		<script type="text/javascript" language="javascript" src=__DIR__ . "/../../js/jquery.dataTables.js"></script>
 		<script type="text/javascript" charset="utf-8">
 			$(document).ready(function() {
 				var oTable = $('#example').dataTable();

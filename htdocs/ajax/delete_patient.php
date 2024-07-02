@@ -3,11 +3,11 @@
 # Deletes a patient profile from DB
 # Called via Ajax from lab_user_new.php
 #
-include("../includes/db_lib.php");
-include("../includes/SessionCheck.php");
-include("../includes/script_elems.php");
-include("../includes/page_elems.php");
-#require_once("../includes/user_lib.php");
+include(__DIR__ . "/../includes/db_lib.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
+include(__DIR__ . "/../includes/script_elems.php");
+include(__DIR__ . "/../includes/page_elems.php");
+#require_once(__DIR__ . "/../includes/user_lib.php");
 $patient_id=$_REQUEST['patient_id'];
 
 //$lab_config = LabConfig::getById($_SESSION['lab_config_id']);

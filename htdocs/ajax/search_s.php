@@ -3,8 +3,8 @@
 # Returns list of matched specimens
 # Called via Ajax from /search.php
 #
-include("../includes/SessionCheck.php");
-include("../includes/db_lib.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
+include(__DIR__ . "/../includes/db_lib.php");
 LangUtil::setPageId("search");
 
 $q = $_REQUEST['q'];

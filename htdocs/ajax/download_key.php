@@ -1,9 +1,8 @@
 <?php
-require_once("../includes/keymgmt.php");
-require_once("../includes/composer.php");
-require_once("../includes/platform_lib.php");
+require_once(__DIR__ . "/../includes/keymgmt.php");
+require_once(__DIR__ . "/../includes/composer.php");
+require_once(__DIR__ . "/../includes/platform_lib.php");
 
-session_start();
 
 $basedir = dirname(__FILE__)."/../../files";
 

@@ -7,7 +7,7 @@
 $files_dir = dirname(__FILE__) . "/../../files";
 $file = $_REQUEST['f'];
 // Prevent malicious users from grabbing any old system file
-$file = str_replace("..", "", $file);
+$file = str_replace(__DIR__ . "/..", "", $file);
 
 header("Content-disposition: attachment;filename=" . basename($file));
 readfile("$files_dir/$file");

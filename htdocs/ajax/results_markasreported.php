@@ -3,8 +3,8 @@
 # Main page for marking specimen results as reported
 # Called via Ajax from results_entry.php
 #
-include("../includes/SessionCheck.php");
-include("../includes/db_lib.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
+include(__DIR__ . "/../includes/db_lib.php");
 
 $sid_list = $_REQUEST['sid'];
 foreach($sid_list as $sid)

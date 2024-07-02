@@ -4,9 +4,9 @@
 # Called via POST from lab_config_home.php
 # Redirects back after update is complete
 #
-include("../includes/db_constants.php");
-include("../export/backup_lib.php");
-require_once("../includes/user_lib.php");
+include(__DIR__ . "/../includes/db_constants.php");
+include(__DIR__ . "/../export/backup_lib.php");
+require_once(__DIR__ . "/../includes/user_lib.php");
 $saved_session = SessionUtil::save();
 
 function page_redirect($is_done, $lid)
@@ -29,7 +29,7 @@ function dir_copy($src,$dst)
     @mkdir($dst); 
     while(false !== ( $file = readdir($dir)) ) 
 	{ 
-        if (( $file != '.' ) && ( $file != '..' )) 
+        if (( $file != '.' ) && ( $file != __DIR__ . '/..' )) 
 		{ 
             if ( is_dir($src . '/' . $file) ) 
 			{ 

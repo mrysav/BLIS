@@ -2,7 +2,7 @@
 #
 # Exports the given HTML content as txt document
 #
-include("../includes/db_lib.php");
+include(__DIR__ . "/../includes/db_lib.php");
 putUILog('export_text', 'X', basename($_SERVER['REQUEST_URI'], ".php"), 'X', 'X', 'X');
 $date = date("Ymdhi");
 $file_name = "blisreport_".$date.".txt";

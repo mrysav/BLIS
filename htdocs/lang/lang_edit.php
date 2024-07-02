@@ -6,7 +6,7 @@
 //include("redirect.php");
 //include("includes/header.php");
 
-require_once('../includes/composer.php');
+require_once(__DIR__ . '/../includes/composer.php');
 
 LangUtil::setPageId("lang_modify");
 

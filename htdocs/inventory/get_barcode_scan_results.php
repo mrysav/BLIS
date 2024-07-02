@@ -2,7 +2,7 @@
 include("redirect.php");
 include("includes/db_lib.php");
 include("includes/stats_lib.php");
-include("../lang/lang_xml2php.php");
+include(__DIR__ . "/../lang/lang_xml2php.php");
 include("barcode/barcode_lib.php");
 LangUtil::setPageId("stocks");
 

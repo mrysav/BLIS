@@ -173,7 +173,7 @@
 		$row = array();
 
 		/* Add the  details image at the start of the display array */
-		$row[] = '<img src="../examples_support/details_open.png">';
+		$row[] = '<img src=__DIR__ . "/../examples_support/details_open.png">';
 
 		for ( $i=0 ; $i<count($aColumns) ; $i++ )
 		{

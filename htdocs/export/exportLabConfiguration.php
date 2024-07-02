@@ -1,9 +1,9 @@
 <?php
 
 include("redirect.php");
-include("../includes/header.php");
-include("../includes/db_constants.php");
-require_once("../includes/platform_lib.php");
+include(__DIR__ . "/../includes/header.php");
+include(__DIR__ . "/../includes/db_constants.php");
+require_once(__DIR__ . "/../includes/platform_lib.php");
 
 $lab_config_id=$_REQUEST['id'];
 $user = get_user_by_id($_SESSION['user_id']);
@@ -27,7 +27,7 @@ $file_list2[] = $backupDbFileName;
 
 $lab_config = LabConfig::getById($lab_config_id);
 $site_name = str_replace(" ", "-", $lab_config->getSiteName());
-$destination = "../../blis_configuration_".$site_name."_".$country."/";
+$destination = __DIR__ . "/../../blis_configuration_".$site_name."_".$country."/";
 $toScreenDestination = "blis_configuration_".$site_name."_".$country;
 @mkdir($destination);
 @mkdir($destination."blis_revamp/");
@@ -65,5 +65,5 @@ unlink($backupDbFileName);
 username and password you created and begin configuring the system for use.
 
 <?php
-include("../includes/footer.php");
+include(__DIR__ . "/../includes/footer.php");
 ?>

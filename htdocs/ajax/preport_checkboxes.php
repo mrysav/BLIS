@@ -4,8 +4,8 @@
 # Called via Ajax from reports.php
 # Used for '[MENU_PATIENT]' report
 #
-include("../includes/SessionCheck.php");
-include("../includes/db_lib.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
+include(__DIR__ . "/../includes/db_lib.php");
 LangUtil::setPageId("reports");
 
 $lab_config_id = $_REQUEST['l'];

@@ -3,7 +3,7 @@
 # Updates the discount for an test-bill association
 #
 
-include("../includes/db_lib.php");
+include(__DIR__ . "/../includes/db_lib.php");
 
 $lab_config_id = $_SESSION['lab_config_id'];
 

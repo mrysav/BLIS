@@ -5,9 +5,9 @@
  * Date: 9/29/2016
  * Time: 12:24 PM
  */
-include("../includes/SessionCheck.php");
-include('../includes/db_lib.php');
-include('../includes/page_elems.php');
+include(__DIR__ . "/../includes/SessionCheck.php");
+include(__DIR__ . '/../includes/db_lib.php');
+include(__DIR__ . '/../includes/page_elems.php');
 
 
 $site_list =  $_REQUEST['all_sites'];

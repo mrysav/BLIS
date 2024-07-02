@@ -4,9 +4,9 @@
 # Called via POST from lab_config_home.php
 # Redirects back after revert complete
 #
-require_once("../export/backup_lib.php");
-require_once("../includes/db_constants.php");
-require_once("../includes/platform_lib.php");
+require_once(__DIR__ . "/../export/backup_lib.php");
+require_once(__DIR__ . "/../includes/db_constants.php");
+require_once(__DIR__ . "/../includes/platform_lib.php");
 
 function page_redirect($is_done)
 {

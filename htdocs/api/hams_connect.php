@@ -1,5 +1,5 @@
 <?php
-include('../adodb5/adodb.inc.php');  
+include(__DIR__ . '/../adodb5/adodb.inc.php');  
 class HAMS
 {
 	function getConn()

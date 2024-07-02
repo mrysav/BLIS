@@ -23,7 +23,7 @@
 # displays footer so the users know the page is done loading.
 #
 
-include_once("../lang/lang_util.php");
+include_once(__DIR__ . "/../lang/lang_util.php");
 include("db_close.php");
 LangUtil::setPageId("footer");
 ?>
@@ -99,7 +99,7 @@ LangUtil::setPageId("footer");
 			$page_name = $_SERVER['PHP_SELF'];
 			$page_name_parts = explode("/", $page_name);
 			$file_name = $page_name_parts[count($page_name_parts)-1].".dat";
-			$file_handle = fopen("../feedback/loadtimes/".$file_name, "a");
+			$file_handle = fopen(__DIR__ . "/../feedback/loadtimes/".$file_name, "a");
 			fwrite($file_handle, $totaltime."\n");
 			fclose($file_handle);
 			echo "<br>$file_name This page loaded in $totaltime seconds.";

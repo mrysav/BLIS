@@ -13,8 +13,7 @@ require_once("includes/user_lib.php");
 
 # Start session if not already started
 if(session_id() == "")
-	session_start();
-
+	
 $username = $_REQUEST['username'];
 $password = $_REQUEST['password'];
 $login_correct = check_user_password($username, $password);

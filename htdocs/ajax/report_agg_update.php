@@ -3,8 +3,8 @@
 # Main page for updating aggregate (disease) report settings
 # Called via Ajax from lab_config_home.php
 #
-include("../includes/SessionCheck.php");
-include("../includes/db_lib.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
+include(__DIR__ . "/../includes/db_lib.php");
 
 $disease_report = new DiseaseReport();
 $disease_report->labConfigId = $_REQUEST['lab_config_id'];

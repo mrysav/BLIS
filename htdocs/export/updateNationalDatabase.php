@@ -4,10 +4,10 @@
 # Called via POST from lab_config_home.php
 # Redirects back after update is complete
 #
-include("../includes/header.php");
-include("../includes/db_constants.php");
-//include("../export/backup_lib.php");
-//require_once("../includes/user_lib.php");
+include(__DIR__ . "/../includes/header.php");
+include(__DIR__ . "/../includes/db_constants.php");
+//include(__DIR__ . "/../export/backup_lib.php");
+//require_once(__DIR__ . "/../includes/user_lib.php");
 $saved_session = SessionUtil::save();
 //$labConfigId = 129;
 $labConfigId = $_REQUEST['labConfigId'];
@@ -32,7 +32,7 @@ function dir_copy($src,$dst) {
     @mkdir($dst); 
     while(false !== ( $file = readdir($dir)) ) 
 	{ 
-        if (( $file != '.' ) && ( $file != '..' )) 
+        if (( $file != '.' ) && ( $file != __DIR__ . '/..' )) 
 		{ 
             if ( is_dir($src . '/' . $file) ) 
 			{ 
@@ -215,5 +215,5 @@ function performUpdate($lab_config_id, $backup_folder) {
 SessionUtil::restore($saved_session);
 page_redirect($returnStatus);
 */
-include("../includes/footer.php");
+include(__DIR__ . "/../includes/footer.php");
 ?>

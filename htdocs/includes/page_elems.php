@@ -4,12 +4,12 @@
 # Contains method calls for commonly used HTML page elements
 #
 
-require_once("../export/backup_lib.php");
-require_once("../regn/field_htmlFactory.php");
-require_once("../regn/generate_customize_field_order_patient.php");
+require_once(__DIR__ . "/../export/backup_lib.php");
+require_once(__DIR__ . "/../regn/field_htmlFactory.php");
+require_once(__DIR__ . "/../regn/generate_customize_field_order_patient.php");
 require_once("db_lib.php");
 require_once("field_order_update.php");
-include_once("../lang/lang_util.php");
+include_once(__DIR__ . "/../lang/lang_util.php");
 
 
 class PageElems
@@ -8326,12 +8326,12 @@ $name_list = array("yyyy_to".$count, "mm_to".$count, "dd_to".$count);
                     </td>
             </tr>
 			<?php if($report_config->reportId==1){?>
-			<tr><td><h4><?php $name="../logos/logo_".$lab_config_id.".jpg";
-			 if (file_exists("../logos/logo_".$report_config->labConfigId.".jpg")==true)
+			<tr><td><h4><?php $name=__DIR__ . "/../logos/logo_".$lab_config_id.".jpg";
+			 if (file_exists(__DIR__ . "/../logos/logo_".$report_config->labConfigId.".jpg")==true)
 			echo "LOGO being Used "; ?></h4></td></tr>
 	  		<tr><td><h3>File Upload:</h3></td><td><?php
 
-	 if (file_exists("../logos/logo_".$report_config->labConfigId.".jpg")==false)
+	 if (file_exists(__DIR__ . "/../logos/logo_".$report_config->labConfigId.".jpg")==false)
 	{echo "( Add a Logo)"; }else echo "(Change Logo)"; ?>
 	Choose a .jpg logo File to upload:
 	<input type="file" name="file" >
@@ -11747,5 +11747,4 @@ public function gettestRangeStatsTable($test_range_count)
 }
 
 if(session_id() == "")
-	session_start();
-?>
+	?>

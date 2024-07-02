@@ -4,8 +4,8 @@
 # Called via Ajax from remarks_edit.php
 #
 
-include("../includes/db_lib.php");
-include("../lang/lang_xml2php.php");
+include(__DIR__ . "/../includes/db_lib.php");
+include(__DIR__ . "/../lang/lang_xml2php.php");
 
 $lab_config_id = $_REQUEST['lid'];
 $test_type_id = $_REQUEST['ttype'];

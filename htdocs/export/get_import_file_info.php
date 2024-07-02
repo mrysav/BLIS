@@ -1,6 +1,6 @@
 <?php
-require_once("../includes/db_lib.php");
-require_once("../includes/composer.php");
+require_once(__DIR__ . "/../includes/db_lib.php");
+require_once(__DIR__ . "/../includes/composer.php");
 
 $file_name = $_REQUEST['fl'];
 $file_name_and_extension = explode('.', $file_name);

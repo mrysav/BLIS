@@ -4,9 +4,9 @@
 # Also, generates/clears existing random data
 # Called via Ajax from lab_config_home.php
 #
-include("../includes/SessionCheck.php");
-include("../includes/db_lib.php");
-include("../includes/random.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
+include(__DIR__ . "/../includes/db_lib.php");
+include(__DIR__ . "/../includes/random.php");
 
 $saved_session = SessionUtil::save();
 $saved_id = $_SESSION['lab_config_id'];

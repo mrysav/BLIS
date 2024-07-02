@@ -6,7 +6,7 @@
 # Called when the lab admin has only one lab under him/her
 #
 
-include("../users/accesslist.php");
+include(__DIR__ . "/../users/accesslist.php");
 include("redirect.php");
 require_once("includes/user_lib.php");
 include("includes/header.php");
@@ -60,7 +60,7 @@ include("includes/header.php");
     background-position: 10px center;
     color: #9F6000;
     background-color: #FEEFB3;
-    background-image: url('../includes/img/knob_attention.png');
+    background-image: url(__DIR__ . '/../includes/img/knob_attention.png');
 
 }
 
@@ -75,7 +75,7 @@ include("includes/header.php");
     background-position: 10px center;
     color: #9F6000;
     background-color: #FEEFB3;
-    background-image: url('../includes/img/knob_attention.png');
+    background-image: url(__DIR__ . '/../includes/img/knob_attention.png');
 
 }
 
@@ -96,7 +96,7 @@ include("includes/header.php");
     background-position: 10px center;
     color: #000000;
     background-color: #99FF99;
-    background-image: url('../includes/img/knob_valid_green.png');
+    background-image: url(__DIR__ . '/../includes/img/knob_valid_green.png');
 }
 
 </style>

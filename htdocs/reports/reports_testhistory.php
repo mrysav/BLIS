@@ -21,7 +21,7 @@ require_once("includes/user_lib.php");
 
 LangUtil::setPageId("reports");
 
-include("../users/accesslist.php");
+include(__DIR__ . "/../users/accesslist.php");
  if(!(isLoggedIn(get_user_by_id($_SESSION['user_id']))))
 	header( 'Location: home.php' );
 
@@ -567,8 +567,8 @@ $script_elems->enableEditInPlace();
 $page_elems = new PageElems();
 ?>
 
-<script type="text/javascript" src="../js/nicEdit.js"></script>
-<script type="text/javascript" src="../js/jquery-barcode-2.0.2.js"></script>  
+<script type="text/javascript" src=__DIR__ . "/../js/nicEdit.js"></script>
+<script type="text/javascript" src=__DIR__ . "/../js/jquery-barcode-2.0.2.js"></script>  
 <script type='text/javascript'>
 
 var curr_orientation = 0;
@@ -956,9 +956,9 @@ td{
 <td>
 <?php
 # If hospital logo exists, include it
-$logo_path = "../logos/logo_".$lab_config_id.".jpg";
-$logo_path2 = "../ajax/logo_".$lab_config_id.".jpg";
-$logo_path1="../../logo_".$lab_config_id.".jpg";
+$logo_path = __DIR__ . "/../logos/logo_".$lab_config_id.".jpg";
+$logo_path2 = __DIR__ . "/../ajax/logo_".$lab_config_id.".jpg";
+$logo_path1=__DIR__ . "/../../logo_".$lab_config_id.".jpg";
 $align=$report_config->alignment_header;
 
 if(file_exists($logo_path1) === true)
@@ -2176,7 +2176,7 @@ Signed by:
 
 
 <?php 
-//$new_footer_part="............................................";
+//$new_footer_part=__DIR__ . "/............................................";
 $footerText=explode(";" ,$report_config->footerText);
 $designation=explode(";" ,$report_config->designation);
 $lab_config_id=$_SESSION['lab_config_id'];

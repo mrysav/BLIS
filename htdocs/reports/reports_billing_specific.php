@@ -11,7 +11,7 @@ include("includes/page_elems.php");
 
 LangUtil::setPageId("reports");
 
-include("../users/accesslist.php");
+include(__DIR__ . "/../users/accesslist.php");
 
 if(!(isLoggedIn(get_user_by_id($_SESSION['user_id']))))
     header( 'Location: home.php' );
@@ -72,7 +72,7 @@ for($i = 0; $i < count($margin_list); $i++) {
 
 		?>
 
-		<script type="text/javascript" src="../js/nicEdit.js"></script>
+		<script type="text/javascript" src=__DIR__ . "/../js/nicEdit.js"></script>
 		<script type='text/javascript'>
 
 		var curr_orientation = 0;
@@ -294,9 +294,9 @@ for($i = 0; $i < count($margin_list); $i++) {
 						<?php
 						
 						# If hospital logo exists, include it
-						$logo_path = "../logos/logo_".$lab_config_id.".jpg";
-						$logo_path2 = "../ajax/logo_".$lab_config_id.".jpg";
-						$logo_path1="../../logo_".$lab_config_id.".jpg";
+						$logo_path = __DIR__ . "/../logos/logo_".$lab_config_id.".jpg";
+						$logo_path2 = __DIR__ . "/../ajax/logo_".$lab_config_id.".jpg";
+						$logo_path1=__DIR__ . "/../../logo_".$lab_config_id.".jpg";
 						
 						if(file_exists($logo_path1) === true)
 						{	copy($logo_path1,$logo_path);
@@ -482,7 +482,7 @@ for($i = 0; $i < count($margin_list); $i++) {
 					<!--p class="main">
 					............................................-->
 					<?php
-					$new_footer_part="............................................";
+					$new_footer_part=__DIR__ . "/............................................";
 					$footerText=explode(";" ,$report_config->footerText);
 					$designation=explode(";" ,$report_config->designation);
 					?>

@@ -4,8 +4,8 @@
 # Called via Ajax form result_entry.php
 #
 
-include("../includes/db_lib.php");
-include("../includes/SessionCheck.php");
+include(__DIR__ . "/../includes/db_lib.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
 LangUtil::setPageId("results_entry");
 if(!isset($_REQUEST['result_cap']))
     $result_cap = $rcap;
@@ -145,11 +145,11 @@ function get_first(count)
 <?php 
         if(isset($_REQUEST['labsec']))
         { 
-$url_str= "../ajax/result_data_page_new.php?a=".$_REQUEST['a']."&t=".$_REQUEST['t']."&l=".$_REQUEST['labsec']."&result_cap=".$rcap."&result_counter=1&c=".$_REQUEST['c']; 
+$url_str= __DIR__ . "/../ajax/result_data_page_new.php?a=".$_REQUEST['a']."&t=".$_REQUEST['t']."&l=".$_REQUEST['labsec']."&result_cap=".$rcap."&result_counter=1&c=".$_REQUEST['c']; 
         }
         else
         {
-$url_str = "../ajax/result_data_page_new.php?a=".$_REQUEST['a']."&t=".$_REQUEST['t']."&result_cap=".$rcap."&result_counter=1&c=".$_REQUEST['c'];             
+$url_str = __DIR__ . "/../ajax/result_data_page_new.php?a=".$_REQUEST['a']."&t=".$_REQUEST['t']."&result_cap=".$rcap."&result_counter=1&c=".$_REQUEST['c'];             
         }
 ?>
 var url='<?php echo $url_str;?>';
@@ -192,13 +192,13 @@ function get_next(url, sno, cap)
         if(isset($_REQUEST['labsec']))
         { 
 ?>
-url= "../ajax/result_data_page_new.php?a=<?php echo $_REQUEST['a'];?>&t=<?php echo $_REQUEST['t'];?>&l=<?php echo $_REQUEST['labsec']?>&result_cap=<?php echo $rcap;?>&result_counter="+sno+"&c=<?php echo $_REQUEST['c'];?>"; 
+url= __DIR__ . "/../ajax/result_data_page_new.php?a=<?php echo $_REQUEST['a'];?>&t=<?php echo $_REQUEST['t'];?>&l=<?php echo $_REQUEST['labsec']?>&result_cap=<?php echo $rcap;?>&result_counter="+sno+"&c=<?php echo $_REQUEST['c'];?>"; 
 <?php
         }
         else
         {
 ?>
-url= "../ajax/result_data_page_new.php?a=<?php echo $_REQUEST['a'];?>&t=<?php echo $_REQUEST['t'];?>&result_cap=<?php echo $rcap;?>&result_counter="+sno+"&c=<?php echo $_REQUEST['c'];?>"; 
+url= __DIR__ . "/../ajax/result_data_page_new.php?a=<?php echo $_REQUEST['a'];?>&t=<?php echo $_REQUEST['t'];?>&result_cap=<?php echo $rcap;?>&result_counter="+sno+"&c=<?php echo $_REQUEST['c'];?>"; 
 <?php
         }
 ?>
@@ -240,13 +240,13 @@ function get_prev(url, sno, cap)
         if(isset($_REQUEST['labsec']))
         { 
 ?>
-url= "../ajax/result_data_page_new.php?a=<?php echo $_REQUEST['a'];?>&t=<?php echo $_REQUEST['t'];?>&l=<?php echo $_REQUEST['labsec']?>&result_cap=<?php echo $rcap;?>&result_counter="+sno+"&c=<?php echo $_REQUEST['c'];?>"; 
+url= __DIR__ . "/../ajax/result_data_page_new.php?a=<?php echo $_REQUEST['a'];?>&t=<?php echo $_REQUEST['t'];?>&l=<?php echo $_REQUEST['labsec']?>&result_cap=<?php echo $rcap;?>&result_counter="+sno+"&c=<?php echo $_REQUEST['c'];?>"; 
 <?php
         }
         else
         {
 ?>
-url= "../ajax/result_data_page_new.php?a=<?php echo $_REQUEST['a'];?>&t=<?php echo $_REQUEST['t'];?>&result_cap=<?php echo $rcap;?>&result_counter="+sno+"&c=<?php echo $_REQUEST['c'];?>"; 
+url= __DIR__ . "/../ajax/result_data_page_new.php?a=<?php echo $_REQUEST['a'];?>&t=<?php echo $_REQUEST['t'];?>&result_cap=<?php echo $rcap;?>&result_counter="+sno+"&c=<?php echo $_REQUEST['c'];?>"; 
 <?php
         }
 ?>
@@ -723,19 +723,19 @@ if($attrib_type == 3 && $count > 2)
 <?php 
         if(isset($_REQUEST['labsec']))
         { 
-            $next_link = "../ajax/result_data_page_new.php?a=".$_REQUEST['a']."&t=".$_REQUEST['t']."&l=".$_REQUEST['labsec']."&result_cap=".$result_cap."&result_counter=".($result_counter + 1)."&c=".$_REQUEST['c']; 
+            $next_link = __DIR__ . "/../ajax/result_data_page_new.php?a=".$_REQUEST['a']."&t=".$_REQUEST['t']."&l=".$_REQUEST['labsec']."&result_cap=".$result_cap."&result_counter=".($result_counter + 1)."&c=".$_REQUEST['c']; 
         }
         else
         {
-            $next_link = "../ajax/result_data_page_new.php?a=".$_REQUEST['a']."&t=".$_REQUEST['t']."&result_cap=".$result_cap."&result_counter=".($result_counter + 1)."&c=".$_REQUEST['c'];             
+            $next_link = __DIR__ . "/../ajax/result_data_page_new.php?a=".$_REQUEST['a']."&t=".$_REQUEST['t']."&result_cap=".$result_cap."&result_counter=".($result_counter + 1)."&c=".$_REQUEST['c'];             
         }
         if(isset($_REQUEST['labsec']))
         { 
-            $prev_link = "../ajax/result_data_page_new.php?a=".$_REQUEST['a']."&t=".$_REQUEST['t']."&l=".$_REQUEST['labsec']."&result_cap=".$result_cap."&result_counter=".($result_counter - 1)."&c=".$_REQUEST['c']; 
+            $prev_link = __DIR__ . "/../ajax/result_data_page_new.php?a=".$_REQUEST['a']."&t=".$_REQUEST['t']."&l=".$_REQUEST['labsec']."&result_cap=".$result_cap."&result_counter=".($result_counter - 1)."&c=".$_REQUEST['c']; 
         }
         else
         {
-            $prev_link = "../ajax/result_data_page_new.php?a=".$_REQUEST['a']."&t=".$_REQUEST['t']."&result_cap=".$result_cap."&result_counter=".($result_counter - 1)."&c=".$_REQUEST['c'];             
+            $prev_link = __DIR__ . "/../ajax/result_data_page_new.php?a=".$_REQUEST['a']."&t=".$_REQUEST['t']."&result_cap=".$result_cap."&result_counter=".($result_counter - 1)."&c=".$_REQUEST['c'];             
         }
     ?>        
 <div class="prev_link">                       

@@ -58,9 +58,9 @@
 				<?php
 				include 'print_functions.php';
 				# If hospital logo exists, include it
-				$logo_path = "../logos/logo_".$lab_config_id.".jpg";
-				$logo_path2 = "../ajax/logo_".$lab_config_id.".jpg";
-				$logo_path1="../../logo_".$lab_config_id.".jpg";
+				$logo_path = __DIR__ . "/../logos/logo_".$lab_config_id.".jpg";
+				$logo_path2 = __DIR__ . "/../ajax/logo_".$lab_config_id.".jpg";
+				$logo_path1=__DIR__ . "/../../logo_".$lab_config_id.".jpg";
 				$align=$report_config->alignment_header;
 				
 				if(file_exists($logo_path1) === true) {	

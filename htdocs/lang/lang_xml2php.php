@@ -73,7 +73,7 @@ function catalog_db2xml($lang_id="default")
 <catalog lang="$lang_id" descr=''>
 	<entity id="section" descr="Lab Section">
 EOF;
-	$handle = fopen("../../langdata/".$lang_id."_catalog.xml", "w");
+	$handle = fopen(__DIR__ . "/../../langdata/".$lang_id."_catalog.xml", "w");
 	fwrite($handle, $string_data);
 	$query_string = "SELECT * FROM test_category";
 	$resultset = query_associative_all($query_string);
@@ -184,7 +184,7 @@ EOF;
 
 function catalog_xml2php($lang_code)
 {
-	$handle = fopen("../../langdata/".$lang_code."_catalog.php", "w");
+	$handle = fopen(__DIR__ . "/../../langdata/".$lang_code."_catalog.php", "w");
 	$string_data = <<<EOF
 <?php
 \$CATALOG_ARRAY = array (
@@ -192,7 +192,7 @@ function catalog_xml2php($lang_code)
 EOF;
 	fwrite($handle, $string_data);
 
-	$catalog = simplexml_load_file("../../langdata/".$lang_code."_catalog.xml");
+	$catalog = simplexml_load_file(__DIR__ . "/../../langdata/".$lang_code."_catalog.xml");
 
 	$catalog_count = 0;
 	foreach($catalog as $entity)
@@ -311,7 +311,7 @@ EOF;
 	$string_data = <<<EOF
 );
 
-include_once("../lang/lang_util.php");
+include_once(__DIR__ . "/../lang/lang_util.php");
 ?>
 EOF;
 	fwrite($handle, "\n".$string_data);
@@ -434,12 +434,12 @@ function update_remarks_xml($langdata_path, $updated_remarks)
 }
 
 
-//lang_xml2php("default", "../../local/langdata_revamp/");
-//lang_xml2php("en", "../../local/langdata_revamp/");
-//lang_xml2php("fr", "../../local/langdata_revamp/");
+//lang_xml2php("default", __DIR__ . "/../../local/langdata_revamp/");
+//lang_xml2php("en", __DIR__ . "/../../local/langdata_revamp/");
+//lang_xml2php("fr", __DIR__ . "/../../local/langdata_revamp/");
 
-//remarks_db2xml("../../local/langdata_127/", 127;
-//remarks_xml2php("../../local/langdata_127");
+//remarks_db2xml(__DIR__ . "/../../local/langdata_127/", 127;
+//remarks_xml2php(__DIR__ . "/../../local/langdata_127");
 
 //catalog_db2xml("fr");
 //catalog_xml2php("fr");

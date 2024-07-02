@@ -1,6 +1,6 @@
 <?php
 
-include "../includes/db_lib.php";
+include __DIR__ . "/../includes/db_lib.php";
 
 echo API::test_api(44);
 echo "<br>";

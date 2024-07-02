@@ -3,7 +3,7 @@
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <?php
 
-include("../reports/redirect.php");
+include(__DIR__ . "/../reports/redirect.php");
 include("includes/db_lib.php");
 include("includes/script_elems.php");
 include("includes/page_elems.php");
@@ -12,7 +12,7 @@ require_once("includes/user_lib.php");
 
 LangUtil::setPageId("reports");
 
-include("../users/accesslist.php");
+include(__DIR__ . "/../users/accesslist.php");
  if(!(isLoggedIn(get_user_by_id($_SESSION['user_id']))))
 	header( 'Location: home.php' );
 
@@ -536,8 +536,8 @@ $script_elems->enableEditInPlace();
 $page_elems = new PageElems();
 ?>
 
-<script type="text/javascript" src="../js/nicEdit.js"></script>
-<script type="text/javascript" src="../js/jquery-barcode-2.0.2.js"></script>  
+<script type="text/javascript" src=__DIR__ . "/../js/nicEdit.js"></script>
+<script type="text/javascript" src=__DIR__ . "/../js/jquery-barcode-2.0.2.js"></script>  
 <script type='text/javascript'>
 
 var curr_orientation = 0;

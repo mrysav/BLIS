@@ -3,10 +3,10 @@
 # Exports lab configuration parameters
 #
 
-include("../includes/db_lib.php");
-require_once("../includes/perms_check.php");
-include("../includes/page_elems.php");
-include("../includes/script_elems.php");
+include(__DIR__ . "/../includes/db_lib.php");
+require_once(__DIR__ . "/../includes/perms_check.php");
+include(__DIR__ . "/../includes/page_elems.php");
+include(__DIR__ . "/../includes/script_elems.php");
 
 putUILog('export_config', 'X', basename($_SERVER['REQUEST_URI'], ".php"), 'X', 'X', 'X');
 

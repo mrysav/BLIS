@@ -2,8 +2,8 @@
 # Sends user comments to BLIS developers by email
 # A copy is also retained in the DB
 # Called via Ajax from comments.php
-include("../includes/db_lib.php");
-include("../includes/SessionCheck.php");
+include(__DIR__ . "/../includes/db_lib.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
 # Construct email parameters
 $comment = $_REQUEST['comment'];
 $username = $_REQUEST['user'];

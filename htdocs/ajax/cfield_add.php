@@ -4,8 +4,8 @@
 # Called via Ajax from cfield_add.php
 #
 
-include("../includes/db_lib.php");
-include("../includes/SessionCheck.php");
+include(__DIR__ . "/../includes/db_lib.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
 $lab_config_id = $_REQUEST['lid'];
 $tabletype = $_REQUEST['tabletype'];
 $field_name = $_REQUEST['fname'];

@@ -1,5 +1,5 @@
 <?php
-include "../includes/dhims2.php";
+include __DIR__ . "/../includes/dhims2.php";
 $return=DHIMS2API::getDataElementsCombo($_REQUEST['dataElementID'],$_REQUEST['dhims2username'],$_REQUEST['dhims2password']);
 //file_put_contents("dhims2.txt", $_REQUEST['orgunitid']);
 if($return === 404 || empty($return))

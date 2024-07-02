@@ -2,7 +2,7 @@
 
 include_once("generate_customize_field_order_patient.php");
 
-include_once("../includes/db_lib.php");
+include_once(__DIR__ . "/../includes/db_lib.php");
 
 class field_htmlFactory{
 	

@@ -5,8 +5,8 @@
 # Called after htdocs update succeeds
 #
 include("redirect.php");
-include("../includes/db_lib.php");
-require_once("../includes/user_lib.php");
+include(__DIR__ . "/../includes/db_lib.php");
+require_once(__DIR__ . "/../includes/user_lib.php");
 
 global $DB_HOST, $DB_USER, $DB_PASS;
 

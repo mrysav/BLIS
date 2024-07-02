@@ -4,8 +4,8 @@
 # Called via Ajax from cfield_edit.php
 #
 
-include("../includes/db_lib.php");
-include("../includes/SessionCheck.php");
+include(__DIR__ . "/../includes/db_lib.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
 $field_id = $_REQUEST['id'];
 $lab_config_id = $_REQUEST['lid'];
 $type = $_REQUEST['t'];

@@ -223,7 +223,7 @@ if ($handle = opendir($dir_name1))
 {
 	while (false !== ($file = readdir($handle)))
 	{
-		if($file === "." || $file == "..")
+		if($file === "." || $file == __DIR__ . "/..")
 			continue;
 		$file_list1[] = $dir_name1."/$file";
 	}

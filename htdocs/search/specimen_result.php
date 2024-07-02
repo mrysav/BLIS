@@ -4,7 +4,7 @@
 #
 include("redirect.php");
 include("includes/header.php");
-include("../includes/ajax_lib.php");
+include(__DIR__ . "/../includes/ajax_lib.php");
 $script_elems->enableJQueryForm();
 $script_elems->enableJQueryValidate();
 $script_elems->enableTableSorter();

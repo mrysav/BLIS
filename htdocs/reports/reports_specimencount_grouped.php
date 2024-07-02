@@ -9,7 +9,7 @@ include("includes/stats_lib.php");
 include("includes/script_elems.php");
 LangUtil::setPageId("reports");
 
-include("../users/accesslist.php");
+include(__DIR__ . "/../users/accesslist.php");
  if(!(isLoggedIn(get_user_by_id($_SESSION['user_id']))))
 	header( 'Location: home.php' );
 
@@ -56,8 +56,7 @@ function print_content(div_id)
 <br><br>
 <?php
 //AS Fixing error of invalid lab config id
-	session_start();
-$user = get_user_by_name($_SESSION['username']);
+	$user = get_user_by_name($_SESSION['username']);
 $lab_config_id = $user->labConfigId;
 //$lab_config_id = $_REQUEST['location'];
 $lab_config = LabConfig::getById($lab_config_id);

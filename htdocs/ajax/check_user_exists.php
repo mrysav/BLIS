@@ -4,8 +4,8 @@
 # Called via Ajax from lab_user_new.php
 #
 
-include("../includes/db_lib.php");
-include("../includes/SessionCheck.php");
+include(__DIR__ . "/../includes/db_lib.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
 $saved_session = SessionUtil::save();
 
 $user_list=$_REQUEST['userlist'];

@@ -5,7 +5,7 @@
 # copy this code after the line saying PLUG_FORM_DIV
 # Substitute "[reportname]" by the report name (single word or with underscore)
 
-include_once("../lang/lang_util.php");
+include_once(__DIR__ . "/../lang/lang_util.php");
 
 ?>
 

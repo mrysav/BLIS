@@ -244,8 +244,7 @@ function view_testwise_daily()
 <br><br>
 <?php
 $lab_config_id = array($_REQUEST['location']);
-	session_start();
-if(count($lab_config_id)==1)
+	if(count($lab_config_id)==1)
 {
 //AS Fixing error of invalid lab config id
 $user = get_user_by_name($_SESSION['username']);

@@ -11,7 +11,7 @@ include("includes/stats_lib.php");
 include("includes/script_elems.php");
 LangUtil::setPageId("reports");
 
-include("../users/accesslist.php");
+include(__DIR__ . "/../users/accesslist.php");
  if(!(isLoggedIn(get_user_by_id($_SESSION['user_id']))))
 	header( 'Location: home.php' );
  
@@ -47,7 +47,7 @@ $script_elems->enableFacebox();
     background-position: 10px center;
     color: #D8000C;
     background-color: #FFBABA;
-    background-image: url('../includes/img/knob_cancel.png');
+    background-image: url(__DIR__ . '/../includes/img/knob_cancel.png');
 }
 .update_success {
     
@@ -59,7 +59,7 @@ $script_elems->enableFacebox();
     background-position: 10px center;
     color: #000000;
     background-color: #99FF99;
-    background-image: url('../includes/img/knob_valid_green.png');
+    background-image: url(__DIR__ . '/../includes/img/knob_valid_green.png');
 }
 </style>
 
@@ -103,8 +103,7 @@ function print_content(div_id)
 <?php
 //print_r($_REQUEST);
 //AS Fixing error of invalid lab config id
-	session_start();
-$user = get_user_by_name($_SESSION['username']);
+	$user = get_user_by_name($_SESSION['username']);
 $lab_config_id = $user->labConfigId;
 //$lab_config_id = $_REQUEST['location'];
 $lab_config = LabConfig::getById($lab_config_id);
@@ -1067,7 +1066,7 @@ if($byAge == 1 && $byGender == 1 && $combo !=3 )
         <tr>
         <td align="center"> 
         <div id="dhims2_send_link" style="display:block;" class="warning"><b>DHIMS2 INTERFACE</b>
-            	<form name="dhims2_frm" id="dhims2_frm" action="../api/dhims2_send.php" method="post">
+            	<form name="dhims2_frm" id="dhims2_frm" action=__DIR__ . "/../api/dhims2_send.php" method="post">
                 <input type="hidden" value='<?php echo json_encode($dhims2_test_config);?>' name="dhims2_test_counts" id="dhims2_test_counts"  />
                 <input type="hidden" name="lab_config_id" id="lab_config_id" value="<?php  echo $lab_config_id?>" />
                 Username:<input type="text" name="dhims2_username" id="dhims2_username" /><br />
@@ -1076,7 +1075,7 @@ if($byAge == 1 && $byGender == 1 && $combo !=3 )
                 </form>               
             </div>
             <div id="dhims2_send_failure" style="display:none;" class="update_error">
-   <b>Sending Error!</b><form name="dhims2_frm_retry" id="dhims2_frm_retry" action="../api/dhims2_send.php" method="post">
+   <b>Sending Error!</b><form name="dhims2_frm_retry" id="dhims2_frm_retry" action=__DIR__ . "/../api/dhims2_send.php" method="post">
                 <input type="hidden" value='<?php echo json_encode($dhims2_test_config);?>' name="dhims2_test_counts" id="dhims2_test_counts"  />
                 <input type="hidden" name="lab_config_id" id="lab_config_id" value="<?php  echo $lab_config_id?>" />
                 Username:<input type="text" name="dhims2_username" id="dhims2_username" /><br />

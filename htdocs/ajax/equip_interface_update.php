@@ -1,8 +1,8 @@
 <?php
-include("../includes/SessionCheck.php");
-include("../includes/db_lib.php");
-include("../includes/script_elems.php");
-include("../includes/page_elems.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
+include(__DIR__ . "/../includes/db_lib.php");
+include(__DIR__ . "/../includes/script_elems.php");
+include(__DIR__ . "/../includes/page_elems.php");
 
 
 $equipment_id=$_REQUEST['equipment_id'];

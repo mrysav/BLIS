@@ -1,7 +1,7 @@
 <?php
 
-include("../includes/db_lib.php");
-include("../includes/script_elems.php");
+include(__DIR__ . "/../includes/db_lib.php");
+include(__DIR__ . "/../includes/script_elems.php");
 
 $patientId = $_REQUEST['pid'];
 $type = $_REQUEST['type'];

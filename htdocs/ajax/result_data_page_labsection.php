@@ -4,8 +4,8 @@
 # Called via Ajax form result_entry.php
 #
 
-include("../includes/db_lib.php");
-include("../includes/SessionCheck.php");
+include(__DIR__ . "/../includes/db_lib.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
 LangUtil::setPageId("results_entry");
 
 $attrib_value = $_REQUEST['a'];
@@ -235,19 +235,19 @@ if($attrib_type == 3 && $count > 2)
 <?php 
         if(isset($_REQUEST['l']))
         { 
-            $next_link = "../ajax/result_data_page_labsection.php?a=".$_REQUEST['a']."&l=".$_REQUEST['l']."&result_cap=".$result_cap."&result_counter=".($result_counter+1); 
+            $next_link = __DIR__ . "/../ajax/result_data_page_labsection.php?a=".$_REQUEST['a']."&l=".$_REQUEST['l']."&result_cap=".$result_cap."&result_counter=".($result_counter+1); 
         }
         else
         {
-            $next_link = "../ajax/result_data_page_labsection.php?a=".$_REQUEST['a']."&result_cap=".$result_cap."&result_counter=".($result_counter+1);             
+            $next_link = __DIR__ . "/../ajax/result_data_page_labsection.php?a=".$_REQUEST['a']."&result_cap=".$result_cap."&result_counter=".($result_counter+1);             
         }
         if(isset($_REQUEST['l']))
         { 
-            $prev_link = "../ajax/result_data_page_labsection.php?a=".$_REQUEST['a']."&l=".$_REQUEST['l']."&result_cap=".$result_cap."&result_counter=".($result_counter - 1); 
+            $prev_link = __DIR__ . "/../ajax/result_data_page_labsection.php?a=".$_REQUEST['a']."&l=".$_REQUEST['l']."&result_cap=".$result_cap."&result_counter=".($result_counter - 1); 
         }
         else
         {
-            $prev_link = "../ajax/result_data_page_labsection.php?a=".$_REQUEST['a']."&result_cap=".$result_cap."&result_counter=".($result_counter - 1);             
+            $prev_link = __DIR__ . "/../ajax/result_data_page_labsection.php?a=".$_REQUEST['a']."&result_cap=".$result_cap."&result_counter=".($result_counter - 1);             
         }
     ?>        
 <div class="prev_link">                       

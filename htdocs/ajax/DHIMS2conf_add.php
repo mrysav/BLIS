@@ -1,7 +1,7 @@
 <?php
-include("../includes/SessionCheck.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
 //file_put_contents("dhims2.txt",$_REQUEST['blis2dataelement_text']);
-include("../includes/db_lib.php");
+include(__DIR__ . "/../includes/db_lib.php");
 $dhims2 = new DHIMS2();
 $dhims2->blisGender = $_REQUEST['blisgender'];
 $dhims2->blisAgegroup = $_REQUEST['bliscat'];

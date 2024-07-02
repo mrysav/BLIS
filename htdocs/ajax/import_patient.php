@@ -1,6 +1,6 @@
 <?php
-include("../includes/SessionCheck.php");
-include("../includes/db_lib.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
+include(__DIR__ . "/../includes/db_lib.php");
 
 $user = get_user_by_id($_SESSION['user_id']);
 $country = strtolower($user->country);
@@ -130,5 +130,5 @@ foreach($specimenRecords as $specimenRecord) {
 DbUtil::switchRestore($saved_db);
 ?>
 <script type="text/javascript">
-window.location="../new_specimen.php?pid=<?php echo $importPatientId; ?>";
+window.location=__DIR__ . "/../new_specimen.php?pid=<?php echo $importPatientId; ?>";
 </script>

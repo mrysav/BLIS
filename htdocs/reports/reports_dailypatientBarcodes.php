@@ -25,8 +25,7 @@ $font_size = $_REQUEST['fs']; //11;
 $date_from = $_REQUEST['yf']."-".$_REQUEST['mf']."-".$_REQUEST['df'];
 $date_to = $_REQUEST['yt']."-".$_REQUEST['mt']."-".$_REQUEST['dt'];
 //AS Fixing error of invalid lab config id
-	session_start();
-$user = get_user_by_name($_SESSION['username']);
+	$user = get_user_by_name($_SESSION['username']);
 $lab_config_id = $user->labConfigId;
 //$lab_config_id = $_REQUEST['l'];
 
@@ -102,8 +101,8 @@ display:none;
 <style type='text/css'>
 	<?php $page_elems->getReportConfigCss($margin_list); ?>
 </style>
-<script type="text/javascript" src="../js/nicEdit.js"></script>
-<script type="text/javascript" src="../js/jquery-barcode-2.0.2.js"></script>
+<script type="text/javascript" src=__DIR__ . "/../js/nicEdit.js"></script>
+<script type="text/javascript" src=__DIR__ . "/../js/jquery-barcode-2.0.2.js"></script>
 <script type='text/javascript'>
 function refresh_print_form() {
 	var yf = <?php echo $_REQUEST['yf'];?>;

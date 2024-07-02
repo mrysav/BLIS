@@ -1,11 +1,11 @@
 <?php
 
-include("redirect.php");
+include(__DIR__ . "/redirect.php");
 include("includes/stats_lib.php");
 include("includes/password_reset_need.php");
 
 
-$file = "../../BlisSetup.html";
+$file = __DIR__ . "/../../BlisSetup.html";
 $content =<<<content
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -17,8 +17,7 @@ CONTENT="1; URL=http://{$_SERVER['SERVER_ADDR']}:4001/login.php">
 content;
 file_put_contents($file, $content);
 
-session_start();
-# If already logged in, redirect to home page
+// # If already logged in, redirect to home page
 if(isset($_SESSION['user_id']))
 {
 	header("Location: home.php");
@@ -31,22 +30,22 @@ $page_elems = new PageElems();
 $login_tip="If you have forgotten your password then please contact your BLIS administrator.";
 $page_elems->getSideTip(LangUtil::getGeneralTerm("TIPS"), $login_tip);
 ?>
-<style type="text/css"> 
+<style type="text/css">
 	.btn {
-		color:white; 
-		background-color:#3B5998; 
-		border-style:none; 
-		font-weight:bold; 
-		font-size:14px; 
-		height:28px; 
+		color:white;
+		background-color:#3B5998;
+		border-style:none;
+		font-weight:bold;
+		font-size:14px;
+		height:28px;
 		width:65px;
 		cursor:pointer;
 	}
-</style> 
+</style>
 
 <script type='text/javascript'>
 function load()
-{	
+{
 	$('#username_error').hide();
 	$('#password_error').hide();
 }
@@ -134,7 +133,7 @@ function capLock(e)
 				<form name="form_login" id='form_login' action="validate.php" method="post">
 				<table cellpadding="6px" cellspacing='10px'>
 				<?php
-					
+
 					if(isset($_REQUEST['to']))
 					{
 						# Previous session timed out
@@ -190,7 +189,7 @@ function capLock(e)
 						</td>
 						<td>
 							<input type="text" name="username" id = "username" value="" size="20" class='uniform_width' />
-							<label class="error" for="username" id="username_error"><small><font color="red"><?php echo LangUtil::getGeneralTerm("MSG_REQDFIELD"); ?></font></small></label> 
+							<label class="error" for="username" id="username_error"><small><font color="red"><?php echo LangUtil::getGeneralTerm("MSG_REQDFIELD"); ?></font></small></label>
 						</td>
 					</tr>
 					<tr valign='top'>
@@ -203,12 +202,12 @@ function capLock(e)
 							<br>
 							<div id="caps_lock_msg_div" style="display:none"><font color='red'><small><?php echo LangUtil::getPageTerm("MSG_CAPSLOCK"); ?></small></font></div>
 						</td>
-					</tr>					
+					</tr>
 					<tr>
 						<td></td>
 						<td>
 							<input type="button" class="btn" id="login_button" value="<?php echo LangUtil::$generalTerms["CMD_LOGIN"]; ?>" onclick="check_input_boxes()"/>
-						
+
 						</td>
 					</tr>
 					<tr>
@@ -220,7 +219,7 @@ function capLock(e)
 							</a> -->
 						</td>
 					</tr>
-					<?php 
+					<?php
 					$password_reset_needed = password_reset_required();
 					if($password_reset_needed){
 					?>

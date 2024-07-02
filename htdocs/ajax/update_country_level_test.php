@@ -1,6 +1,6 @@
 <?php
-include("../includes/SessionCheck.php");
-include("../includes/db_lib.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
+include(__DIR__ . "/../includes/db_lib.php");
 
 $userId = $_SESSION['user_id'];
 $testName = $_REQUEST['testName'];

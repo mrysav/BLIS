@@ -3,9 +3,9 @@
 # Main page for updating test type info
 # Called via Ajax from test_type_edit.php
 #
-include("../includes/SessionCheck.php");
-include("../includes/db_lib.php");
-include("../lang/lang_xml2php.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
+include(__DIR__ . "/../includes/db_lib.php");
+include(__DIR__ . "/../lang/lang_xml2php.php");
 
 //NC3065
 //$user = get_user_by_id($_SESSION['user_id']);

@@ -1,7 +1,7 @@
 <?php
 
 require_once(dirname(__FILE__)."/../includes/keymgmt.php");
-require_once("../includes/SessionCheck.php");
+require_once(__DIR__ . "/../includes/SessionCheck.php");
 
 $userId = $_SESSION['user_id'];
 $lab=$_REQUEST['lab_name'];

@@ -21,7 +21,7 @@ $script_elems->enableLatencyRecord();
     background-position: 10px center;
     color: #9F6000;
     background-color: #FEEFB3;
-    background-image: url('../includes/img/knob_attention.png');
+    background-image: url(__DIR__ . '/../includes/img/knob_attention.png');
 }
 .update_error {
     
@@ -33,7 +33,7 @@ $script_elems->enableLatencyRecord();
     background-position: 10px center;
     color: #D8000C;
     background-color: #FFBABA;
-    background-image: url('../includes/img/knob_cancel.png');
+    background-image: url(__DIR__ . '/../includes/img/knob_cancel.png');
 }
 .update_success {
     
@@ -45,7 +45,7 @@ $script_elems->enableLatencyRecord();
     background-position: 10px center;
     color: #000000;
     background-color: #99FF99;
-    background-image: url('../includes/img/knob_valid_green.png');
+    background-image: url(__DIR__ . '/../includes/img/knob_valid_green.png');
 }
 </style>
 
@@ -79,7 +79,7 @@ function blis_update_t()
 function blis_update()
 {
     $.ajax({
-		url : '../update/blis_update.php',
+		url : __DIR__ . '/../update/blis_update.php',
 		success : function(data) {
 			if ( data=="true" ) {
                             $('#update_failure').hide();
@@ -111,7 +111,7 @@ echo LangUtil::getPageTerm("TIPS_BLISINTRO");
 ?>
 <br><br>
     <div id="update_div2" style="display:none;" class="warning">
-    <a rel='facebox' id='update_link' href='../update/blis_update.php'>Click here to complete update to version <?php echo $VERSION ?></a>
+    <a rel='facebox' id='update_link' href=__DIR__ . '/../update/blis_update.php'>Click here to complete update to version <?php echo $VERSION ?></a>
     </div>
 
     <div id="update_div" style="display:none;" class="warning">

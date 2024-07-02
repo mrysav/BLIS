@@ -6,9 +6,6 @@
 
 require_once(dirname(__FILE__)."/platform_lib.php");
 
-if(session_id() == "")
-	session_start();
-
 # Flag for toggling between local machine, portable version and arc server
 $ON_DEV = 1;
 $ON_ARC = 2;

@@ -3,8 +3,8 @@
 # Updates patient profile
 # Called via Ajax from patient_profile.php
 #
-include("../includes/SessionCheck.php");
-include("../includes/db_lib.php");
+include(__DIR__ . "/../includes/SessionCheck.php");
+include(__DIR__ . "/../includes/db_lib.php");
 
 # Helper function 
 function get_custom_value($custom_field)
