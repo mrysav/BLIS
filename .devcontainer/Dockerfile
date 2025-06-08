@@ -6,7 +6,7 @@ FROM ubuntu:noble
 # https://code.visualstudio.com/docs/remote/containers
 
 # Install a bunch of stuff from the standard repositories and a custom PHP repository
-# Namely, PHP 5.6
+# Namely, PHP 7.4
 RUN apt-get update && apt-get install -y software-properties-common && \
     add-apt-repository ppa:ondrej/php && apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y \
@@ -26,14 +26,14 @@ RUN apt-get update && apt-get install -y software-properties-common && \
         unzip \
         weasyprint \
         zip \
-        php5.6 \
-        php5.6-bcmath \
-        php5.6-curl \
-        php5.6-gd \
-        php5.6-mysql \
-        php5.6-zip \
-        php5.6-mbstring \
-        php5.6-xml \
+        php7.4 \
+        php7.4-bcmath \
+        php7.4-curl \
+        php7.4-gd \
+        php7.4-mysql \
+        php7.4-zip \
+        php7.4-mbstring \
+        php7.4-xml \
         && rm -rf /var/lib/apt/lists/*
 
 RUN echo "column-statistics = 0" | tee -a /etc/mysql/conf.d/mysqldump.cnf
@@ -47,8 +47,8 @@ RUN rm /etc/apache2/sites-enabled/000-default.conf && \
     echo ". /var/www/apache2_blis.env" >> /etc/apache2/envvars
 
 # Copy custom php.ini into the container
-RUN cp /etc/php/5.6/apache2/php.ini /etc/php/5.6/apache2/php.ini.original
-COPY docker/config/php.ini /etc/php/5.6/apache2/php.ini
+RUN cp /etc/php/7.4/apache2/php.ini /etc/php/7.4/apache2/php.ini.original
+COPY docker/config/php.ini /etc/php/7.4/apache2/php.ini
 
 COPY docker/bin/start-blis.sh /usr/bin/start-blis
 
