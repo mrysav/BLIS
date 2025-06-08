@@ -1,5 +1,7 @@
 FROM ubuntu:noble
 
+ARG PHP_VERSION="5.6"
+
 # Install a bunch of stuff from the standard repositories
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
         acl \
@@ -18,14 +20,14 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
 # Namely, pulling in PHP  here from a repo
 RUN add-apt-repository ppa:ondrej/php && apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y \
-        php \
-        php-bcmath \
-        php-curl \
-        php-gd \
-        php-mysql \
-        php-zip \
-        php-mbstring \
-        php-xml \
+        php$PHP_VERSION \
+        php$PHP_VERSION-bcmath \
+        php$PHP_VERSION-curl \
+        php$PHP_VERSION-gd \
+        php$PHP_VERSION-mysql \
+        php$PHP_VERSION-zip \
+        php$PHP_VERSION-mbstring \
+        php$PHP_VERSION-xml \
         && rm -rf /var/lib/apt/lists/*
 
 # This is a mysqldump configuration option required in this environment to
@@ -42,7 +44,7 @@ RUN a2enmod rewrite socache_shmcb ssl && \
     a2ensite blis*
 
 # Copy custom PHP config into the container
-COPY docker/config/php.ini /etc/php//apache2/php.ini
+COPY docker/config/php.ini /etc/php/$PHP_VERSION/apache2/php.ini
 
 # Copy logrotate configuration into container
 COPY docker/config/logrotate-blis.conf /etc/logrotate.d/blis
